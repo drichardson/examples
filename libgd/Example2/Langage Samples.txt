@@ -1,0 +1,42 @@
+All of these samples render properly using the following fonts:
+- Arial Unicode MS
+
+English:
+Douglas Richardson
+
+German:
+Nachschlüssel
+
+French:
+Ça va S'il vous plaît
+
+Spanish:
+Español
+
+Chinese:
+专为海外华人儿童设计的中文学校
+
+Japanese:
+形容動詞
+ストラリア
+九中土
+
+Korean:
+한국어/조선말
+
+Vietnamese:
+tiếng Việt
+
+lā atakallamu al-‘arabīyah
+
+Hindi:
+हिन्दी 
+
+Other:
+ƒ∆ßøˆ∂ƒ˙å©\øˆ´∆ƒ
+
+
+HOWEVER, Arabic does not. The Baghdad font was able to render Arabic correctly.
+Arabic:
+لا أتكلم العربية
+لا

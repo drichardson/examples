@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9199F594136BD859003242FF /* Texture1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9199F593136BD859003242FF /* Texture1.png */; };
+		91BF7A35136919E30072662F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91BF7A34136919E30072662F /* Cocoa.framework */; };
+		91BF7A3F136919E30072662F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91BF7A3D136919E30072662F /* InfoPlist.strings */; };
+		91BF7A42136919E30072662F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BF7A41136919E30072662F /* main.m */; };
+		91BF7A48136919E30072662F /* TextureTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BF7A47136919E30072662F /* TextureTestAppDelegate.m */; };
+		91BF7A4B136919E30072662F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BF7A49136919E30072662F /* MainMenu.xib */; };
+		91BF7A7013691C6B0072662F /* MyOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BF7A6F13691C6B0072662F /* MyOpenGLView.m */; };
+		91BF7A7213691CF90072662F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91BF7A7113691CF90072662F /* OpenGL.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9199F593136BD859003242FF /* Texture1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Texture1.png; sourceTree = "<group>"; };
+		91BF7A30136919E30072662F /* TextureTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextureTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		91BF7A34136919E30072662F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		91BF7A37136919E30072662F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		91BF7A38136919E30072662F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		91BF7A39136919E30072662F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		91BF7A3C136919E30072662F /* TextureTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TextureTest-Info.plist"; sourceTree = "<group>"; };
+		91BF7A3E136919E30072662F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		91BF7A40136919E30072662F /* TextureTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TextureTest-Prefix.pch"; sourceTree = "<group>"; };
+		91BF7A41136919E30072662F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		91BF7A46136919E30072662F /* TextureTestAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureTestAppDelegate.h; sourceTree = "<group>"; };
+		91BF7A47136919E30072662F /* TextureTestAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextureTestAppDelegate.m; sourceTree = "<group>"; };
+		91BF7A4A136919E30072662F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		91BF7A6E13691C6B0072662F /* MyOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOpenGLView.h; sourceTree = "<group>"; };
+		91BF7A6F13691C6B0072662F /* MyOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOpenGLView.m; sourceTree = "<group>"; };
+		91BF7A7113691CF90072662F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		91BF7A2D136919E30072662F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91BF7A7213691CF90072662F /* OpenGL.framework in Frameworks */,
+				91BF7A35136919E30072662F /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		91BF7A25136919E30072662F = {
+			isa = PBXGroup;
+			children = (
+				91BF7A7113691CF90072662F /* OpenGL.framework */,
+				91BF7A3A136919E30072662F /* TextureTest */,
+				91BF7A33136919E30072662F /* Frameworks */,
+				91BF7A31136919E30072662F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		91BF7A31136919E30072662F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				91BF7A30136919E30072662F /* TextureTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		91BF7A33136919E30072662F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91BF7A34136919E30072662F /* Cocoa.framework */,
+				91BF7A36136919E30072662F /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		91BF7A36136919E30072662F /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91BF7A37136919E30072662F /* AppKit.framework */,
+				91BF7A38136919E30072662F /* CoreData.framework */,
+				91BF7A39136919E30072662F /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		91BF7A3A136919E30072662F /* TextureTest */ = {
+			isa = PBXGroup;
+			children = (
+				91BF7A46136919E30072662F /* TextureTestAppDelegate.h */,
+				91BF7A47136919E30072662F /* TextureTestAppDelegate.m */,
+				91BF7A49136919E30072662F /* MainMenu.xib */,
+				91BF7A3B136919E30072662F /* Supporting Files */,
+				91BF7A6E13691C6B0072662F /* MyOpenGLView.h */,
+				91BF7A6F13691C6B0072662F /* MyOpenGLView.m */,
+			);
+			path = TextureTest;
+			sourceTree = "<group>";
+		};
+		91BF7A3B136919E30072662F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9199F593136BD859003242FF /* Texture1.png */,
+				91BF7A3C136919E30072662F /* TextureTest-Info.plist */,
+				91BF7A3D136919E30072662F /* InfoPlist.strings */,
+				91BF7A40136919E30072662F /* TextureTest-Prefix.pch */,
+				91BF7A41136919E30072662F /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		91BF7A2F136919E30072662F /* TextureTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 91BF7A4E136919E30072662F /* Build configuration list for PBXNativeTarget "TextureTest" */;
+			buildPhases = (
+				91BF7A2C136919E30072662F /* Sources */,
+				91BF7A2D136919E30072662F /* Frameworks */,
+				91BF7A2E136919E30072662F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TextureTest;
+			productName = TextureTest;
+			productReference = 91BF7A30136919E30072662F /* TextureTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		91BF7A27136919E30072662F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Doug Richardson";
+			};
+			buildConfigurationList = 91BF7A2A136919E30072662F /* Build configuration list for PBXProject "TextureTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 91BF7A25136919E30072662F;
+			productRefGroup = 91BF7A31136919E30072662F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				91BF7A2F136919E30072662F /* TextureTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		91BF7A2E136919E30072662F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91BF7A3F136919E30072662F /* InfoPlist.strings in Resources */,
+				91BF7A4B136919E30072662F /* MainMenu.xib in Resources */,
+				9199F594136BD859003242FF /* Texture1.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		91BF7A2C136919E30072662F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91BF7A42136919E30072662F /* main.m in Sources */,
+				91BF7A48136919E30072662F /* TextureTestAppDelegate.m in Sources */,
+				91BF7A7013691C6B0072662F /* MyOpenGLView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		91BF7A3D136919E30072662F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91BF7A3E136919E30072662F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		91BF7A49136919E30072662F /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91BF7A4A136919E30072662F /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		91BF7A4C136919E30072662F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		91BF7A4D136919E30072662F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		91BF7A4F136919E30072662F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TextureTest/TextureTest-Prefix.pch";
+				INFOPLIST_FILE = "TextureTest/TextureTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		91BF7A50136919E30072662F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TextureTest/TextureTest-Prefix.pch";
+				INFOPLIST_FILE = "TextureTest/TextureTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		91BF7A2A136919E30072662F /* Build configuration list for PBXProject "TextureTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91BF7A4C136919E30072662F /* Debug */,
+				91BF7A4D136919E30072662F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		91BF7A4E136919E30072662F /* Build configuration list for PBXNativeTarget "TextureTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91BF7A4F136919E30072662F /* Debug */,
+				91BF7A50136919E30072662F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 91BF7A27136919E30072662F /* Project object */;
+}

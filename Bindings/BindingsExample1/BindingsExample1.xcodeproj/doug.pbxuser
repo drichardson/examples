@@ -1,0 +1,148 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 916311A010181AEA0050644B /* BindingsExample1 */;
+		activeTarget = 8D1107260486CEB800E47090 /* BindingsExample1 */;
+		addToTargets = (
+			8D1107260486CEB800E47090 /* BindingsExample1 */,
+		);
+		codeSenseManager = 916311AF10181AED0050644B /* Code sense */;
+		executables = (
+			916311A010181AEA0050644B /* BindingsExample1 */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					341,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 270015210;
+			PBXWorkspaceStateSaveDate = 270015210;
+		};
+		perUserProjectItems = {
+			916311D310182C920050644B /* PBXTextBookmark */ = 916311D310182C920050644B /* PBXTextBookmark */;
+			916311D410182C920050644B /* PBXTextBookmark */ = 916311D410182C920050644B /* PBXTextBookmark */;
+			916311D510182C920050644B /* PBXTextBookmark */ = 916311D510182C920050644B /* PBXTextBookmark */;
+			916311D610182C920050644B /* PBXTextBookmark */ = 916311D610182C920050644B /* PBXTextBookmark */;
+		};
+		sourceControlManager = 916311AE10181AED0050644B /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	8D1107260486CEB800E47090 /* BindingsExample1 */ = {
+		activeExec = 0;
+		executables = (
+			916311A010181AEA0050644B /* BindingsExample1 */,
+		);
+	};
+	916311A010181AEA0050644B /* BindingsExample1 */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = BindingsExample1;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+	};
+	916311AE10181AED0050644B /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	916311AF10181AED0050644B /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	916311B41018280F0050644B /* Temperature.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1093, 593}}";
+			sepNavSelRange = "{250, 0}";
+			sepNavVisRange = "{0, 250}";
+		};
+	};
+	916311B51018280F0050644B /* Temperature.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {531, 210}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 195}";
+			sepNavWindowFrame = "{{77, 302}, {1140, 721}}";
+		};
+	};
+	916311D310182C920050644B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 916311B41018280F0050644B /* Temperature.h */;
+		name = "Temperature.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 203;
+		vrLoc = 0;
+	};
+	916311D410182C920050644B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 916311B51018280F0050644B /* Temperature.m */;
+		name = "Temperature.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 195;
+		vrLoc = 0;
+	};
+	916311D510182C920050644B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 916311B41018280F0050644B /* Temperature.h */;
+		name = "Temperature.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 203;
+		vrLoc = 0;
+	};
+	916311D610182C920050644B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 916311B51018280F0050644B /* Temperature.m */;
+		name = "Temperature.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 195;
+		vrLoc = 0;
+	};
+}

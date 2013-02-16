@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C# Express 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageButtonLib", "MessageButtonLib\MessageButtonLib.csproj", "{F7D08EAF-2848-461D-8272-6C87AEF39AC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramUsingLibrary", "ProgramUsingLibrary\ProgramUsingLibrary.csproj", "{06828192-1CB6-4EF5-BF1C-CC4D9E4C762A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7D08EAF-2848-461D-8272-6C87AEF39AC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7D08EAF-2848-461D-8272-6C87AEF39AC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7D08EAF-2848-461D-8272-6C87AEF39AC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7D08EAF-2848-461D-8272-6C87AEF39AC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06828192-1CB6-4EF5-BF1C-CC4D9E4C762A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06828192-1CB6-4EF5-BF1C-CC4D9E4C762A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06828192-1CB6-4EF5-BF1C-CC4D9E4C762A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06828192-1CB6-4EF5-BF1C-CC4D9E4C762A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

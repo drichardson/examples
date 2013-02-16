@@ -1,0 +1,56 @@
+-
+    name: Gold
+    value: 1200.0
+    weight: 5
+-
+    name: Watch
+    value: 100
+    weight: 2
+-
+    name: Apple
+    value: 3
+    weight: 3
+-
+    name: Bowling Ball
+    value: 20
+    weight: 20
+-
+    name: Baseball
+    value: 5
+    weight: 5
+-
+    name: Toothbrush
+    value: 2
+    weight: 1
+-
+    name: Silver
+    value: 50
+    weight: 5
+-
+    name: Copper 100lbs
+    value: 200
+    weight: 500
+-
+    name: Computer
+    value: 500
+    weight: 75
+-
+    name: Golf Balls
+    value: 15
+    weight: 5
+-
+    name: Car
+    value: 10000
+    weight: 4000
+-
+    name: Pennies
+    value: 50
+    weight: 100
+-
+    name: Water
+    value: 1
+    weight: 10
+-
+    name: Beef Jerky
+    value: 5
+    weight: 5

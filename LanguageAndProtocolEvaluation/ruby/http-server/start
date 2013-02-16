@@ -1,0 +1,24 @@
+#!/bin/bash
+
+function sigterm_handler
+{
+    echo "Got SIGTERM, shutting down mongrel instances..."
+    ./stop
+    echo "Shutdown complete."
+}
+
+trap sigterm_handler SIGINT SIGTERM
+
+echo Starting mongrel instances...
+mongrel_rails start -e production --pid /tmp/my_mongrel_3000.pid -p 3000 -d || exit 1
+mongrel_rails start -e production --pid /tmp/my_mongrel_3001.pid -p 3001 -d || exit 1
+mongrel_rails start -e production --pid /tmp/my_mongrel_3002.pid -p 3002 -d || exit 1
+mongrel_rails start -e production --pid /tmp/my_mongrel_3003.pid -p 3003 -d || exit 1
+mongrel_rails start -e production --pid /tmp/my_mongrel_3004.pid -p 3004 -d || exit 1
+echo all mongrel instances started.
+
+echo starting pen for load balancing between the mongrel instances. Control+C will stop the server.
+
+# Turned on automatic round robin balancing (-r) because requests from this system (localhost) will
+# all get directed to the server server. May want to disable this when testing with multiple hosts.
+../../pen-0.18.0/pen -r -f 1979 localhost:3000 localhost:3001 localhost:3002 localhost:3003 localhost:3004

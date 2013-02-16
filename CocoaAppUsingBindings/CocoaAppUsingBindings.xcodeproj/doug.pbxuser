@@ -1,0 +1,216 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 91C3922E0BA5DDD70040327A /* CocoaAppUsingBindings */;
+		activeTarget = 8D1107260486CEB800E47090 /* CocoaAppUsingBindings */;
+		codeSenseManager = 91C3923D0BA5DDDC0040327A /* Code sense */;
+		executables = (
+			91C3922E0BA5DDD70040327A /* CocoaAppUsingBindings */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					541,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 196986375;
+			PBXWorkspaceStateSaveDate = 196986375;
+		};
+		perUserProjectItems = {
+			913A17E00BBDC644005A50BC /* PBXTextBookmark */ = 913A17E00BBDC644005A50BC /* PBXTextBookmark */;
+			913A17E10BBDC644005A50BC /* PBXTextBookmark */ = 913A17E10BBDC644005A50BC /* PBXTextBookmark */;
+			913A17E20BBDC644005A50BC /* PBXBookmark */ = 913A17E20BBDC644005A50BC /* PBXBookmark */;
+			913A17E30BBDC644005A50BC /* PBXTextBookmark */ = 913A17E30BBDC644005A50BC /* PBXTextBookmark */;
+			913A17E40BBDC644005A50BC /* PBXTextBookmark */ = 913A17E40BBDC644005A50BC /* PBXTextBookmark */;
+			913A17E50BBDC644005A50BC /* PBXTextBookmark */ = 913A17E50BBDC644005A50BC /* PBXTextBookmark */;
+			913A17E60BBDC644005A50BC /* PBXTextBookmark */ = 913A17E60BBDC644005A50BC /* PBXTextBookmark */;
+			913A17EE0BBDDE43005A50BC /* PBXTextBookmark */ = 913A17EE0BBDDE43005A50BC /* PBXTextBookmark */;
+			91909E330BA72B1600225BDF /* PBXTextBookmark */ = 91909E330BA72B1600225BDF /* PBXTextBookmark */;
+			91909E340BA72B1600225BDF /* PBXTextBookmark */ = 91909E340BA72B1600225BDF /* PBXTextBookmark */;
+		};
+		sourceControlManager = 91C3923C0BA5DDDC0040327A /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {739, 673}}";
+			sepNavSelRange = "{273, 0}";
+			sepNavVisRect = "{{0, 0}, {739, 673}}";
+		};
+	};
+	8D1107260486CEB800E47090 /* CocoaAppUsingBindings */ = {
+		activeExec = 0;
+		executables = (
+			91C3922E0BA5DDD70040327A /* CocoaAppUsingBindings */,
+		);
+	};
+	913A17E00BBDC644005A50BC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 91C392410BA5DEDD0040327A /* Multiplier.m */;
+		name = "Multiplier.m: 13";
+		rLen = 0;
+		rLoc = 317;
+		rType = 0;
+		vrLen = 454;
+		vrLoc = 0;
+	};
+	913A17E10BBDC644005A50BC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 91C392400BA5DEDD0040327A /* Multiplier.h */;
+		name = "Multiplier.h: 3";
+		rLen = 0;
+		rLoc = 41;
+		rType = 0;
+		vrLen = 535;
+		vrLoc = 0;
+	};
+	913A17E20BBDC644005A50BC /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+	};
+	913A17E30BBDC644005A50BC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 91C392410BA5DEDD0040327A /* Multiplier.m */;
+		name = "Multiplier.m: 13";
+		rLen = 0;
+		rLoc = 317;
+		rType = 0;
+		vrLen = 454;
+		vrLoc = 0;
+	};
+	913A17E40BBDC644005A50BC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 91C392400BA5DEDD0040327A /* Multiplier.h */;
+		name = "Multiplier.h: 3";
+		rLen = 0;
+		rLoc = 41;
+		rType = 0;
+		vrLen = 535;
+		vrLoc = 0;
+	};
+	913A17E50BBDC644005A50BC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 91C392410BA5DEDD0040327A /* Multiplier.m */;
+		name = "Multiplier.m: 13";
+		rLen = 0;
+		rLoc = 317;
+		rType = 0;
+		vrLen = 454;
+		vrLoc = 0;
+	};
+	913A17E60BBDC644005A50BC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 91C392400BA5DEDD0040327A /* Multiplier.h */;
+		name = "Multiplier.h: 3";
+		rLen = 0;
+		rLoc = 41;
+		rType = 0;
+		vrLen = 535;
+		vrLoc = 0;
+	};
+	913A17EE0BBDDE43005A50BC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 15";
+		rLen = 0;
+		rLoc = 273;
+		rType = 0;
+		vrLen = 273;
+		vrLoc = 0;
+	};
+	91909E330BA72B1600225BDF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 91C392410BA5DEDD0040327A /* Multiplier.m */;
+		name = "Multiplier.m: 10";
+		rLen = 0;
+		rLoc = 296;
+		rType = 0;
+		vrLen = 429;
+		vrLoc = 0;
+	};
+	91909E340BA72B1600225BDF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 91C392400BA5DEDD0040327A /* Multiplier.h */;
+		name = "Multiplier.h: 14";
+		rLen = 0;
+		rLoc = 472;
+		rType = 0;
+		vrLen = 340;
+		vrLoc = 0;
+	};
+	91C3922E0BA5DDD70040327A /* CocoaAppUsingBindings */ = {
+		isa = PBXExecutable;
+		activeArgIndex = 2147483647;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = CocoaAppUsingBindings;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	91C3923C0BA5DDDC0040327A /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+		scmType = "";
+	};
+	91C3923D0BA5DDDC0040327A /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	91C392400BA5DEDD0040327A /* Multiplier.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {739, 673}}";
+			sepNavSelRange = "{41, 0}";
+			sepNavVisRect = "{{0, 0}, {739, 673}}";
+			sepNavWindowFrame = "{{182, 490}, {631, 511}}";
+		};
+	};
+	91C392410BA5DEDD0040327A /* Multiplier.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {739, 673}}";
+			sepNavSelRange = "{317, 0}";
+			sepNavVisRect = "{{0, 0}, {739, 673}}";
+			sepNavWindowFrame = "{{454, 496}, {631, 511}}";
+		};
+	};
+}

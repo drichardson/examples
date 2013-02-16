@@ -1,0 +1,8 @@
+You need to prepare /private/var/run/fastcgi/dynamic before running start_apache. I couldn't find the configure directive to control this path.
+
+sudo mkdir -p /private/var/run/fastcgi/dynamic
+sudo chmod -R 777 /private/var/run/fastcgi
+
+
+Log files, PID files, and such can be found here:
+/tmp/apache2_custom_*

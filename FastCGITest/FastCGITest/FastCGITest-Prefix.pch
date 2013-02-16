@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'FastCGITest' target in the 'FastCGITest' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

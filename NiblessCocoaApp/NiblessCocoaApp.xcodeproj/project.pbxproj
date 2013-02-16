@@ -1,0 +1,194 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		91CEE3F50DCD10CE00C38950 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CEE3E90DCD10AB00C38950 /* main.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		91CEE3E90DCD10AB00C38950 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		91CEE3EE0DCD10C500C38950 /* NiblessCocoaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NiblessCocoaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		91CEE3F10DCD10C500C38950 /* NiblessCocoaApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NiblessCocoaApp-Info.plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		91CEE3EC0DCD10C500C38950 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		91CEE3DE0DCD10A300C38950 = {
+			isa = PBXGroup;
+			children = (
+				91CEE3E90DCD10AB00C38950 /* main.m */,
+				91CEE3EF0DCD10C500C38950 /* Products */,
+				91CEE3F10DCD10C500C38950 /* NiblessCocoaApp-Info.plist */,
+			);
+			sourceTree = "<group>";
+		};
+		91CEE3EF0DCD10C500C38950 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				91CEE3EE0DCD10C500C38950 /* NiblessCocoaApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		91CEE3ED0DCD10C500C38950 /* NiblessCocoaApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 91CEE3F40DCD10C600C38950 /* Build configuration list for PBXNativeTarget "NiblessCocoaApp" */;
+			buildPhases = (
+				91CEE3EA0DCD10C500C38950 /* Resources */,
+				91CEE3EB0DCD10C500C38950 /* Sources */,
+				91CEE3EC0DCD10C500C38950 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NiblessCocoaApp;
+			productName = NiblessCocoaApp;
+			productReference = 91CEE3EE0DCD10C500C38950 /* NiblessCocoaApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		91CEE3E00DCD10A300C38950 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 91CEE3E30DCD10A300C38950 /* Build configuration list for PBXProject "NiblessCocoaApp" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = 91CEE3DE0DCD10A300C38950;
+			productRefGroup = 91CEE3EF0DCD10C500C38950 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				91CEE3ED0DCD10C500C38950 /* NiblessCocoaApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		91CEE3EA0DCD10C500C38950 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		91CEE3EB0DCD10C500C38950 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91CEE3F50DCD10CE00C38950 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		91CEE3E10DCD10A300C38950 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		91CEE3E20DCD10A300C38950 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		91CEE3F20DCD10C600C38950 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "NiblessCocoaApp-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = NiblessCocoaApp;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		91CEE3F30DCD10C600C38950 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "NiblessCocoaApp-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = NiblessCocoaApp;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		91CEE3E30DCD10A300C38950 /* Build configuration list for PBXProject "NiblessCocoaApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91CEE3E10DCD10A300C38950 /* Debug */,
+				91CEE3E20DCD10A300C38950 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		91CEE3F40DCD10C600C38950 /* Build configuration list for PBXNativeTarget "NiblessCocoaApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91CEE3F20DCD10C600C38950 /* Debug */,
+				91CEE3F30DCD10C600C38950 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 91CEE3E00DCD10A300C38950 /* Project object */;
+}

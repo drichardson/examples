@@ -1,0 +1,30 @@
+{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 Helvetica-Bold;\f1\fswiss\fcharset77 Helvetica;\f2\fmodern\fcharset77 CourierNewPSMT;
+}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww14560\viewh14640\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs42 \cf0 VNCClient Readme
+\f1\b0\fs30 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\fs28 \cf0 3/28/2006\
+VNC Client can connect to an RFB server and display the screen. It is very slow. After timing, I found most of the time is spend receiving the FrameBufferUpdate message from the RFB server. I believe implementing the CopyRect encoding will reduce the size of the FrameBufferUpdate message in the average case.\
+
+\f0\b \
+NOTE
+\f1\b0 : After further investigation, this turned out to be a problem handling the frame buffer update message. In the case of multiple rectangles per update, only the rectangle header for the first rectangle was read. After that, only pixel data was read, according to the specifications of the first rectangle.\
+\
+The RealVNC server I'm using can log various messages. Below is a .cmd file to run the server with all logging.\
+BEGIN FILE\
+
+\f2\fs24 set OUT=stdout\
+set LEVEL=255\
+\
+winvnc4 Log=SMsgWriter:%OUT%:%LEVEL%,SVncAuth:%OUT%:%LEVEL%,WMPoller:%OUT%:%LEVEL%,WMCopyRect:%OUT%:%LEVEL%,DIBSectionBuffer:%OUT%:%LEVEL%,SConnection:%OUT%:%LEVEL%,KeyRemapper:%OUT%:%LEVEL%,VNCSConnST:%OUT%:%LEVEL%,SSecurityFactoryStandard:%OUT%:%LEVEL%,Cursor:%OUT%:%LEVEL%,PixelBuffer:%OUT%:%LEVEL%,SDisplayCoreWMHooks:%OUT%:%LEVEL%,SDisplayCorePolling:%OUT%:%LEVEL%,WMMonitor:%OUT%:%LEVEL%,SInput:%OUT%:%LEVEL%,MonitorInfo:%OUT%:%LEVEL%,DeviceContext:%OUT%:%LEVEL%,DeviceFrameBuffer:%OUT%:%LEVEL%,Clipboard:%OUT%:%LEVEL%,UpdateTracker:%OUT%:%LEVEL%,TsSessions:%OUT%:%LEVEL%,WMCursor:%OUT%:%LEVEL%,CleanDesktop:%OUT%:%LEVEL%,WMHooks:%OUT%:%LEVEL%,SecurityWin32:%OUT%:%LEVEL%,WMShatter:%OUT%:%LEVEL%,Registry:%OUT%:%LEVEL%,DynamicFn:%OUT%:%LEVEL%,EventManager:%OUT%:%LEVEL%,RegConfig:%OUT%:%LEVEL%,Connections:%OUT%:%LEVEL%,VNCServerST:%OUT%:%LEVEL%,SDisplay:%OUT%:%LEVEL%,CurrentUser:%OUT%:%LEVEL%,AboutDialog:%OUT%:%LEVEL%,MsgWindow:%OUT%:%LEVEL%,Threading:%OUT%:%LEVEL%,Service:%OUT%:%LEVEL%,PropSheet:%OUT%:%LEVEL%,Dialog:%OUT%:%LEVEL%,Config:%OUT%:%LEVEL%,SocketManager:%OUT%:%LEVEL%,HTTPServer:%OUT%:%LEVEL%,TcpSocket:%OUT%:%LEVEL%,main:%OUT%:%LEVEL%,VNCServerWin32:%OUT%:%LEVEL%,STrayIcon:%OUT%:%LEVEL%,QueryConnectDialog:%OUT%:%LEVEL%,ManagedListener:%OUT%:%LEVEL%,JavaViewerServer:%OUT%:%LEVEL%\
+
+\f1\fs28 END FILE\
+\
+User interface events and network events seem to interfere with each other. For instance, opening a menu causes all network logging messages to stop until the menu is closed. Likewise, clicking on a menu has no effect while a network  message (like FrameBufferUpdate) is being processed. I thought the event loop was supposed to handle this. Need to look into the problem and find a fix or alternatives, such as a separate thread for the network processing. The screen should always update, regardless of menus being opened, and the user should always have immediate control of the user interface, regardless of network processing.}

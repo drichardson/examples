@@ -1,0 +1,175 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 9127521C11B1C40A003879D2 /* Flash Beep Prototype */;
+		activeTarget = 8D1107260486CEB800E47090 /* Flash Beep Prototype */;
+		addToTargets = (
+			8D1107260486CEB800E47090 /* Flash Beep Prototype */,
+		);
+		breakpoints = (
+		);
+		codeSenseManager = 9127522E11B1C41A003879D2 /* Code sense */;
+		executables = (
+			9127521C11B1C40A003879D2 /* Flash Beep Prototype */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					779,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					739,
+					60,
+					20,
+					48.16259765625,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 296862730;
+			PBXWorkspaceStateSaveDate = 296862730;
+		};
+		perUserProjectItems = {
+			9127527211B1C76E003879D2 /* PBXTextBookmark */ = 9127527211B1C76E003879D2 /* PBXTextBookmark */;
+			9127527311B1C76E003879D2 /* PBXTextBookmark */ = 9127527311B1C76E003879D2 /* PBXTextBookmark */;
+			912752F011B1CF2C003879D2 /* PBXTextBookmark */ = 912752F011B1CF2C003879D2 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 9127522D11B1C41A003879D2 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	8D1107260486CEB800E47090 /* Flash Beep Prototype */ = {
+		activeExec = 0;
+		executables = (
+			9127521C11B1C40A003879D2 /* Flash Beep Prototype */,
+		);
+	};
+	9127521C11B1C40A003879D2 /* Flash Beep Prototype */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "Flash Beep Prototype";
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	9127522D11B1C41A003879D2 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	9127522E11B1C41A003879D2 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	9127522F11B1C433003879D2 /* Screen.png */ = {
+		uiCtxt = {
+			sepNavWindowFrame = "{{120, 6}, {1257, 973}}";
+		};
+	};
+	9127523211B1C466003879D2 /* RFBView.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1052, 616}}";
+			sepNavSelRange = "{289, 0}";
+			sepNavVisRange = "{0, 296}";
+		};
+	};
+	9127523311B1C466003879D2 /* RFBView.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {969, 1482}}";
+			sepNavSelRange = "{619, 0}";
+			sepNavVisRange = "{0, 0}";
+			sepNavWindowFrame = "{{372, 55}, {1257, 973}}";
+		};
+	};
+	9127527211B1C76E003879D2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9127523211B1C466003879D2 /* RFBView.h */;
+		name = "RFBView.h: 17";
+		rLen = 0;
+		rLoc = 289;
+		rType = 0;
+		vrLen = 296;
+		vrLoc = 0;
+	};
+	9127527311B1C76E003879D2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9127523311B1C466003879D2 /* RFBView.m */;
+		name = "RFBView.m: 41";
+		rLen = 0;
+		rLoc = 937;
+		rType = 0;
+		vrLen = 783;
+		vrLoc = 163;
+	};
+	912752F011B1CF2C003879D2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9127523311B1C466003879D2 /* RFBView.m */;
+		name = "RFBView.m: 28";
+		rLen = 0;
+		rLoc = 619;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+}

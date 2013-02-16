@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'hash' target in the 'hash' project.
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

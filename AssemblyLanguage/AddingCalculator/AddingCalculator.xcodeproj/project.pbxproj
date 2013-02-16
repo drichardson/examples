@@ -1,0 +1,474 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		912C9AD2115DC5F5002DCB53 /* All */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 912C9AE1115DC60E002DCB53 /* Build configuration list for PBXAggregateTarget "All" */;
+			buildPhases = (
+			);
+			dependencies = (
+				912C9ADC115DC602002DCB53 /* PBXTargetDependency */,
+				912C9ADA115DC600002DCB53 /* PBXTargetDependency */,
+				912C9AD8115DC5FD002DCB53 /* PBXTargetDependency */,
+				912C9AD6115DC5FB002DCB53 /* PBXTargetDependency */,
+			);
+			name = All;
+			productName = All;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		8DD76FAC0486AB0100D96B5E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
+		915596DF115880EF00EFCAFB /* main-i386.s in Sources */ = {isa = PBXBuildFile; fileRef = 915596DE115880EF00EFCAFB /* main-i386.s */; };
+		915599CE115B142800EFCAFB /* main-x86_64.s in Sources */ = {isa = PBXBuildFile; fileRef = 915599CD115B142800EFCAFB /* main-x86_64.s */; };
+		91559B91115B457400EFCAFB /* main-ppc.s in Sources */ = {isa = PBXBuildFile; fileRef = 91559B90115B457400EFCAFB /* main-ppc.s */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		912C9AD5115DC5FB002DCB53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 91559B81115B454B00EFCAFB /* AddingCalculator Assembly ppc */;
+			remoteInfo = "AddingCalculator Assembly ppc";
+		};
+		912C9AD7115DC5FD002DCB53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9155999F115B133200EFCAFB /* AddingCalculator Assembly x86_64 */;
+			remoteInfo = "AddingCalculator Assembly x86_64";
+		};
+		912C9AD9115DC600002DCB53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 915596CB1158809600EFCAFB /* AddingCalculator Assembly i386 */;
+			remoteInfo = "AddingCalculator Assembly i386";
+		};
+		912C9ADB115DC602002DCB53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DD76FA90486AB0100D96B5E /* AddingCalculator C */;
+			remoteInfo = "AddingCalculator C";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08FB7796FE84155DC02AAC07 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		8DD76FB20486AB0100D96B5E /* AddingCalculator_C */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AddingCalculator_C; sourceTree = BUILT_PRODUCTS_DIR; };
+		915596D41158809600EFCAFB /* AddingCalculator_i386 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AddingCalculator_i386; sourceTree = BUILT_PRODUCTS_DIR; };
+		915596DE115880EF00EFCAFB /* main-i386.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = "main-i386.s"; sourceTree = "<group>"; };
+		915599A5115B133200EFCAFB /* AddingCalculator_x86-64 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "AddingCalculator_x86-64"; sourceTree = BUILT_PRODUCTS_DIR; };
+		915599CD115B142800EFCAFB /* main-x86_64.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = "main-x86_64.s"; sourceTree = "<group>"; };
+		91559B87115B454B00EFCAFB /* AddingCalculator_ppc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AddingCalculator_ppc; sourceTree = BUILT_PRODUCTS_DIR; };
+		91559B90115B457400EFCAFB /* main-ppc.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = "main-ppc.s"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* AddingCalculator */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6A0FF2B0290797F04C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = AddingCalculator;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				91559B90115B457400EFCAFB /* main-ppc.s */,
+				915599CD115B142800EFCAFB /* main-x86_64.s */,
+				08FB7796FE84155DC02AAC07 /* main.c */,
+				915596DE115880EF00EFCAFB /* main-i386.s */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76FB20486AB0100D96B5E /* AddingCalculator_C */,
+				915596D41158809600EFCAFB /* AddingCalculator_i386 */,
+				915599A5115B133200EFCAFB /* AddingCalculator_x86-64 */,
+				91559B87115B454B00EFCAFB /* AddingCalculator_ppc */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C6A0FF2B0290797F04C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76FA90486AB0100D96B5E /* AddingCalculator C */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB928508733DD80010E9CD /* Build configuration list for PBXNativeTarget "AddingCalculator C" */;
+			buildPhases = (
+				8DD76FAB0486AB0100D96B5E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AddingCalculator C";
+			productInstallPath = "$(HOME)/bin";
+			productName = AddingCalculator;
+			productReference = 8DD76FB20486AB0100D96B5E /* AddingCalculator_C */;
+			productType = "com.apple.product-type.tool";
+		};
+		915596CB1158809600EFCAFB /* AddingCalculator Assembly i386 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 915596D11158809600EFCAFB /* Build configuration list for PBXNativeTarget "AddingCalculator Assembly i386" */;
+			buildPhases = (
+				915596CC1158809600EFCAFB /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AddingCalculator Assembly i386";
+			productInstallPath = "$(HOME)/bin";
+			productName = AddingCalculator;
+			productReference = 915596D41158809600EFCAFB /* AddingCalculator_i386 */;
+			productType = "com.apple.product-type.tool";
+		};
+		9155999F115B133200EFCAFB /* AddingCalculator Assembly x86_64 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 915599A2115B133200EFCAFB /* Build configuration list for PBXNativeTarget "AddingCalculator Assembly x86_64" */;
+			buildPhases = (
+				915599A0115B133200EFCAFB /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AddingCalculator Assembly x86_64";
+			productInstallPath = "$(HOME)/bin";
+			productName = AddingCalculator;
+			productReference = 915599A5115B133200EFCAFB /* AddingCalculator_x86-64 */;
+			productType = "com.apple.product-type.tool";
+		};
+		91559B81115B454B00EFCAFB /* AddingCalculator Assembly ppc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 91559B84115B454B00EFCAFB /* Build configuration list for PBXNativeTarget "AddingCalculator Assembly ppc" */;
+			buildPhases = (
+				91559B82115B454B00EFCAFB /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AddingCalculator Assembly ppc";
+			productInstallPath = "$(HOME)/bin";
+			productName = AddingCalculator;
+			productReference = 91559B87115B454B00EFCAFB /* AddingCalculator_ppc */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "AddingCalculator" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* AddingCalculator */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				912C9AD2115DC5F5002DCB53 /* All */,
+				8DD76FA90486AB0100D96B5E /* AddingCalculator C */,
+				915596CB1158809600EFCAFB /* AddingCalculator Assembly i386 */,
+				9155999F115B133200EFCAFB /* AddingCalculator Assembly x86_64 */,
+				91559B81115B454B00EFCAFB /* AddingCalculator Assembly ppc */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76FAB0486AB0100D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DD76FAC0486AB0100D96B5E /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915596CC1158809600EFCAFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				915596DF115880EF00EFCAFB /* main-i386.s in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915599A0115B133200EFCAFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				915599CE115B142800EFCAFB /* main-x86_64.s in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		91559B82115B454B00EFCAFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91559B91115B457400EFCAFB /* main-ppc.s in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		912C9AD6115DC5FB002DCB53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 91559B81115B454B00EFCAFB /* AddingCalculator Assembly ppc */;
+			targetProxy = 912C9AD5115DC5FB002DCB53 /* PBXContainerItemProxy */;
+		};
+		912C9AD8115DC5FD002DCB53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9155999F115B133200EFCAFB /* AddingCalculator Assembly x86_64 */;
+			targetProxy = 912C9AD7115DC5FD002DCB53 /* PBXContainerItemProxy */;
+		};
+		912C9ADA115DC600002DCB53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 915596CB1158809600EFCAFB /* AddingCalculator Assembly i386 */;
+			targetProxy = 912C9AD9115DC600002DCB53 /* PBXContainerItemProxy */;
+		};
+		912C9ADC115DC602002DCB53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8DD76FA90486AB0100D96B5E /* AddingCalculator C */;
+			targetProxy = 912C9ADB115DC602002DCB53 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB928608733DD80010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = AddingCalculator_C;
+			};
+			name = Debug;
+		};
+		1DEB928708733DD80010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = AddingCalculator_C;
+			};
+			name = Release;
+		};
+		1DEB928A08733DD80010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		1DEB928B08733DD80010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		912C9AD3115DC5F5002DCB53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = All;
+			};
+			name = Debug;
+		};
+		912C9AD4115DC5F5002DCB53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = All;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		915596D21158809600EFCAFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = AddingCalculator_i386;
+			};
+			name = Debug;
+		};
+		915596D31158809600EFCAFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = AddingCalculator_i386;
+			};
+			name = Release;
+		};
+		915599A3115B133200EFCAFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "AddingCalculator_x86-64";
+			};
+			name = Debug;
+		};
+		915599A4115B133200EFCAFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "AddingCalculator_x86-64";
+			};
+			name = Release;
+		};
+		91559B85115B454B00EFCAFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = ppc;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = AddingCalculator_ppc;
+			};
+			name = Debug;
+		};
+		91559B86115B454B00EFCAFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = ppc;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = AddingCalculator_ppc;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928508733DD80010E9CD /* Build configuration list for PBXNativeTarget "AddingCalculator C" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB928608733DD80010E9CD /* Debug */,
+				1DEB928708733DD80010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "AddingCalculator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB928A08733DD80010E9CD /* Debug */,
+				1DEB928B08733DD80010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		912C9AE1115DC60E002DCB53 /* Build configuration list for PBXAggregateTarget "All" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				912C9AD3115DC5F5002DCB53 /* Debug */,
+				912C9AD4115DC5F5002DCB53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		915596D11158809600EFCAFB /* Build configuration list for PBXNativeTarget "AddingCalculator Assembly i386" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				915596D21158809600EFCAFB /* Debug */,
+				915596D31158809600EFCAFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		915599A2115B133200EFCAFB /* Build configuration list for PBXNativeTarget "AddingCalculator Assembly x86_64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				915599A3115B133200EFCAFB /* Debug */,
+				915599A4115B133200EFCAFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		91559B84115B454B00EFCAFB /* Build configuration list for PBXNativeTarget "AddingCalculator Assembly ppc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91559B85115B454B00EFCAFB /* Debug */,
+				91559B86115B454B00EFCAFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

@@ -1,0 +1,311 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		911CAE221354259D00EFCD81 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911CAE211354259D00EFCD81 /* Cocoa.framework */; };
+		911CAE2C1354259D00EFCD81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 911CAE2A1354259D00EFCD81 /* InfoPlist.strings */; };
+		911CAE2F1354259D00EFCD81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 911CAE2E1354259D00EFCD81 /* main.m */; };
+		911CAE321354259D00EFCD81 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 911CAE301354259D00EFCD81 /* Credits.rtf */; };
+		911CAE351354259D00EFCD81 /* PhysicsSimulationAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 911CAE341354259D00EFCD81 /* PhysicsSimulationAppDelegate.m */; };
+		911CAE381354259D00EFCD81 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 911CAE361354259D00EFCD81 /* MainMenu.xib */; };
+		911CAE4F13542DA100EFCD81 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911CAE4E13542DA100EFCD81 /* CoreVideo.framework */; };
+		911CAE5313542FEC00EFCD81 /* Simulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 911CAE5213542FEC00EFCD81 /* Simulation.m */; };
+		911CAE65135434EC00EFCD81 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911CAE64135434EC00EFCD81 /* OpenGL.framework */; };
+		91872DF81356A25200EEDC21 /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = 91872DF71356A25200EEDC21 /* Particle.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		911CAE1D1354259D00EFCD81 /* PhysicsSimulation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhysicsSimulation.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		911CAE211354259D00EFCD81 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		911CAE241354259D00EFCD81 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		911CAE251354259D00EFCD81 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		911CAE261354259D00EFCD81 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		911CAE291354259D00EFCD81 /* PhysicsSimulation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PhysicsSimulation-Info.plist"; sourceTree = "<group>"; };
+		911CAE2B1354259D00EFCD81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		911CAE2D1354259D00EFCD81 /* PhysicsSimulation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhysicsSimulation-Prefix.pch"; sourceTree = "<group>"; };
+		911CAE2E1354259D00EFCD81 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		911CAE311354259D00EFCD81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		911CAE331354259D00EFCD81 /* PhysicsSimulationAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSimulationAppDelegate.h; sourceTree = "<group>"; };
+		911CAE341354259D00EFCD81 /* PhysicsSimulationAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhysicsSimulationAppDelegate.m; sourceTree = "<group>"; };
+		911CAE371354259D00EFCD81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		911CAE4E13542DA100EFCD81 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		911CAE5113542FEC00EFCD81 /* Simulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Simulation.h; sourceTree = "<group>"; };
+		911CAE5213542FEC00EFCD81 /* Simulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Simulation.m; sourceTree = "<group>"; };
+		911CAE64135434EC00EFCD81 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		91872DF61356A25200EEDC21 /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
+		91872DF71356A25200EEDC21 /* Particle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Particle.m; sourceTree = "<group>"; };
+		91872DFD1356A2E500EEDC21 /* Units.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Units.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		911CAE1A1354259D00EFCD81 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				911CAE65135434EC00EFCD81 /* OpenGL.framework in Frameworks */,
+				911CAE4F13542DA100EFCD81 /* CoreVideo.framework in Frameworks */,
+				911CAE221354259D00EFCD81 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		911CAE121354259D00EFCD81 = {
+			isa = PBXGroup;
+			children = (
+				911CAE64135434EC00EFCD81 /* OpenGL.framework */,
+				911CAE4E13542DA100EFCD81 /* CoreVideo.framework */,
+				911CAE271354259D00EFCD81 /* PhysicsSimulation */,
+				911CAE201354259D00EFCD81 /* Frameworks */,
+				911CAE1E1354259D00EFCD81 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		911CAE1E1354259D00EFCD81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				911CAE1D1354259D00EFCD81 /* PhysicsSimulation.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		911CAE201354259D00EFCD81 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				911CAE211354259D00EFCD81 /* Cocoa.framework */,
+				911CAE231354259D00EFCD81 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		911CAE231354259D00EFCD81 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				911CAE241354259D00EFCD81 /* AppKit.framework */,
+				911CAE251354259D00EFCD81 /* CoreData.framework */,
+				911CAE261354259D00EFCD81 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		911CAE271354259D00EFCD81 /* PhysicsSimulation */ = {
+			isa = PBXGroup;
+			children = (
+				911CAE331354259D00EFCD81 /* PhysicsSimulationAppDelegate.h */,
+				911CAE341354259D00EFCD81 /* PhysicsSimulationAppDelegate.m */,
+				911CAE361354259D00EFCD81 /* MainMenu.xib */,
+				911CAE281354259D00EFCD81 /* Supporting Files */,
+				911CAE5113542FEC00EFCD81 /* Simulation.h */,
+				911CAE5213542FEC00EFCD81 /* Simulation.m */,
+				91872DF61356A25200EEDC21 /* Particle.h */,
+				91872DF71356A25200EEDC21 /* Particle.m */,
+				91872DFD1356A2E500EEDC21 /* Units.h */,
+			);
+			path = PhysicsSimulation;
+			sourceTree = "<group>";
+		};
+		911CAE281354259D00EFCD81 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				911CAE291354259D00EFCD81 /* PhysicsSimulation-Info.plist */,
+				911CAE2A1354259D00EFCD81 /* InfoPlist.strings */,
+				911CAE2D1354259D00EFCD81 /* PhysicsSimulation-Prefix.pch */,
+				911CAE2E1354259D00EFCD81 /* main.m */,
+				911CAE301354259D00EFCD81 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		911CAE1C1354259D00EFCD81 /* PhysicsSimulation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 911CAE3B1354259D00EFCD81 /* Build configuration list for PBXNativeTarget "PhysicsSimulation" */;
+			buildPhases = (
+				911CAE191354259D00EFCD81 /* Sources */,
+				911CAE1A1354259D00EFCD81 /* Frameworks */,
+				911CAE1B1354259D00EFCD81 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PhysicsSimulation;
+			productName = PhysicsSimulation;
+			productReference = 911CAE1D1354259D00EFCD81 /* PhysicsSimulation.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		911CAE141354259D00EFCD81 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 911CAE171354259D00EFCD81 /* Build configuration list for PBXProject "PhysicsSimulation" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 911CAE121354259D00EFCD81;
+			productRefGroup = 911CAE1E1354259D00EFCD81 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				911CAE1C1354259D00EFCD81 /* PhysicsSimulation */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		911CAE1B1354259D00EFCD81 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				911CAE2C1354259D00EFCD81 /* InfoPlist.strings in Resources */,
+				911CAE321354259D00EFCD81 /* Credits.rtf in Resources */,
+				911CAE381354259D00EFCD81 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		911CAE191354259D00EFCD81 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				911CAE2F1354259D00EFCD81 /* main.m in Sources */,
+				911CAE351354259D00EFCD81 /* PhysicsSimulationAppDelegate.m in Sources */,
+				911CAE5313542FEC00EFCD81 /* Simulation.m in Sources */,
+				91872DF81356A25200EEDC21 /* Particle.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		911CAE2A1354259D00EFCD81 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				911CAE2B1354259D00EFCD81 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		911CAE301354259D00EFCD81 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				911CAE311354259D00EFCD81 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		911CAE361354259D00EFCD81 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				911CAE371354259D00EFCD81 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		911CAE391354259D00EFCD81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		911CAE3A1354259D00EFCD81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		911CAE3C1354259D00EFCD81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PhysicsSimulation/PhysicsSimulation-Prefix.pch";
+				INFOPLIST_FILE = "PhysicsSimulation/PhysicsSimulation-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		911CAE3D1354259D00EFCD81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PhysicsSimulation/PhysicsSimulation-Prefix.pch";
+				INFOPLIST_FILE = "PhysicsSimulation/PhysicsSimulation-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		911CAE171354259D00EFCD81 /* Build configuration list for PBXProject "PhysicsSimulation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				911CAE391354259D00EFCD81 /* Debug */,
+				911CAE3A1354259D00EFCD81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		911CAE3B1354259D00EFCD81 /* Build configuration list for PBXNativeTarget "PhysicsSimulation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				911CAE3C1354259D00EFCD81 /* Debug */,
+				911CAE3D1354259D00EFCD81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 911CAE141354259D00EFCD81 /* Project object */;
+}

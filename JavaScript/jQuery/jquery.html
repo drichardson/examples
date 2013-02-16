@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery Test</title>
+	
+	<style type="text/css" media="screen">
+		a.test { font-weight: bold; }
+		.red { background-color: red; }
+		.blue { background-color: blue; }
+		.green { background-color: green;}
+	</style>
+	
+	<script type="text/javascript" src="jquery.js"></script>
+	
+	<script type="text/javascript" charset="utf-8">
+		useTest = true
+		
+		$(document).ready(function() {
+			
+			$("a").click(function(event) {
+				alert("Thanks for visiting!");
+				event.preventDefault();
+				
+				if (useTest) {
+					$("a").addClass("test red");
+				} else {
+					$("a").removeClass("test");
+				}
+				useTest = !useTest
+				
+				$(this).hide("slow");
+			});
+			
+			$("#orderedlist").addClass("red");
+			$("#orderedlist > li").addClass("blue");
+			
+			$("#orderedlist li:last").hover(
+				function() {
+					$(this).addClass("green");
+				},
+				function() {
+					$(this).removeClass("green");
+				});
+				
+			$("#orderedlist").find("li").each(function(i) {
+				$(this).append(" BAM! " + i);
+			});
+			
+		});
+	</script>
+</head>
+ 
+<body>
+	<h1>jQuery Test Page</h1>
+	
+	<a href="http://jquery.com/">jQuery</a>
+	<br/>
+	<a href="http://google.com/">Google</a>
+	
+	<h2>Ordered List</h2>
+	<ol id="orderedlist">
+		<li>List item 1</li>
+		<li>List item 2</li>
+		<li>List item 3</li>
+	</ol>
+</body>
+
+</html>

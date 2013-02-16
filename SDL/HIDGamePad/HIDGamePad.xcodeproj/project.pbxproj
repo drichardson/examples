@@ -1,0 +1,242 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9199F5AF136D1625003242FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9199F5AE136D1625003242FF /* Foundation.framework */; };
+		9199F5B2136D1625003242FF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5B1136D1625003242FF /* main.m */; };
+		91DA3A26136E65F9006EDCF5 /* libSDL-1.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 91DA3A25136E65F9006EDCF5 /* libSDL-1.2.0.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9199F5A8136D1625003242FF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9199F5AA136D1625003242FF /* HIDGamePad */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HIDGamePad; sourceTree = BUILT_PRODUCTS_DIR; };
+		9199F5AE136D1625003242FF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		9199F5B1136D1625003242FF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9199F5B4136D1625003242FF /* HIDGamePad-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HIDGamePad-Prefix.pch"; sourceTree = "<group>"; };
+		91DA3A12136E172A006EDCF5 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		91DA3A25136E65F9006EDCF5 /* libSDL-1.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL-1.2.0.dylib"; path = "/opt/local/lib/libSDL-1.2.0.dylib"; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9199F5A7136D1625003242FF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91DA3A26136E65F9006EDCF5 /* libSDL-1.2.0.dylib in Frameworks */,
+				9199F5AF136D1625003242FF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9199F59F136D1624003242FF = {
+			isa = PBXGroup;
+			children = (
+				91DA3A12136E172A006EDCF5 /* IOKit.framework */,
+				9199F5B0136D1625003242FF /* HIDGamePad */,
+				9199F5AD136D1625003242FF /* Frameworks */,
+				9199F5AB136D1625003242FF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9199F5AB136D1625003242FF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9199F5AA136D1625003242FF /* HIDGamePad */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9199F5AD136D1625003242FF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91DA3A25136E65F9006EDCF5 /* libSDL-1.2.0.dylib */,
+				9199F5AE136D1625003242FF /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9199F5B0136D1625003242FF /* HIDGamePad */ = {
+			isa = PBXGroup;
+			children = (
+				9199F5B1136D1625003242FF /* main.m */,
+				9199F5B3136D1625003242FF /* Supporting Files */,
+			);
+			path = HIDGamePad;
+			sourceTree = "<group>";
+		};
+		9199F5B3136D1625003242FF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9199F5B4136D1625003242FF /* HIDGamePad-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9199F5A9136D1625003242FF /* HIDGamePad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9199F5B8136D1625003242FF /* Build configuration list for PBXNativeTarget "HIDGamePad" */;
+			buildPhases = (
+				9199F5A6136D1625003242FF /* Sources */,
+				9199F5A7136D1625003242FF /* Frameworks */,
+				9199F5A8136D1625003242FF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HIDGamePad;
+			productName = HIDGamePad;
+			productReference = 9199F5AA136D1625003242FF /* HIDGamePad */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9199F5A1136D1624003242FF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Doug Richardson";
+			};
+			buildConfigurationList = 9199F5A4136D1624003242FF /* Build configuration list for PBXProject "HIDGamePad" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9199F59F136D1624003242FF;
+			productRefGroup = 9199F5AB136D1625003242FF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9199F5A9136D1625003242FF /* HIDGamePad */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9199F5A6136D1625003242FF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9199F5B2136D1625003242FF /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9199F5B6136D1625003242FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9199F5B7136D1625003242FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9199F5B9136D1625003242FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HIDGamePad/HIDGamePad-Prefix.pch";
+				HEADER_SEARCH_PATHS = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9199F5BA136D1625003242FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HIDGamePad/HIDGamePad-Prefix.pch";
+				HEADER_SEARCH_PATHS = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9199F5A4136D1624003242FF /* Build configuration list for PBXProject "HIDGamePad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9199F5B6136D1625003242FF /* Debug */,
+				9199F5B7136D1625003242FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9199F5B8136D1625003242FF /* Build configuration list for PBXNativeTarget "HIDGamePad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9199F5B9136D1625003242FF /* Debug */,
+				9199F5BA136D1625003242FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9199F5A1136D1624003242FF /* Project object */;
+}

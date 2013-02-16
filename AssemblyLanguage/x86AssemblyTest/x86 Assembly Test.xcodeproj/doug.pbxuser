@@ -1,0 +1,182 @@
+// !$*UTF8*$!
+{
+	08FB7793FE84155DC02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 91D8C18E0BAF51E2008F0783 /* x86 Assembly Test */;
+		activeTarget = 8DD76FA90486AB0100D96B5E /* x86 Assembly Test */;
+		addToTargets = (
+			8DD76FA90486AB0100D96B5E /* x86 Assembly Test */,
+		);
+		breakpoints = (
+			91D8C2330BAF5AA1008F0783 /* main.c:49 */,
+		);
+		codeSenseManager = 91D8C19C0BAF5209008F0783 /* Code sense */;
+		executables = (
+			91D8C18E0BAF51E2008F0783 /* x86 Assembly Test */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					780,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 291011807;
+			PBXWorkspaceStateSaveDate = 291011807;
+		};
+		perUserProjectItems = {
+			91A29D5E11586D5A005A6E6B = 91A29D5E11586D5A005A6E6B /* PBXTextBookmark */;
+			91D5C0001157436300F6507E = 91D5C0001157436300F6507E /* PBXTextBookmark */;
+		};
+		sourceControlManager = 91D8C19B0BAF5209008F0783 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	08FB7796FE84155DC02AAC07 /* main.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {970, 1140}}";
+			sepNavSelRange = "{475, 0}";
+			sepNavVisRange = "{0, 806}";
+			sepNavVisRect = "{{0, 0}, {601, 286}}";
+		};
+	};
+	8DD76FA90486AB0100D96B5E /* x86 Assembly Test */ = {
+		activeExec = 0;
+		executables = (
+			91D8C18E0BAF51E2008F0783 /* x86 Assembly Test */,
+		);
+	};
+	91A29D5E11586D5A005A6E6B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.c */;
+		name = "main.c: 18";
+		rLen = 0;
+		rLoc = 475;
+		rType = 0;
+		vrLen = 806;
+		vrLoc = 0;
+	};
+	91D5C0001157436300F6507E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.c */;
+		name = "main.c: 17";
+		rLen = 0;
+		rLoc = 473;
+		rType = 0;
+		vrLen = 806;
+		vrLoc = 0;
+	};
+	91D8C18E0BAF51E2008F0783 /* x86 Assembly Test */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "x86 Assembly Test";
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+			$cs = 1;
+			$ds = 1;
+			$eax = 1;
+			$ebp = 1;
+			$ebx = 1;
+			$ecx = 1;
+			$edi = 1;
+			$edx = 1;
+			$eflags = 1;
+			$eip = 1;
+			$es = 1;
+			$esi = 1;
+			$esp = 1;
+			$gs = 1;
+			$mm0 = 1;
+			$mm1 = 1;
+			$mm2 = 1;
+			$mm3 = 1;
+			$mm4 = 1;
+			$mm5 = 1;
+			$mm6 = 1;
+			$mm7 = 1;
+			$mxcsr = 1;
+			$ss = 1;
+			$xmm0 = 1;
+			$xmm1 = 1;
+			$xmm2 = 1;
+			$xmm3 = 1;
+			$xmm4 = 1;
+			$xmm5 = 1;
+			$xmm6 = 1;
+			$xmm7 = 1;
+		};
+	};
+	91D8C19B0BAF5209008F0783 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+		scmType = "";
+	};
+	91D8C19C0BAF5209008F0783 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	91D8C2330BAF5AA1008F0783 /* main.c:49 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 08FB7796FE84155DC02AAC07 /* main.c */;
+		functionName = "main()";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 49;
+		location = main.ob;
+		modificationTime = 196042711.747435;
+		originalNumberOfMultipleMatches = 0;
+		state = 1;
+	};
+}

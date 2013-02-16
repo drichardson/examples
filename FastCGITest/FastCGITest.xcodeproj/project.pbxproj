@@ -1,0 +1,247 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		91B0CECE1526A24F00D4E018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B0CECD1526A24F00D4E018 /* Foundation.framework */; };
+		91B0CED11526A24F00D4E018 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B0CED01526A24F00D4E018 /* main.m */; };
+		91B0CEDC1526A3C600D4E018 /* libfcgi.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B0CEDB1526A3C600D4E018 /* libfcgi.2.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		91B0CEC71526A24F00D4E018 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		91B0CEC91526A24F00D4E018 /* FastCGITest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FastCGITest; sourceTree = BUILT_PRODUCTS_DIR; };
+		91B0CECD1526A24F00D4E018 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		91B0CED01526A24F00D4E018 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		91B0CED31526A24F00D4E018 /* FastCGITest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FastCGITest-Prefix.pch"; sourceTree = "<group>"; };
+		91B0CEDB1526A3C600D4E018 /* libfcgi.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfcgi.2.dylib; path = ../../../../../opt/local/lib/libfcgi.2.dylib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		91B0CEC61526A24F00D4E018 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91B0CEDC1526A3C600D4E018 /* libfcgi.2.dylib in Frameworks */,
+				91B0CECE1526A24F00D4E018 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		91B0CEBE1526A24F00D4E018 = {
+			isa = PBXGroup;
+			children = (
+				91B0CEDB1526A3C600D4E018 /* libfcgi.2.dylib */,
+				91B0CECF1526A24F00D4E018 /* FastCGITest */,
+				91B0CECC1526A24F00D4E018 /* Frameworks */,
+				91B0CECA1526A24F00D4E018 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		91B0CECA1526A24F00D4E018 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				91B0CEC91526A24F00D4E018 /* FastCGITest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		91B0CECC1526A24F00D4E018 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91B0CECD1526A24F00D4E018 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		91B0CECF1526A24F00D4E018 /* FastCGITest */ = {
+			isa = PBXGroup;
+			children = (
+				91B0CED01526A24F00D4E018 /* main.m */,
+				91B0CED21526A24F00D4E018 /* Supporting Files */,
+			);
+			path = FastCGITest;
+			sourceTree = "<group>";
+		};
+		91B0CED21526A24F00D4E018 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				91B0CED31526A24F00D4E018 /* FastCGITest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		91B0CEC81526A24F00D4E018 /* FastCGITest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 91B0CED81526A24F00D4E018 /* Build configuration list for PBXNativeTarget "FastCGITest" */;
+			buildPhases = (
+				91B0CEC51526A24F00D4E018 /* Sources */,
+				91B0CEC61526A24F00D4E018 /* Frameworks */,
+				91B0CEC71526A24F00D4E018 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FastCGITest;
+			productName = FastCGITest;
+			productReference = 91B0CEC91526A24F00D4E018 /* FastCGITest */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		91B0CEC01526A24F00D4E018 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Doug Richardson";
+			};
+			buildConfigurationList = 91B0CEC31526A24F00D4E018 /* Build configuration list for PBXProject "FastCGITest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 91B0CEBE1526A24F00D4E018;
+			productRefGroup = 91B0CECA1526A24F00D4E018 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				91B0CEC81526A24F00D4E018 /* FastCGITest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		91B0CEC51526A24F00D4E018 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91B0CED11526A24F00D4E018 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		91B0CED61526A24F00D4E018 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		91B0CED71526A24F00D4E018 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		91B0CED91526A24F00D4E018 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FastCGITest/FastCGITest-Prefix.pch";
+				HEADER_SEARCH_PATHS = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		91B0CEDA1526A24F00D4E018 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FastCGITest/FastCGITest-Prefix.pch";
+				HEADER_SEARCH_PATHS = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		91B0CEC31526A24F00D4E018 /* Build configuration list for PBXProject "FastCGITest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91B0CED61526A24F00D4E018 /* Debug */,
+				91B0CED71526A24F00D4E018 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		91B0CED81526A24F00D4E018 /* Build configuration list for PBXNativeTarget "FastCGITest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91B0CED91526A24F00D4E018 /* Debug */,
+				91B0CEDA1526A24F00D4E018 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 91B0CEC01526A24F00D4E018 /* Project object */;
+}

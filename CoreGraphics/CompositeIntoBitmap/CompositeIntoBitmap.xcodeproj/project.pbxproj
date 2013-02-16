@@ -1,0 +1,230 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9176BB91137A434F00A690DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9176BB90137A434F00A690DB /* Foundation.framework */; };
+		9176BB94137A434F00A690DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9176BB93137A434F00A690DB /* main.m */; };
+		9176BB9E137A436800A690DB /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9176BB9D137A436800A690DB /* AppKit.framework */; };
+		9176BBA0137A436D00A690DB /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9176BB9F137A436D00A690DB /* ApplicationServices.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9176BB8A137A434F00A690DB /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9176BB8C137A434F00A690DB /* CompositeIntoBitmap */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CompositeIntoBitmap; sourceTree = BUILT_PRODUCTS_DIR; };
+		9176BB90137A434F00A690DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		9176BB93137A434F00A690DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9176BB96137A434F00A690DB /* CompositeIntoBitmap-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CompositeIntoBitmap-Prefix.pch"; sourceTree = "<group>"; };
+		9176BB9D137A436800A690DB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		9176BB9F137A436D00A690DB /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9176BB89137A434F00A690DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9176BBA0137A436D00A690DB /* ApplicationServices.framework in Frameworks */,
+				9176BB9E137A436800A690DB /* AppKit.framework in Frameworks */,
+				9176BB91137A434F00A690DB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9176BB81137A434F00A690DB = {
+			isa = PBXGroup;
+			children = (
+				9176BB9F137A436D00A690DB /* ApplicationServices.framework */,
+				9176BB9D137A436800A690DB /* AppKit.framework */,
+				9176BB92137A434F00A690DB /* CompositeIntoBitmap */,
+				9176BB8F137A434F00A690DB /* Frameworks */,
+				9176BB8D137A434F00A690DB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9176BB8D137A434F00A690DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9176BB8C137A434F00A690DB /* CompositeIntoBitmap */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9176BB8F137A434F00A690DB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9176BB90137A434F00A690DB /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9176BB92137A434F00A690DB /* CompositeIntoBitmap */ = {
+			isa = PBXGroup;
+			children = (
+				9176BB93137A434F00A690DB /* main.m */,
+				9176BB95137A434F00A690DB /* Supporting Files */,
+			);
+			path = CompositeIntoBitmap;
+			sourceTree = "<group>";
+		};
+		9176BB95137A434F00A690DB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9176BB96137A434F00A690DB /* CompositeIntoBitmap-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9176BB8B137A434F00A690DB /* CompositeIntoBitmap */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9176BB9A137A435000A690DB /* Build configuration list for PBXNativeTarget "CompositeIntoBitmap" */;
+			buildPhases = (
+				9176BB88137A434F00A690DB /* Sources */,
+				9176BB89137A434F00A690DB /* Frameworks */,
+				9176BB8A137A434F00A690DB /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CompositeIntoBitmap;
+			productName = CompositeIntoBitmap;
+			productReference = 9176BB8C137A434F00A690DB /* CompositeIntoBitmap */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9176BB83137A434F00A690DB /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 9176BB86137A434F00A690DB /* Build configuration list for PBXProject "CompositeIntoBitmap" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9176BB81137A434F00A690DB;
+			productRefGroup = 9176BB8D137A434F00A690DB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9176BB8B137A434F00A690DB /* CompositeIntoBitmap */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9176BB88137A434F00A690DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9176BB94137A434F00A690DB /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9176BB98137A435000A690DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9176BB99137A435000A690DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9176BB9B137A435000A690DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CompositeIntoBitmap/CompositeIntoBitmap-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9176BB9C137A435000A690DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CompositeIntoBitmap/CompositeIntoBitmap-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9176BB86137A434F00A690DB /* Build configuration list for PBXProject "CompositeIntoBitmap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9176BB98137A435000A690DB /* Debug */,
+				9176BB99137A435000A690DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9176BB9A137A435000A690DB /* Build configuration list for PBXNativeTarget "CompositeIntoBitmap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9176BB9B137A435000A690DB /* Debug */,
+				9176BB9C137A435000A690DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9176BB83137A434F00A690DB /* Project object */;
+}

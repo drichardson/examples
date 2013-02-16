@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ ! -d "c-fastcgi.xcodeproj" ]; then
+    echo "You're in the wrong directory fucktard"
+    exit 1
+fi
+
+apachectl -f `pwd`/httpd.conf -k stop

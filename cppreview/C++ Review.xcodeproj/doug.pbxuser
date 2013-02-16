@@ -1,0 +1,148 @@
+// !$*UTF8*$!
+{
+	08FB7793FE84155DC02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 91DAD68E0BB03382008A51B6 /* C++ Review */;
+		activeTarget = 8DD76F620486A84900D96B5E /* C++ Review */;
+		breakpoints = (
+		);
+		breakpointsGroup = 91DAD7350BB041F5008A51B6 /* XCBreakpointsBucket */;
+		codeSenseManager = 91DAD69B0BB03398008A51B6 /* Code sense */;
+		executables = (
+			91DAD68E0BB03382008A51B6 /* C++ Review */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					541,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 196098519;
+			PBXWorkspaceStateSaveDate = 196098519;
+		};
+		perUserProjectItems = {
+			91DAD9CD0BB070A9008A51B6 /* PBXTextBookmark */ = 91DAD9CD0BB070A9008A51B6 /* PBXTextBookmark */;
+			91DAD9E40BB07302008A51B6 /* PBXTextBookmark */ = 91DAD9E40BB07302008A51B6 /* PBXTextBookmark */;
+			91DADA490BB07A0C008A51B6 /* PBXTextBookmark */ = 91DADA490BB07A0C008A51B6 /* PBXTextBookmark */;
+			91DADA4A0BB07A0C008A51B6 /* PBXTextBookmark */ = 91DADA4A0BB07A0C008A51B6 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 91DAD69A0BB03398008A51B6 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	08FB7796FE84155DC02AAC07 /* main.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {739, 6870}}";
+			sepNavSelRange = "{11110, 0}";
+			sepNavVisRect = "{{0, 0}, {739, 891}}";
+			sepNavWindowFrame = "{{727, 118}, {822, 783}}";
+		};
+	};
+	8DD76F620486A84900D96B5E /* C++ Review */ = {
+		activeExec = 0;
+		executables = (
+			91DAD68E0BB03382008A51B6 /* C++ Review */,
+		);
+	};
+	91DAD68E0BB03382008A51B6 /* C++ Review */ = {
+		isa = PBXExecutable;
+		activeArgIndex = 2147483647;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "C++ Review";
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	91DAD69A0BB03398008A51B6 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+		scmType = "";
+	};
+	91DAD69B0BB03398008A51B6 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	91DAD7350BB041F5008A51B6 /* XCBreakpointsBucket */ = {
+		isa = XCBreakpointsBucket;
+		name = "Project Breakpoints";
+		objects = (
+		);
+	};
+	91DAD9CD0BB070A9008A51B6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.cpp */;
+		name = "main.cpp: 359";
+		rLen = 0;
+		rLoc = 9539;
+		rType = 0;
+		vrLen = 1696;
+		vrLoc = 7511;
+	};
+	91DAD9E40BB07302008A51B6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: expected identifier before '<' token";
+		fRef = 08FB7796FE84155DC02AAC07 /* main.cpp */;
+		rLen = 0;
+		rLoc = 25;
+		rType = 1;
+	};
+	91DADA490BB07A0C008A51B6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.cpp */;
+		name = "main.cpp: testMultiMap";
+		rLen = 0;
+		rLoc = 11110;
+		rType = 0;
+		vrLen = 1299;
+		vrLoc = 0;
+	};
+	91DADA4A0BB07A0C008A51B6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.cpp */;
+		name = "main.cpp: testMultiMap";
+		rLen = 0;
+		rLoc = 11110;
+		rType = 0;
+		vrLen = 1367;
+		vrLoc = 9881;
+	};
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>ajax1</title>
+	
+	<script type="text/javascript" charset="utf-8" src="prototype-1.6.0.3.js"></script>
+	
+	<!-- Example 1 - Simple Request -->
+	<script type="text/javascript" charset="utf-8">
+		function doSimpleAjax()
+		{
+			new Ajax.Request('./ajax1-data.txt', { method: 'get', onSuccess: myCallback });
+		}
+		
+		function myCallback(transport)
+		{
+			var response = transport.responseText || "no response text";
+			alert("Success!\n\n" + response);
+		}
+	</script>
+	
+	<!-- Example 2 - Parameterized Request -->
+	<script type="text/javascript" charset="utf-8">
+			function doAjaxWithParameters()
+			{
+				new Ajax.Request('./ajax1-parameter.php', {
+					method: 'get',
+					parameters: {company: 'AAPL', limit: 82.34},
+					onSuccess: myCallback2,
+					onFailure: function() { alert("Failure occurred"); }
+				});
+			}
+			
+			function myCallback2(transport)
+			{
+				var response = transport.responseText || "no response text";
+				alert("Success!\n\n" + response);
+			}
+	</script>
+	
+	<!-- Example 3 - Serialize Forms -->
+	<script type="text/javascript" charset="utf-8">
+		function doFormProcessing()
+		{			
+			new Ajax.Request('./ajax1-parameter.php', {
+				method: 'get',
+				parameters: $('form1_id').serialize(true),
+				onSuccess: myCallback2,
+				onFailure: function() { alert("Stock lookup failure"); }
+			});
+		}
+	</script>
+	
+	<!-- Example 4 - Automatically evaluate JavaScript Response -->
+	<script type="text/javascript" charset="utf-8">
+		function doJavaScriptEval()
+		{
+			new Ajax.Request('./ajax1-javascript-result.js');
+		}
+	</script>
+	
+	<!-- Example 5 - Handle JSON Response -->
+	<script type="text/javascript" charset="utf-8">
+		function doJSONRequest()
+		{
+			new Ajax.Request('./ajax1-json.php', { onSuccess: myJSONResponseCallback });
+		}
+		
+		function myJSONResponseCallback(transport)
+		{
+			var myObject = transport.responseText.evalJSON();
+			alert("myObject.value1 = " + myObject.value1 + "\nmyObject.value2 = " + myObject.value2);
+		}
+	</script>
+</head>
+
+<body>
+	
+	<input type="button" value="Do Simple Ajax" onclick="javascript:doSimpleAjax()"/>
+	
+	<input type="button" value="Do Ajax with Parameters" onclick="javascript:doAjaxWithParameters()"/>
+	
+	<div style="border: 1px solid black; padding: 5px; margin: 5px;">
+		<form id="form1_id" action="ajax1-parameter.php" method="get" accept-charset="utf-8"
+			onsubmit="javascript:doFormProcessing(); return false;">
+			<p>SYMBOL:&nbsp;<input type="text" name="company" value="AAPL" id="company_id"/></p>
+			<p>LIMIT:&nbsp;<input type="text" name="limit" value="?" id="limit_id"></p>
+			<p><input type="submit" value="Lookup &rarr;" /></p>
+		</form>
+	</div>
+	
+	<input type="button" name="javascripteval" value="Evalutate JavaScript Response" id="javascripteval"
+		onclick="javascript:doJavaScriptEval();" />
+		
+	<div style="border: 1px solid black; padding: 5px; margin: 5px">
+		<h3>Our Fantastic Products</h3>
+		<div id="products">(fetching products list...)</div>
+		<div id="product_errors" style="color: red; font-weight: bold"></div>
+	
+		<input type="button" value="Update Products"
+			onclick="javascript:new Ajax.Updater('products', './ajax1-product-html-fragment.html');" />
+	</div>
+	
+	<input type="button" value="JSON Request" onclick="javascript:doJSONRequest();" />
+</body>
+</html>

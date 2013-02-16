@@ -1,0 +1,12 @@
+//
+// Prefix header for all source files of the 'Layers' target in the 'Layers' project
+//
+
+#ifdef __OBJC__
+
+#import <Cocoa/Cocoa.h>
+
+#import "NSColor+CGColorAdditions.h"
+#import "NSColorWell+CGColorAdditions.h"
+
+#endif

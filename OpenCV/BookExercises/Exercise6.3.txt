@@ -1,0 +1,15 @@
+Staring with the Scharr filter kernel:
+-3	10	-3
+0	0	0
+3	10	3
+
+Is the same equal to AxB, where:
+
+A:
+-1
+0
+1
+
+and
+B:
+3	10	3
