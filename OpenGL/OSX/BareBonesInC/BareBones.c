@@ -1,6 +1,7 @@
 #import <stdio.h>
 #import <stdlib.h>
 #import <OpenGL/OpenGL.h>
+#import <OpenGL/gl.h>
 
 int main (int argc, const char * argv[])
 {
