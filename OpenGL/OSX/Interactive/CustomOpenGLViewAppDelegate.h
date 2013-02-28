@@ -8,10 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface CustomOpenGLViewAppDelegate : NSObject <NSApplicationDelegate> {
-    NSWindow *window;
-}
+@interface CustomOpenGLViewAppDelegate : NSObject <NSApplicationDelegate>
 
-@property (assign) IBOutlet NSWindow *window;
+@property (strong) IBOutlet NSWindow *window;
 
 @end

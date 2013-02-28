@@ -24,12 +24,11 @@
 	
 	if ( self )
 	{
-		_pixelFormat = [pixelFormat retain];
+		_pixelFormat = pixelFormat;
 		
 		if ( _pixelFormat == nil )
 		{
 			NSLog(@"nil pixel format cannot be used to initialize a CustomOpenGLView");
-			[self release];
 			return nil;
 		}
 		
@@ -46,10 +45,6 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[_pixelFormat release];
-	[_openGLContext release];
-	
-	[super dealloc];
 }
 
 - (void)lockFocus

@@ -32,9 +32,6 @@
 	CustomOpenGLView* openGLView = [[CustomOpenGLView alloc] initWithFrame:contentView.bounds pixelFormat:pixelFormat];
 	[openGLView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
 	[contentView addSubview:openGLView];
-	
-	[pixelFormat release];
-	[openGLView release];
 }
 
 @end
