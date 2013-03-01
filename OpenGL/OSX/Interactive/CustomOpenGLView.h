@@ -10,16 +10,10 @@
 
 
 @interface CustomOpenGLView : NSView
-{
-@private
-	NSOpenGLContext* _openGLContext;
-	NSOpenGLPixelFormat* _pixelFormat;
-	
-	GLfloat _xTranslation, _yTranslation, _zTranslation;
-	GLfloat _rotation;
-	GLfloat _scale;
-}
 
-- (id)initWithFrame:(NSRect)frame pixelFormat:(NSOpenGLPixelFormat*)pixelFormat;
+- (id)initWithFrame:(NSRect)frame;
+
+@property (nonatomic) IBOutlet NSNumber* doubleBuffer;
+@property (nonatomic) IBOutlet NSNumber* syncToVerticalRetrace;
 
 @end

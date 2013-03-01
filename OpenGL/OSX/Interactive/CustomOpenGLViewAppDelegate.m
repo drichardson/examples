@@ -14,24 +14,13 @@
 @synthesize window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application 
-	
-	NSOpenGLPixelFormatAttribute attributes[] = {
-		
-		// setup for anti-aliasing
-		NSOpenGLPFASampleBuffers, 1,
-		NSOpenGLPFASamples, 4,
-		
-		// 0 terminated
-		0
-	};
-	
-	NSOpenGLPixelFormat* pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attributes];
-	
+	// Insert code here to initialize your application
 	NSView* contentView = [window contentView];
-	CustomOpenGLView* openGLView = [[CustomOpenGLView alloc] initWithFrame:contentView.bounds pixelFormat:pixelFormat];
+	CustomOpenGLView* openGLView = [[CustomOpenGLView alloc] initWithFrame:contentView.bounds];
 	[openGLView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
 	[contentView addSubview:openGLView];
+    
+    [self setGlView:openGLView];
 }
 
 @end
