@@ -1,0 +1,6 @@
+To compile:
+$ ant compile
+
+To run:
+cd build/classes; java Shapes
+
