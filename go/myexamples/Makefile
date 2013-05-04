@@ -2,11 +2,8 @@ targets := $(shell ../listTargets.sh)
 
 all: $(targets)
 
-% : %.6
-	6l -o $@ $<
-
-%.6  : %.go
-	6g $<
+%: %.go
+	go build $<
 
 clean:
-	$(RM) *.6 $(targets)
+	$(RM) $(targets)
