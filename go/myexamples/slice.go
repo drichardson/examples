@@ -28,4 +28,11 @@ func main() {
 
 	slice = buf[0:3]
 	fmt.Println("0:3", slice)
+
+
+    x := []int{1,2,3}
+    x = append(x, 4, 5, 6)
+    fmt.Println("x is ", x)
+    x = append(x, []int{5, 6, 7}...) 
+    fmt.Println("x is ", x)
 }
