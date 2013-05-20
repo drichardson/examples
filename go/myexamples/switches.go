@@ -8,15 +8,15 @@ func main() {
 	switchWithExpression("doug")
 	switchWithExpression("rebecca")
 	switchWithExpression("something else")
-	
+
 	switchWithExpression2(-123)
 	switchWithExpression2(4122)
 	switchWithExpression2(0)
-	
+
 	switchWithoutExpression("doug")
 	switchWithoutExpression("rebecca")
 	switchWithoutExpression("something else")
-	
+
 	switchOnType("a string")
 	switchOnType(123)
 	switchOnType(false)
