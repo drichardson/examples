@@ -6,6 +6,8 @@ func main() {
     variadic(1);
     variadic(1, 2, 3);
     variadic(4, 5, 6);
+    x := []int{10, 21, 32}
+    variadic(x...) // expand
 }
 
 func variadic(nums...int) {
