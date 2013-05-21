@@ -34,11 +34,11 @@ func (d MyType) String() string {
 }
 
 func (d MyType2) DoSomething() string {
-    return fmt.Sprintf("Doing Something on MyType2 %v\n", d)
+    return fmt.Sprintf("Doing Something on MyType2 %d\n", d)
 }
 
 func (d MyType2) String() string {
-    return fmt.Sprintf("MyType2Sting%v", d)
+    return fmt.Sprintf("MyType2Sting%d", d)
 }
 
 
