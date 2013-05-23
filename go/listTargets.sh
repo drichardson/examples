@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -name '*.go'|sed s#.go##
+find . -name '*.go'|sed s#\\.go##
