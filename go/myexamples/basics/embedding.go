@@ -35,5 +35,5 @@ func (s* Size) String() string {
 }
 
 func (r* Rect) String() string {
-    return fmt.Sprintf("point={%v},size={%v}", r.(Point), r.Size)
+    return fmt.Sprintf("point={%v},size={%v}", r.Point, r.Size)
 }
