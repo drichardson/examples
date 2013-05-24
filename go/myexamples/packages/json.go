@@ -16,4 +16,19 @@ func main() {
 
 
     // Parse some json
+    jsonText := []byte(`{"key1": 123, "key2": [1,2,3], "key3": { "a": 1, "b": 2 }}`)
+    //jsonText = []byte(`1`)
+    var parsed interface{}
+    error := json.Unmarshal(jsonText, &parsed)
+    if error == nil {
+        fmt.Printf("json parse succeess. Got type %T\n", parsed)
+        switch m := parsed.(type) {
+        case map[string]interface{}:
+            fmt.Printf("Got expected map: %v\n", m)
+        default:
+            fmt.Printf("Some other type: %v\n", m)
+        }
+    } else {
+        fmt.Printf("json parse error: %v\n", error)
+    }
 }
