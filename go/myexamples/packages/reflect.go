@@ -19,7 +19,7 @@ func (ms MyStruct) InspectFields() {
     t := reflect.TypeOf(ms)
     structField, ok := t.FieldByName("s")
     if !ok {
-        fmt.Printf("Error getting struct field 's'\n")
+        panic("Error getting struct field 's'")
     }
     fmt.Printf("Struct field 's' has tag %v\n", structField.Tag)
     fmt.Printf("Struct field 's' has tag name 1 = %v, 2 = %v, 3 = %v\n", structField.Tag.Get("myTag1"), structField.Tag.Get("myTag2"), structField.Tag.Get("myTag3"))
