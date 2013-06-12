@@ -18,14 +18,15 @@ type Board struct {
 func NewBoard() (b *Board) {
     b = new(Board)
     b.grid = make([]uint, 9*9)
-    for rowIndex := uint(0); rowIndex < 9; rowIndex++ {
+    order := [9]uint{0, 3, 6, 1, 4, 7, 2, 5, 8}
+    for i, rowIndex := range order {
         row := b.Row(rowIndex)
-        rowCounter := rowIndex + 1
+        rowCounter := i + 1
         for pos := 0; pos < 9; pos++  {
-            row[pos] = rowCounter;
+            row[pos] = uint(rowCounter);
             rowCounter++
             if ( rowCounter > 9 ) {
-                rowCounter = 0
+                rowCounter = 1
             }
         }
     }
