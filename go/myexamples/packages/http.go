@@ -7,6 +7,7 @@ import (
     "os"
     "fmt"
     "io/ioutil"
+    _ "expvar"
 )
 
 func newLogger(prefix string) (l *log.Logger) {
@@ -25,6 +26,9 @@ func main() {
     httpClient(8080)
     httpClient(7070)
     httpClient(6060)
+
+    c := make(chan int)
+    <-c
 }
 
 

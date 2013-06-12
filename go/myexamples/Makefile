@@ -3,7 +3,7 @@ targets := $(shell ../listTargets.sh)
 all: $(targets)
 
 %: %.go
-	go build -o $@ -gcflags "-N -l" $< 
+	go build -o $@ $< 
 
 clean:
 	$(RM) $(targets)
