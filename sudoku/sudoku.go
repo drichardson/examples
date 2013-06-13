@@ -2,8 +2,8 @@ package main
 
 import (
     "fmt"
-    //"log"
     "math/rand"
+    "time"
 )
 
 func main() {
@@ -14,8 +14,7 @@ func main() {
 
 type Board struct {
     grid []uint
-} 
-
+}
 
 func NewBoard() (b *Board) {
     b = new(Board)
@@ -47,16 +46,12 @@ func randomRowsOrColumnsInOneGroup(r *rand.Rand) (int, int) {
 
 func NewRandomBoard() (b *Board) {
     b = NewBoard()
-    fmt.Printf("NewBoard is\n%v\n", b)
 
-    // TODO: Use a seed value that changes to get different results each time
-    r := rand.New(rand.NewSource(1))
+    r := rand.New(rand.NewSource(time.Now().UnixNano()))
 
-    // 20 randomizations
-    for count := 0; count < 20; count++ {
+    for count := 0; count < 100; count++ {
         b.SwapRows(randomRowsOrColumnsInOneGroup(r))
         b.SwapColumns(randomRowsOrColumnsInOneGroup(r))
-        fmt.Printf("Now board is:\n%v\n", b)
     }
 
     return
@@ -139,12 +134,18 @@ func AssertInSameRowOrColumnGroup(row1 int, row2 int) {
 }
 
 func (b* Board) SwapColumns(column1 int, column2 int) {
-    //tmpCol := make([]uint, 9)
     AssertInSameRowOrColumnGroup(column1, column2)
+
+    for row := 0; row < 9; row++ {
+        col1Index := row * 9 + column1
+        col2Index := row * 9 + column2
+        tmp := b.grid[col1Index]
+        b.grid[col1Index] = b.grid[col2Index]
+        b.grid[col2Index] = tmp
+    }
 }
 
 func (b* Board) SwapRows(row1 int, row2 int) {
-    fmt.Printf("Swapping row %v with row %v\n", row1, row2)
     AssertInSameRowOrColumnGroup(row1, row2)
 
     tmpRow := make([]uint, 9)
