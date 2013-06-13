@@ -2,11 +2,10 @@ package main
 
 import (
     "fmt"
-    "sort"
 )
 
 func main() {
-    b := NewRandomBoard()
+    b := NewBoard()
     fmt.Printf("Board is:\n%v\n", b)
 }
 
@@ -31,85 +30,61 @@ func NewBoard() (b *Board) {
             }
         }
     }
+    AssertBoardValid(b)
     return
 }
 
-func squareIndexForRowAndColumn(rowIndex uint, columnIndex uint) (uint) {
-    return rowIndex * 9 + columnIndex
-}
-
-func (b* Board) validValuesAtRowColumn(row uint, col uint) ([]int) {
-
-    // Assume all values are valid
-    validValues := make(map[int]bool, 9);
-    for i := 1; i <= 9; i++ {
-        validValues[i] = true
-    }
-
-
-    // Remove any values that already appear in the row
-    for i := uint(0); i < 9; i++ {
-        delete(validValues, int(b.grid[row * 9 + i]))
-    }
-
-    // Remove any values that already appear in the column
-    for i := uint(0); i < 9; i++ {
-        delete(validValues, int(b.grid[i * 9 + col]))
-    }
-
-    // Remove any values that already appear in the 3x3 group this square is part of
-    topLeftSquareInGroup := (row / 3) * 3 + (col / 3) * 3
-    fmt.Printf("Top left square is %v, %v, %v\n", topLeftSquareInGroup, (row / 3) * 3, (col / 3) * 3)
-    for iRow := uint(0); iRow < 3; iRow++ {
-        for iCol := uint(0); iCol < 3; iCol++ {
-            fmt.Printf("Removing square value %v because (%v, %v) = (%v, %v)\n", b.grid[iRow * 9 + iCol + topLeftSquareInGroup], iRow, iCol, iRow * 9, iCol + topLeftSquareInGroup)
-            delete(validValues, int(b.grid[iRow * 9 + iCol + topLeftSquareInGroup]))
-        }
-    }
-
-    // Turn the values map into an array of valid values.
-    values := make([]int, len(validValues))
-    counter := 0
-    for key, value := range validValues {
-        if value {
-            values[counter] = key
-            counter++
-        }
-    }
-
-    sort.Ints(values)
-    return values
-}
-
-func NewRandomBoard() (b* Board) {
-
-    b = new(Board)
-    b.grid = make([]uint, 9*9)
-
-    // For each row in the board
-    for rowIndex := uint(0); rowIndex < 9; rowIndex++ {
-
-        row := b.Row(rowIndex)
-
-        // For each column in the row
-        for col := uint(0); col < 9; col++ {
-
-            // Get an array of valid values
-            validValues := b.validValuesAtRowColumn(rowIndex, col)
-            fmt.Printf("Valid values for %v, %v = %v\n", rowIndex, col, validValues)
-
-            // Randomly select one
-            if len(validValues) == 0 {
-                fmt.Printf("Can't find value to select from for %v, %v for board\n%v\n", rowIndex, col, b)
-                panic("No valid values to select from")
+func AssertBoardValid(b* Board) (bool) {
+    // Check rows
+    for row := 0; row < 9; row++ {
+        m := make(map[int]bool)
+        for col := 0; col < 9; col++ {
+            val := b.grid[row * 9 + col]
+            if _, present := m[int(val)]; present {
+                panic(fmt.Sprintf("Given value %d already occurs in row %d", row, val))
             }
-
-            row[col] = uint(validValues[0])
+            if val < 1 || val > 9 {
+                panic(fmt.Sprintf("Invalid value %d at row %d col %d", val, row, col))
+            }
+            m[int(val)] = true
         }
-
     }
 
-    return
+    // check columns
+    for col := 0; col < 9; col++ {
+        m := make(map[int]bool)
+        for row := 0; row < 9; row++ {
+            val := b.grid[row * 9 + col]
+            if _, present := m[int(val)]; present {
+                panic(fmt.Sprintf("Given value %d already occurs in col %d", row, val))
+            }
+            if val < 1 || val > 9 {
+                panic(fmt.Sprintf("Invalid value %d at row %d col %d", val, row, col))
+            }
+            m[int(val)] = true
+        }
+    }
+
+    // check 3x3 squares
+    for groupRow := 0; groupRow < 3; groupRow++ {
+        for groupCol := 0; groupCol < 3; groupCol++ {
+            m := make(map[int]bool)
+            groupRowStart := groupRow * 3
+            groupColStart := groupCol * 3
+            for row := 0; row < 3; row++ {
+                for col := 0; col < 3; col++ {
+                    val := b.grid[(groupRowStart + row) * 9 + (groupColStart + col)]
+                    if _, present := m[int(val)]; present {
+                        panic(fmt.Sprintf("Value %d already occurs in group %d, %d", val, groupRow, groupCol))
+                    }
+                    m[int(val)] = true
+                }
+            }
+        }
+    }
+
+
+    return true
 }
 
 func (b* Board) Row(index uint) ([]uint) {
