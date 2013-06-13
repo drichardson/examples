@@ -36,6 +36,15 @@ func NewBoard() (b *Board) {
     return
 }
 
+func randomRowsOrColumnsInOneGroup(r *rand.Rand) (int, int) {
+    row1 := r.Intn(9)
+    group1 := row1 / 3
+    var row2 int
+    for row2 = row1; row2 == row1; row2 = (group1*3) + r.Intn(3) {
+    }
+    return row1, row2
+}
+
 func NewRandomBoard() (b *Board) {
     b = NewBoard()
     fmt.Printf("NewBoard is\n%v\n", b)
@@ -45,12 +54,8 @@ func NewRandomBoard() (b *Board) {
 
     // 20 randomizations
     for count := 0; count < 20; count++ {
-        row1 := r.Intn(9)
-        group1 := row1 / 3
-        var row2 int
-        for row2 = row1; row2 == row1; row2 = (group1*3) + r.Intn(3) {
-        }
-        b.SwapRows(row1, row2)
+        b.SwapRows(randomRowsOrColumnsInOneGroup(r))
+        b.SwapColumns(randomRowsOrColumnsInOneGroup(r))
         fmt.Printf("Now board is:\n%v\n", b)
     }
 
@@ -114,13 +119,8 @@ func (b* Board) Row(index uint) ([]uint) {
     return b.grid[index * 9 : index * 9 + 9]
 }
 
-func (b* Board) SwapColumns(column1 int, column2 int) {
-    //tmpCol := make([]uint, 9)
 
-}
-
-func (b* Board) SwapRows(row1 int, row2 int) {
-    fmt.Printf("Swapping row %v with row %v\n", row1, row2)
+func AssertInSameRowOrColumnGroup(row1 int, row2 int) {
     if row1 >= 0 && row1 <= 2 {
         if row2 < 0 || row2 > 2 {
             panic("Rows must be in same group row")
@@ -136,6 +136,16 @@ func (b* Board) SwapRows(row1 int, row2 int) {
     } else {
         panic("Invalid rows")
     }
+}
+
+func (b* Board) SwapColumns(column1 int, column2 int) {
+    //tmpCol := make([]uint, 9)
+    AssertInSameRowOrColumnGroup(column1, column2)
+}
+
+func (b* Board) SwapRows(row1 int, row2 int) {
+    fmt.Printf("Swapping row %v with row %v\n", row1, row2)
+    AssertInSameRowOrColumnGroup(row1, row2)
 
     tmpRow := make([]uint, 9)
     r1 := b.grid[row1 * 9 : row1 * 9 + 9]
