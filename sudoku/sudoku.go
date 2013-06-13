@@ -2,10 +2,12 @@ package main
 
 import (
     "fmt"
+    //"log"
+    "math/rand"
 )
 
 func main() {
-    b := NewBoard()
+    b := NewRandomBoard()
     fmt.Printf("Board is:\n%v\n", b)
 }
 
@@ -31,6 +33,27 @@ func NewBoard() (b *Board) {
         }
     }
     AssertBoardValid(b)
+    return
+}
+
+func NewRandomBoard() (b *Board) {
+    b = NewBoard()
+    fmt.Printf("NewBoard is\n%v\n", b)
+
+    // TODO: Use a seed value that changes to get different results each time
+    r := rand.New(rand.NewSource(1))
+
+    // 20 randomizations
+    for count := 0; count < 20; count++ {
+        row1 := r.Intn(9)
+        group1 := row1 / 3
+        var row2 int
+        for row2 = row1; row2 == row1; row2 = (group1*3) + r.Intn(3) {
+        }
+        b.SwapRows(row1, row2)
+        fmt.Printf("Now board is:\n%v\n", b)
+    }
+
     return
 }
 
@@ -89,6 +112,37 @@ func AssertBoardValid(b* Board) (bool) {
 
 func (b* Board) Row(index uint) ([]uint) {
     return b.grid[index * 9 : index * 9 + 9]
+}
+
+func (b* Board) SwapColumns(column1 int, column2 int) {
+    //tmpCol := make([]uint, 9)
+
+}
+
+func (b* Board) SwapRows(row1 int, row2 int) {
+    fmt.Printf("Swapping row %v with row %v\n", row1, row2)
+    if row1 >= 0 && row1 <= 2 {
+        if row2 < 0 || row2 > 2 {
+            panic("Rows must be in same group row")
+        }
+    } else if row1 >= 3 && row1 <= 5 {
+        if row2 < 3 || row2 > 5 {
+            panic("Rows must be in same group row 2")
+        }
+    } else if row1 >= 6 && row1 <= 8 {
+        if row2 < 6 || row2 > 8 {
+            panic("Rows must be in same group row 3")
+        }
+    } else {
+        panic("Invalid rows")
+    }
+
+    tmpRow := make([]uint, 9)
+    r1 := b.grid[row1 * 9 : row1 * 9 + 9]
+    r2 := b.grid[row2 * 9 : row2 * 9 + 9]
+    copy(tmpRow, r1)
+    copy(r1, r2)
+    copy(r2, tmpRow)
 }
 
 func (b* Board) String() (string) {
