@@ -7,8 +7,14 @@ import (
 )
 
 func main() {
-    b := NewRandomBoard()
-    fmt.Printf("Board is:\n%v\n", b)
+    b := NewStandardBoard()
+    fmt.Printf("NewStandardBoard is\n%v\n", b)
+
+    b = NewRandomBoard()
+    fmt.Printf("NewRandomBoard is:\n%v\n", b)
+
+    b = NewRandomBoardByPartialSolutionAlgorithm()
+    fmt.Printf("NewRandomBoardByPartialSolutionAlgorithm is:\n%v\n", b)
 }
 
 
@@ -16,9 +22,14 @@ type Board struct {
     grid []uint
 }
 
-func NewBoard() (b *Board) {
+func NewZeroBoard() (b *Board) {
     b = new(Board)
     b.grid = make([]uint, 9*9)
+    return
+}
+
+func NewStandardBoard() (b *Board) {
+    b = NewZeroBoard()
     order := [9]uint{0, 3, 6, 1, 4, 7, 2, 5, 8}
     for i, rowIndex := range order {
         row := b.Row(rowIndex)
@@ -45,7 +56,7 @@ func randomRowsOrColumnsInOneGroup(r *rand.Rand) (int, int) {
 }
 
 func NewRandomBoard() (b *Board) {
-    b = NewBoard()
+    b = NewStandardBoard()
 
     r := rand.New(rand.NewSource(time.Now().UnixNano()))
 
@@ -55,6 +66,47 @@ func NewRandomBoard() (b *Board) {
     }
 
     return
+}
+
+func NewRandomBoardByPartialSolutionAlgorithm() (b *Board) {
+    b = NewZeroBoard()
+
+    r := rand.New(rand.NewSource(time.Now().UnixNano()))
+
+    // Randomly fill in groups (0,0), (1,1), and (2,2). They don't depend on each other at this point so we can
+    // fill them with any values.
+    b.RandomlyFillGroup(r,0,0)
+    b.RandomlyFillGroup(r,1,1)
+    b.RandomlyFillGroup(r,2,2)
+
+
+    return
+}
+
+// TODO: Figure out how to use an array[]interface{}, since you don't care about the type of the elements in the array.
+func shuffleArray(array []uint, r *rand.Rand) {
+    for i, l := 0, len(array); i < l; i++ {
+        swapIndex := r.Intn(l)
+        swap := array[swapIndex]
+        array[swapIndex] = array[i]
+        array[i] = swap
+    }
+}
+
+func (b *Board) RandomlyFillGroup(r *rand.Rand, groupRow int, groupCol int) {
+    if !(groupRow >= 0 && groupRow <= 2 && groupCol >= 0 && groupCol <= 2) {
+        panic(fmt.Sprintf("Invalid group row %v or column %v. Should be between 0, 1, or 2.", groupRow, groupCol))
+    }
+
+    group := []uint{1, 2, 3, 4, 5, 6, 7, 8, 9}
+    shuffleArray(group, r)
+    startRow := groupRow * 3
+    startCol := groupCol * 3
+    start := startRow * 9 + startCol
+    end := start + 3
+    copy(b.grid[start:end], group[0:3])
+    copy(b.grid[start+9:end+9], group[3:6])
+    copy(b.grid[start+18:end+18], group[6:9])
 }
 
 func AssertBoardValid(b* Board) (bool) {
