@@ -26,6 +26,9 @@ func main() {
 	slice = buf[1:3]
 	fmt.Println("1:3", slice)
 
+	slice = buf[2:3]
+	fmt.Println("2:3", slice)
+
 	slice = buf[0:3]
 	fmt.Println("0:3", slice)
 
