@@ -1,4 +1,4 @@
-sudoku: sudoku.go
-	go build $<
+all:
+	go build boardGenerator.go
 
 

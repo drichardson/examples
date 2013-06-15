@@ -1,4 +1,4 @@
-package main
+package sudoku
 
 import (
     "fmt"
@@ -68,6 +68,13 @@ func NewRandomBoard() (b *Board) {
     return
 }
 
+type PartialSolution [9][6]uint;
+
+func (b *Board) SolvePartialBoard() (solutions []PartialSolution) {
+    solutions = make([]PartialSolution, 0)
+    return
+}
+
 func NewRandomBoardByPartialSolutionAlgorithm() (b *Board) {
     b = NewZeroBoard()
 
@@ -79,7 +86,15 @@ func NewRandomBoardByPartialSolutionAlgorithm() (b *Board) {
     b.RandomlyFillGroup(r,1,1)
     b.RandomlyFillGroup(r,2,2)
 
+    // TODO: Use depth first search to find all solutions. Then randomly select one of the solutions.
+    solutions := b.SolvePartialBoard()
 
+    fmt.Printf("Found %v solutions\n", len(solutions));
+    fmt.Printf("Solutions: %v\n", solutions);
+    fmt.Printf("Found %v solutions\n", len(solutions));
+
+
+    // TODO: AssertBoardValid(b)
     return
 }
 
@@ -93,20 +108,25 @@ func shuffleArray(array []uint, r *rand.Rand) {
     }
 }
 
+func (b *Board) FillGroup(groupRow int, groupCol int, values[9]uint) {
+    startRow := groupRow * 3
+    startCol := groupCol * 3
+    start := startRow * 9 + startCol
+    end := start + 3
+    copy(b.grid[start:end], values[0:3])
+    copy(b.grid[start+9:end+9], values[3:6])
+    copy(b.grid[start+18:end+18], values[6:9])
+}
+
+
 func (b *Board) RandomlyFillGroup(r *rand.Rand, groupRow int, groupCol int) {
     if !(groupRow >= 0 && groupRow <= 2 && groupCol >= 0 && groupCol <= 2) {
         panic(fmt.Sprintf("Invalid group row %v or column %v. Should be between 0, 1, or 2.", groupRow, groupCol))
     }
 
-    group := []uint{1, 2, 3, 4, 5, 6, 7, 8, 9}
-    shuffleArray(group, r)
-    startRow := groupRow * 3
-    startCol := groupCol * 3
-    start := startRow * 9 + startCol
-    end := start + 3
-    copy(b.grid[start:end], group[0:3])
-    copy(b.grid[start+9:end+9], group[3:6])
-    copy(b.grid[start+18:end+18], group[6:9])
+    group := [9]uint{1, 2, 3, 4, 5, 6, 7, 8, 9}
+    shuffleArray(group[:], r)
+    b.FillGroup(groupRow, groupCol, group)
 }
 
 func AssertBoardValid(b* Board) (bool) {
