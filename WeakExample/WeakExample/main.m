@@ -30,7 +30,7 @@
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"%@: %@", [super description], _name];
+    return _name;
 }
 
 @end
@@ -39,18 +39,32 @@ void run_test(NSString* objectName)
 {
     MyObj* obj1 = [[MyObj alloc] initWithName:objectName];
     
-    __weak MyObj* weakObj1 = obj1;
-    void (^myBlock)() = ^{
-        MyObj* strongObj = weakObj1;
-        if ( strongObj )
-        {
-            NSLog(@"Strong obj: %@", strongObj);
-        }
-    };
+#if 1
     
-    double delayInSeconds = 10002.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), myBlock);
+    // High level demonstration
+    __weak MyObj* weakObj1 = obj1;
+    NSLog(@"Use it: %p\n", weakObj1);
+    
+#else
+    // Low level breakdown. For more details, see:
+    // http://clang.llvm.org/docs/AutomaticReferenceCounting.html#arc-runtime-objc-initweak
+    extern void* objc_initWeak(void**, void*);
+    extern void objc_destroyWeak(void**);
+    extern void* objc_loadWeak(void**);
+    
+    void* weakObj1 = nil;
+    void* result = objc_initWeak(&weakObj1, (__bridge void *)(obj1));
+    assert(result == weakObj1);
+    
+#if 1
+    // Here is the call that requires the autorelease pool. If you comment this out, all instances of MyObj will be deallocated.
+    void* myID = objc_loadWeak(&weakObj1);
+#endif
+    
+    
+    objc_destroyWeak(&weakObj1);
+    assert(weakObj1 == nil);
+#endif
 }
 
 int main(int argc, const char * argv[])
