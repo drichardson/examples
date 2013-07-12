@@ -20,6 +20,7 @@
 		913777E7178D20EB002E106B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913777E6178D20EB002E106B /* AVFoundation.framework */; };
 		913777EA178D228A002E106B /* DRPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 913777E9178D228A002E106B /* DRPlayerView.m */; };
 		913777EC178D2A03002E106B /* sample_iPod.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 913777EB178D2A03002E106B /* sample_iPod.m4v */; };
+		91F9BB79178FD13000236DC8 /* DRURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F9BB78178FD13000236DC8 /* DRURLProtocol.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,8 @@
 		913777E8178D228A002E106B /* DRPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRPlayerView.h; sourceTree = "<group>"; };
 		913777E9178D228A002E106B /* DRPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRPlayerView.m; sourceTree = "<group>"; };
 		913777EB178D2A03002E106B /* sample_iPod.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_iPod.m4v; sourceTree = "<group>"; };
+		91F9BB77178FD13000236DC8 /* DRURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRURLProtocol.h; sourceTree = "<group>"; };
+		91F9BB78178FD13000236DC8 /* DRURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRURLProtocol.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,8 @@
 				913777CA178D20B0002E106B /* Supporting Files */,
 				913777E8178D228A002E106B /* DRPlayerView.h */,
 				913777E9178D228A002E106B /* DRPlayerView.m */,
+				91F9BB77178FD13000236DC8 /* DRURLProtocol.h */,
+				91F9BB78178FD13000236DC8 /* DRURLProtocol.m */,
 			);
 			path = ProtocolHandler;
 			sourceTree = "<group>";
@@ -187,6 +192,7 @@
 				913777D4178D20B0002E106B /* DRAppDelegate.m in Sources */,
 				913777DD178D20B0002E106B /* DRViewController.m in Sources */,
 				913777EA178D228A002E106B /* DRPlayerView.m in Sources */,
+				91F9BB79178FD13000236DC8 /* DRURLProtocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +307,7 @@
 				913777E5178D20B0002E106B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

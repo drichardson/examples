@@ -10,14 +10,15 @@
 #import <AVFoundation/AVFoundation.h>
 #import "DRPlayerView.h"
 
-@interface DRViewController () <AVAssetResourceLoaderDelegate>
+@interface DRViewController () <NSURLConnectionDataDelegate>
 @end
 
 @implementation DRViewController
 {
     AVQueuePlayer* _player;
     DRPlayerView* _playerView;
-    dispatch_queue_t _resourceLoaderQueue;
+    NSURLConnection* _connection;
+    NSData* _data;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -25,13 +26,13 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _player = [[AVQueuePlayer alloc] initWithItems:@[]];
-        _resourceLoaderQueue = dispatch_queue_create("resourceLoaderQueue", 0);
     }
     return self;
 }
 
 - (void)loadView
 {
+    NSLog(@"Loading view");
     _playerView = [[DRPlayerView alloc] init];
     [_playerView setPlayer:_player];
     [self setView:_playerView];
@@ -41,11 +42,20 @@
 {
     [super viewDidLoad];
     
-    AVURLAsset* asset = [AVURLAsset assetWithURL:[NSURL URLWithString:@"something://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"]];
-    [[asset resourceLoader] setDelegate:self queue:_resourceLoaderQueue];
+    NSLog(@"View did load");
+#if 0
+    [_connection cancel];
+    _connection = [NSURLConnection connectionWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"x://blashblash"]] delegate:self];
+#else
+#if 1
+    AVURLAsset* asset = [AVURLAsset assetWithURL:[NSURL URLWithString:@"x://blahblahblah"]];
+#else
+    AVURLAsset* asset = [AVURLAsset assetWithURL:[[NSBundle mainBundle] URLForResource:@"sample_iPod" withExtension:@".m4v"]];
+#endif
     AVPlayerItem* item = [AVPlayerItem playerItemWithAsset:asset];
     [_player insertItem:item afterItem:nil];
     [_player setRate:1];
+#endif
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,29 +64,27 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark Resource Loading Delegate
-
-- (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    assert(dispatch_get_current_queue() == _resourceLoaderQueue);
-    
-    NSLog(@"Should wait for request? %@", [[loadingRequest request] URL]);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"sample_iPod" ofType:@"m4v"];
-        NSLog(@"Path is %@", path);
-        NSData* data = [NSData dataWithContentsOfFile:path];
-        
-        NSURL* url = [[loadingRequest request] URL];
-        NSString* mime = @"video/mp4";
-        NSInteger contentLength = [data length];
-        
-        //NSURLResponse* response = [[NSURLResponse alloc] initWithURL:url MIMEType:mime expectedContentLength:contentLength textEncodingName:nil];
-        NSHTTPURLResponse* response = [[NSHTTPURLResponse alloc] initWithURL:url statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:@{@"Content-Type": mime, @"Content-Length": [NSString stringWithFormat:@"%d", contentLength]}];
-        
-        [loadingRequest finishLoadingWithResponse:response data:data redirect:nil];
-    });
-    
-    return YES;
+    NSLog(@"Got response: %@. Headers: %@", [response URL], [(NSHTTPURLResponse*)response allHeaderFields]);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    NSLog(@"Receieved %d bytes of data", [data length]);
+    if ( _data == nil ) _data = data;
+    else assert(0);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSLog(@"Connection finished");
+    _connection = nil;
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    NSLog(@"COnnection failed with: %@", error);
 }
 
 @end

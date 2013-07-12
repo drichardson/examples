@@ -8,12 +8,16 @@
 
 #import "DRAppDelegate.h"
 
+#import "DRURLProtocol.h"
 #import "DRViewController.h"
 
 @implementation DRAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    BOOL registered = [NSURLProtocol registerClass:[DRURLProtocol class]];
+    NSLog(@"registered: %d", registered);
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[DRViewController alloc] initWithNibName:nil bundle:nil];
