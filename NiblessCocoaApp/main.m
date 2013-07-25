@@ -30,7 +30,7 @@
 -(void)myQuit:(id)sender
 {
 	NSLog(@"My Quit called");
-	[NSApp terminate];
+	[[NSApplication sharedApplication] terminate:self];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
