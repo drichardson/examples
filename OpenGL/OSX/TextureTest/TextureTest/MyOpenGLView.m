@@ -47,12 +47,12 @@
     NSImage* image = [NSImage imageNamed:@"Texture1.png"];
     NSBitmapImageRep* imageRep = [[image representations] objectAtIndex:0];
     
-    assert([imageRep bitsPerPixel] == 24);
+    assert([imageRep bitsPerPixel] == 32);
     assert([imageRep samplesPerPixel] == 3);
     
     GLbyte* pixels = (GLbyte*)[imageRep bitmapData];
     
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.size.width, image.size.height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.size.width, image.size.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 }
 
 - (void)_draw

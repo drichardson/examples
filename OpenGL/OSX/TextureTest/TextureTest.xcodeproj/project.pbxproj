@@ -52,7 +52,6 @@
 		91BF7A25136919E30072662F = {
 			isa = PBXGroup;
 			children = (
-				91BF7A7113691CF90072662F /* OpenGL.framework */,
 				91BF7A3A136919E30072662F /* TextureTest */,
 				91BF7A33136919E30072662F /* Frameworks */,
 				91BF7A31136919E30072662F /* Products */,
@@ -70,6 +69,7 @@
 		91BF7A33136919E30072662F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91BF7A7113691CF90072662F /* OpenGL.framework */,
 				91BF7A34136919E30072662F /* Cocoa.framework */,
 				91BF7A36136919E30072662F /* Other Frameworks */,
 			);
