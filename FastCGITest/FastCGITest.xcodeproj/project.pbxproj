@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		91B0CECE1526A24F00D4E018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B0CECD1526A24F00D4E018 /* Foundation.framework */; };
 		91B0CED11526A24F00D4E018 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B0CED01526A24F00D4E018 /* main.m */; };
-		91B0CEDC1526A3C600D4E018 /* libfcgi.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B0CEDB1526A3C600D4E018 /* libfcgi.2.dylib */; };
+		91BD94AC179509600030866B /* libfcgi.0.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 91BD94AB179509600030866B /* libfcgi.0.0.0.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,7 +29,7 @@
 		91B0CECD1526A24F00D4E018 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		91B0CED01526A24F00D4E018 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		91B0CED31526A24F00D4E018 /* FastCGITest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FastCGITest-Prefix.pch"; sourceTree = "<group>"; };
-		91B0CEDB1526A3C600D4E018 /* libfcgi.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfcgi.2.dylib; path = ../../../../../opt/local/lib/libfcgi.2.dylib; sourceTree = "<group>"; };
+		91BD94AB179509600030866B /* libfcgi.0.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfcgi.0.0.0.dylib; path = /usr/local/Cellar/fcgi/2.4.0/lib/libfcgi.0.0.0.dylib; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91B0CEDC1526A3C600D4E018 /* libfcgi.2.dylib in Frameworks */,
+				91BD94AC179509600030866B /* libfcgi.0.0.0.dylib in Frameworks */,
 				91B0CECE1526A24F00D4E018 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,7 +48,6 @@
 		91B0CEBE1526A24F00D4E018 = {
 			isa = PBXGroup;
 			children = (
-				91B0CEDB1526A3C600D4E018 /* libfcgi.2.dylib */,
 				91B0CECF1526A24F00D4E018 /* FastCGITest */,
 				91B0CECC1526A24F00D4E018 /* Frameworks */,
 				91B0CECA1526A24F00D4E018 /* Products */,
@@ -66,6 +65,7 @@
 		91B0CECC1526A24F00D4E018 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91BD94AB179509600030866B /* libfcgi.0.0.0.dylib */,
 				91B0CECD1526A24F00D4E018 /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -198,10 +198,10 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FastCGITest/FastCGITest-Prefix.pch";
-				HEADER_SEARCH_PATHS = /opt/local/include;
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/opt/local/lib,
+					/usr/local/Cellar/fcgi/2.4.0/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -212,10 +212,10 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FastCGITest/FastCGITest-Prefix.pch";
-				HEADER_SEARCH_PATHS = /opt/local/include;
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/opt/local/lib,
+					/usr/local/Cellar/fcgi/2.4.0/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -240,6 +240,7 @@
 				91B0CEDA1526A24F00D4E018 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
