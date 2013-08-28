@@ -20,17 +20,9 @@ static time_t fake_timegm(struct tm *t) {
 }
 
 static time_t fake_timegm_without_modifying_env(struct tm *t) {
+    time_t zero_time = 0;
     struct tm zero_tm;
-    memset(&zero_tm, 0, sizeof(zero_tm));
-    zero_tm.tm_sec = 0;
-    zero_tm.tm_min = 0;
-    zero_tm.tm_hour = 0;
-    zero_tm.tm_mday = 1; // 1 based
-    zero_tm.tm_mon = 0; // 0 based
-    zero_tm.tm_year = 1970 - 1900; // 1900 based
-    zero_tm.tm_yday = 0; // 0 based
-    zero_tm.tm_isdst = 0;
-    zero_tm.tm_gmtoff = 0;
+    gmtime_r(&zero_time, &zero_tm);
 
     time_t offset_from_utc = mktime(&zero_tm);
     time_t result = mktime(t);
