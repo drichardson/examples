@@ -30,12 +30,12 @@ static time_t fake_timegm_without_modifying_env(struct tm *t) {
     return result - offset_from_utc;
 }
 
-static void test_time_string(char const* time_string, time_t expected) {
-    printf("*** Testing time %s, expected unix time %ld **********\n", time_string, expected);
+static void test_time_string(char const* time_string, char const* time_format, time_t expected) {
+    printf("*** Testing time %s, format %s, expected unix time %ld **********\n", time_string, time_format, expected);
     
     struct tm tm;
     memset(&tm, 0, sizeof(tm));
-    char const* rc = strptime(time_string, "%FT%TZ", &tm);
+    char const* rc = strptime(time_string, time_format, &tm);
     if (rc == NULL || *rc != '\0') {
         fprintf(stderr, "Failed to parse time string. Result %s\n", rc);
         exit(1);
@@ -65,10 +65,12 @@ static void test_time_string(char const* time_string, time_t expected) {
     printf("fake_time             = %ld\n", fake_time);
     printf("fake_time no modify   = %ld\n", fake_time_without_modifying_env);
     printf("gm_time               = %ld\n", gm_time);
+    printf("gm_time using offset  = %ld\n", gm_time - tm.tm_gmtoff);
 }
 int main(int argc, char** argv) {
-    test_time_string("1970-01-01T00:00:00Z", 0);
-    test_time_string("2013-08-28T17:58:53Z", 1377712733);
+    test_time_string("1970-01-01T00:00:00Z", "%FT%TZ", 0);
+    test_time_string("2013-08-28T17:58:53Z", "%FT%TZ", 1377712733);
+    test_time_string("2013-08-29T09:16:23-0700", "%FT%T%z", 1377792983);
     return 0;
 }
 
