@@ -70,6 +70,7 @@ static void test_time_string(char const* time_string, char const* time_format, t
 int main(int argc, char** argv) {
     test_time_string("1970-01-01T00:00:00Z", "%FT%TZ", 0);
     test_time_string("1969-12-31T16:00:00-0800", "%FT%T%z", 0);
+    test_time_string("1969-12-31T14:00:00-1000", "%FT%T%z", 0);
     test_time_string("2013-08-28T17:58:53Z", "%FT%TZ", 1377712733);
     test_time_string("2013-08-29T09:16:23-0700", "%FT%T%z", 1377792983);
     return 0;
