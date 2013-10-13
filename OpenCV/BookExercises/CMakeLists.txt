@@ -1,7 +1,7 @@
 set( common_LIBS opencv_highgui opencv_core opencv_imgproc )
 
-include_directories(/opt/local/include)
-link_directories (/opt/local/lib) 
+include_directories(/usr/local/include)
+link_directories (/usr/local/lib) 
 
 add_executable(Exercise3.1 Exercise3.1.c)
 target_link_libraries(Exercise3.1 ${common_LIBS})
