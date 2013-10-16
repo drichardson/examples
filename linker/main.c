@@ -7,7 +7,7 @@ int main(int arg, char**argv) {
     foo();
     printf("foo is %p\n", foo);
 
-    void *h = dlopen("./foo.so", RTLD_NOW);
+    void *h = dlopen("/mnt/obb/foo.so", RTLD_NOW);
     foo();
     printf("h = %p\n", h);
     printf("foo is %p\n", foo);
