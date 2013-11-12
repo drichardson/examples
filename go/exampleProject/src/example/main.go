@@ -1,9 +1,9 @@
 package main
 
 import (
-	"./pkg1"
-	"./pkg2"
 	"fmt"
+	"pkg1"
+	"pkg2"
 )
 
 func main() {
