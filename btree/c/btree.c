@@ -233,6 +233,20 @@ void b_tree_insert(b_tree* T, char const* k, b_node_value v) {
 void b_tree_delete(b_tree* t, char const* key) {
 }
 
+static void b_tree_print_levels(b_tree_node* x, int level) {
+    printf("%d: ", level);
+    for(int i = 0; i < x->count; ++i) {
+        printf("%s=%d", x->keys[i], x->values[i]);
+        if (i+1 != x->count) putchar(',');
+    }
+    putchar('\n');
+    if (!x->is_leaf) {
+        for(int i = 0; i < x->count+1; ++i) {
+            b_tree_print_levels(x, level+1);
+        }
+    }
+}
+
 #if 0
 void pv(b_tree* t, char const *key) {
     b_tree_search_result result = b_tree_search(t->root, key);
@@ -242,23 +256,34 @@ void pv(b_tree* t, char const *key) {
 #endif
 
 int main(int argc, char const** argv) {
+
+    if (argc != 2) {
+        printf("Usage: c-btree <number_of_entries>\n");
+        exit(1);
+    }
+
+    unsigned const num_entries = strtoul(argv[1], NULL, 10);
+    
+
+
     b_tree* t = b_tree_new();
 
-    unsigned const random_entries = 10;
-    b_node_key* keys = (b_node_key*)malloc(sizeof(b_node_key) * random_entries);
-    b_node_value* values = (b_node_value*)malloc(sizeof(b_node_value) * random_entries);
-    for(unsigned i = 0; i < random_entries; ++i) {
+    b_node_key* keys = (b_node_key*)malloc(sizeof(b_node_key) * num_entries);
+    b_node_value* values = (b_node_value*)malloc(sizeof(b_node_value) * num_entries);
+    for(unsigned i = 0; i < num_entries; ++i) {
         snprintf(keys[i], sizeof(keys[i]), "%c_%u_key", 'a' + (i % 26), i);
         values[i] = i;
     }
 
     // insert the nodes
-    for(unsigned i = 0; i < random_entries; ++i) {
+    for(unsigned i = 0; i < num_entries; ++i) {
         b_tree_insert(t, keys[i], values[i]);
+        printf("TREE insert %d\n", i);
+        b_tree_print_levels(t->root, 0);
     }
 
     // make sure every node is represented
-    for(unsigned i = 0; i < random_entries; ++i) {
+    for(unsigned i = 0; i < num_entries; ++i) {
         b_tree_search_result result = b_tree_search(t->root, keys[i]);
         if (result.x == NULL) {
             printf("missing entry in tree for %s\n", keys[i]);
