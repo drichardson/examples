@@ -28,13 +28,29 @@ static void b_tree_key_copy(b_node_key dest, b_node_key const src) {
 }
 
 static b_tree_node* b_tree_new_node(void) {
+    printf("allocating new node\n");
     return (b_tree_node*)calloc(1, sizeof(b_tree_node));
 }
 
 static b_tree* b_tree_new(void) {
     b_tree* result = (b_tree*)malloc(sizeof(b_tree));
     result->root = b_tree_new_node();
+    result->root->is_leaf = true;
     return result;
+}
+
+static void b_tree_free_nodes(b_tree_node* x) {
+    if (!x->is_leaf) {
+        for(int i = 0; i < x->count+1; ++i) {
+            b_tree_free_nodes(x->subtrees[i]);
+        }
+    }
+    free(x);
+}
+
+void b_tree_free(b_tree* t) {
+    b_tree_free_nodes(t->root);
+    free(t);
 }
 
 typedef struct {
@@ -76,6 +92,8 @@ b_tree_search_result b_tree_search(b_tree_node* x, char const* k) {
 
 // split the full tree at x.subtrees[i]
 static void b_tree_split_child(b_tree_node* x, int const i) {
+    printf("splitting child\n");
+
     // 1. z = Allocate-Node()
     b_tree_node* z = b_tree_new_node();
 
@@ -117,10 +135,12 @@ static void b_tree_split_child(b_tree_node* x, int const i) {
     for(int j = x->count; j >= i; --j) {
         // 15. x.key[j+1] = x.key[j]
         b_tree_key_copy(x->keys[j+1], x->keys[j]);
+        x->values[j+1] = x->values[j];
     }
 
     // 16. x.key[i] = y.key[t]
     b_tree_key_copy(x->keys[i], y->keys[B_TREE_MINIMUM_DEGREE]);
+    x->values[i] = y->values[B_TREE_MINIMUM_DEGREE];
 
     // 17. x.n = x.n + 1
     x->count++;
@@ -140,11 +160,13 @@ static void b_tree_insert_nonfull(b_tree_node* x, char const* k, b_node_value v)
         while(i >= 0 && strcmp(k, x->keys[i]) < 0) {
             // 4. x.key[i+1] = x.key[i]
             b_tree_key_copy(x->keys[i+1], x->keys[i]);
+            x->values[i+1] = x->values[i];
             // 5. i = i - 1
             --i;
         }
         // 6. x.key[i+1] = k
         b_tree_key_copy(x->keys[i+1], k);
+        x->values[i+1] = v;
         // 7. x.n = x.n + 1
         x->count++;
         // 8. Disk-Write(x)
@@ -173,6 +195,8 @@ static void b_tree_insert_nonfull(b_tree_node* x, char const* k, b_node_value v)
 }
 
 void b_tree_insert(b_tree* T, char const* k, b_node_value v) {
+
+    printf("inserting %s\n", k);
 
     // 1. r = T.root
     b_tree_node* r = T->root;
@@ -209,30 +233,51 @@ void b_tree_insert(b_tree* T, char const* k, b_node_value v) {
 void b_tree_delete(b_tree* t, char const* key) {
 }
 
+#if 0
 void pv(b_tree* t, char const *key) {
-    b_node_value v;
     b_tree_search_result result = b_tree_search(t->root, key);
     if (result.x == NULL) printf("key '%s' not found\n", key);
-    else printf("key (%d) '%s' has value %d\n", result.i, result.x->keys[result.i], v);
+    else printf("key (%d) '%s' has value %d\n", result.i, result.x->keys[result.i], result.x->values[result.i]);
 }
+#endif
 
 int main(int argc, char const** argv) {
     b_tree* t = b_tree_new();
 
-    pv(t, "a");
+    unsigned const random_entries = 10;
+    b_node_key* keys = (b_node_key*)malloc(sizeof(b_node_key) * random_entries);
+    b_node_value* values = (b_node_value*)malloc(sizeof(b_node_value) * random_entries);
+    for(unsigned i = 0; i < random_entries; ++i) {
+        snprintf(keys[i], sizeof(keys[i]), "%c_%u_key", 'a' + (i % 26), i);
+        values[i] = i;
+    }
 
-    b_tree_insert(t, "g", 1);
-    b_tree_insert(t, "a", 2);
-    b_tree_insert(t, "h", 3);
-    b_tree_insert(t, "z", 4);
-    b_tree_insert(t, "f", 5);
-    b_tree_insert(t, "m", 6);
-    b_tree_insert(t, "b", 7);
-    b_tree_insert(t, "o", 8);
+    // insert the nodes
+    for(unsigned i = 0; i < random_entries; ++i) {
+        b_tree_insert(t, keys[i], values[i]);
+    }
 
-    pv(t, "a");
-    pv(t, "o");
-    pv(t, "NOT THERE");
+    // make sure every node is represented
+    for(unsigned i = 0; i < random_entries; ++i) {
+        b_tree_search_result result = b_tree_search(t->root, keys[i]);
+        if (result.x == NULL) {
+            printf("missing entry in tree for %s\n", keys[i]);
+            exit(1);
+        }
+        if (strcmp(result.x->keys[result.i], keys[i]) != 0) {
+            printf("Something really weird happened. Keys don't match.\n");
+            exit(1);
+        }
+
+        if (result.x->values[result.i] != values[i]) {
+            printf("values %d != %d for key %s\n", result.x->values[result.i], values[i], keys[i]);
+            exit(1);
+        }
+    }
+
+    printf("All keys accounted for\n");
+
+    b_tree_free(t);
 
     return 0;
 }
