@@ -30,4 +30,8 @@ func main() {
     dir, file := path.Split(wd+"/lala.txt")
     fmt.Println("dir: ", dir, " file: ", file)
 
+    // Hmmmm, I wonder if path works with URLs.
+    var base string
+    base, file = path.Split("http://example.com/test/file.txt")
+    fmt.Printf("Got base %v and file %v\n", base, file)
 }
