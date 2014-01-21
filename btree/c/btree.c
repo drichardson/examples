@@ -123,7 +123,8 @@ static void b_tree_split_child(b_tree_node* x, int const i) {
     // 10. y.n = t - 1
     y->count = B_TREE_MINIMUM_DEGREE - 1;
     // 11. for j = x.n + 1 downto i + 1
-    for(int j = x->count; j >= i + 1; --j) {
+#error here
+    for(int j = x->count; j >= i; --j) {
         // 12. x.c[j+1] = x.c[j]
         x->subtrees[j+1] = x->subtrees[j];
     }
@@ -203,6 +204,7 @@ void b_tree_insert(b_tree* T, char const* k, b_node_value v) {
 
     // 2. if r.n == 2t - 1
     if (r->count == B_TREE_MAX_KEYS) {
+        printf("growing height\n");
         // 3. s = Allocate-Node()
         b_tree_node* s = b_tree_new_node();
 
@@ -242,7 +244,7 @@ static void b_tree_print_levels(b_tree_node* x, int level) {
     putchar('\n');
     if (!x->is_leaf) {
         for(int i = 0; i < x->count+1; ++i) {
-            b_tree_print_levels(x, level+1);
+            b_tree_print_levels(x->subtrees[i], level+1);
         }
     }
 }
@@ -282,12 +284,15 @@ int main(int argc, char const** argv) {
         b_tree_print_levels(t->root, 0);
     }
 
+    unsigned int missing_count = 0;
+
     // make sure every node is represented
     for(unsigned i = 0; i < num_entries; ++i) {
         b_tree_search_result result = b_tree_search(t->root, keys[i]);
         if (result.x == NULL) {
             printf("missing entry in tree for %s\n", keys[i]);
-            exit(1);
+            missing_count++;
+            continue;
         }
         if (strcmp(result.x->keys[result.i], keys[i]) != 0) {
             printf("Something really weird happened. Keys don't match.\n");
@@ -295,12 +300,14 @@ int main(int argc, char const** argv) {
         }
 
         if (result.x->values[result.i] != values[i]) {
-            printf("values %d != %d for key %s\n", result.x->values[result.i], values[i], keys[i]);
+            printf("Also weird: values %d != %d for key %s\n", result.x->values[result.i], values[i], keys[i]);
             exit(1);
         }
     }
 
-    printf("All keys accounted for\n");
+
+    if (missing_count == 0) printf("All keys accounted for\n");
+    else printf("Missing %u key(s)\n", missing_count);
 
     b_tree_free(t);
 
