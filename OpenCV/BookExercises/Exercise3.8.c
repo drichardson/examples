@@ -51,7 +51,7 @@ int main (int argc, const char * argv[])
 	my_struct ms;
 	bzero(&ms, sizeof(ms));
 	
-	CvFileStorage* fs = cvOpenFileStorage("my_struct.yml", 0, CV_STORAGE_READ);
+	CvFileStorage* fs = cvOpenFileStorage("my_struct.yml", 0, NULL, CV_STORAGE_READ);
 	
 	if ( fs )
 	{
