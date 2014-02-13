@@ -43,12 +43,12 @@
     [super viewDidLoad];
     
     NSLog(@"View did load");
-#if 0
+#if 1
     [_connection cancel];
     _connection = [NSURLConnection connectionWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"x://blashblash"]] delegate:self];
 #else
 #if 1
-    AVURLAsset* asset = [AVURLAsset assetWithURL:[NSURL URLWithString:@"x://blahblahblah"]];
+    AVURLAsset* asset = [AVURLAsset assetWithURL:[NSURL URLWithString:@"x://blahblahblah.m4v"]];
 #else
     AVURLAsset* asset = [AVURLAsset assetWithURL:[[NSBundle mainBundle] URLForResource:@"sample_iPod" withExtension:@".m4v"]];
 #endif
