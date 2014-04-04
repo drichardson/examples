@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <streambuf>
 #include <string>
 #include <fcntl.h>
 #include <unistd.h>
@@ -98,6 +99,10 @@ void read_parameters(int argc, char** argv, TestParameters* p)
 
     char* mode = argv[5];
     if (strcmp(mode, "NONE") == 0) {
+        if (p->buffer_size != 0) {
+            cerr << "NONE mode but non-zero buffer size (" << p->buffer_size << ") given. That just doesn't make sense." << endl;
+            abort();
+        }
         p->mode = BufferingMode_None;
         p->fd_out = ::open(output_filename().c_str(), O_CREAT | O_EXCL);
         if (p->fd_out == -1) {
@@ -105,14 +110,29 @@ void read_parameters(int argc, char** argv, TestParameters* p)
             abort();
         }
     } else if(strcmp(mode, "FILEPTR") == 0) {
+        if (p->buffer_size <= 0) {
+            cerr << "FILEPTR mode but <= zero buffer size (" << p->buffer_size << ") given. That just doesn't make sense." << endl;
+            abort();
+        }
         p->mode = BufferingMode_FILEPTR;
         p->fp_out = fopen(output_filename().c_str(), "wb");
         if (p->fp_out == NULL) {
             cerr << "Could not open output file '" << output_filename() << endl;
             abort();
         }
+        char* buf = new char[p->buffer_size];
+        int rc = setvbuf(p->fp_out, buf, _IOFBF, p->buffer_size);
+        if (rc != 0) {
+            cerr << "Couldn't set fp_out bufsize to " << p->buffer_size << endl;
+            abort();
+        }
     } else if(strcmp(mode, "IOSTREAM") == 0) {
+        if (p->buffer_size <= 0) {
+            cerr << "IOSTREAM mode but <= zero buffer size (" << p->buffer_size << ") given. That just doesn't make sense." << endl;
+            abort();
+        }
         p->mode = BufferingMode_IOSTREAM;
+        p->stream.rdbuf()->pubsetbuf(new char[p->buffer_size], p->buffer_size);
         p->stream.open(output_filename(), ios_base::binary|ios_base::out|ios_base::trunc);
     } else {
         cerr << "Invalid buffering mode '" << mode << '\'' << endl;
