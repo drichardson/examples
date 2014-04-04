@@ -100,12 +100,7 @@ done
 }
 
 function run_all {
-TESTDIR="test-$(date +"%Y%m%d-%H%M%S")"
-mkdir -p "$TESTDIR"
-pushd "$TESTDIR"
-
 echo "##### Running All Tests. #####"
-echo "Output Directory: $TESTDIR"
 
 for i in $(seq 1 4 8)
 do
