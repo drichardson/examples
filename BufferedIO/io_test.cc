@@ -104,7 +104,7 @@ void read_parameters(int argc, char** argv, TestParameters* p)
             abort();
         }
         p->mode = BufferingMode_None;
-        p->fd_out = ::open(output_filename().c_str(), O_CREAT | O_EXCL);
+        p->fd_out = open(output_filename().c_str(), O_CREAT | O_EXCL | O_WRONLY, S_IRWXU);
         if (p->fd_out == -1) {
             cerr << "Could not open output file '" << output_filename() << "' Error: " << errno << endl;
             abort();
@@ -171,7 +171,7 @@ void log_fd(TestParameters* params)
     if (rc != params->bytes_per_log) {
         cerr << "log_fd failed. Wrote " << rc
            <<  " bytes but expected " << params->bytes_per_log
-           << ". Errno: " << errno
+           << ". Errno: " << errno << ". " << strerror(errno)
            << endl;
         abort();
     }

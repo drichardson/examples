@@ -9,13 +9,17 @@ function run_test {
 if [ -z "$1" ]; then
     echo "No test name specified"
     exit 1
-}
+fi
+
+echo "#### Starting Test $1 #####"
+
 if [ -e "$1" ]; then
     echo "Test directory $1 already exists."
     exit 1
 fi
+
 mkdir -p "$1"
-pushd "$1"
+pushd "$1" >> /dev/null
 
 for i in $(seq 1 $NUMPROCESSES)
 do
@@ -34,7 +38,7 @@ do
     fi
 done
 
-popd
+popd >> /dev/null
 
 }
 
@@ -46,7 +50,7 @@ TESTDURATION=5
 MODE=NONE
 
 run_test unbuffered
-MODE=FILE
+MODE=FILEPTR
 BUFSIZEBYTES=8000
 run_test Fbuffered8k
 BUFSIZEBYTES=80000
