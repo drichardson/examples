@@ -103,7 +103,7 @@ done
 function run_all {
 echo "##### Running All Tests. #####"
 
-for i in $(seq 1 4 8)
+for i in 1 4 8
 do
     SUITEDIR="${i}process"
     mkdir "$SUITEDIR"
