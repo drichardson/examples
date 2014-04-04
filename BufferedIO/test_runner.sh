@@ -42,13 +42,21 @@ popd >> /dev/null
 
 }
 
-NUMPROCESSES=1
+function run_suite {
+if [ -z "$1" ]; then
+    echo "num processes not set"
+    exit 1
+fi
+
+echo "#### Running suite with $1 processes ####"
+
+NUMPROCESSES=$1
 NUMTHREADS=4
 BUFSIZEBYTES=0
 BYTESPERLOG=173
 TESTDURATION=5
-MODE=NONE
 
+MODE=NONE
 run_test unbuffered
 MODE=FILEPTR
 BUFSIZEBYTES=8000
@@ -72,4 +80,43 @@ BUFSIZEBYTES=8000000
 run_test IObuffered8000k
 BUFSIZEBYTES=67108864
 run_test IObuffered64M
+}
 
+function multi_run_suite {
+echo "#### Running Multi Suite ####"
+if [ -z "$1" ]; then
+    echo "num processes not set"
+    exit 1
+fi
+
+for i in $(seq 1 3)
+do
+    echo "#### Starting Run $i ####"
+    mkdir run$i
+    pushd run$i >> /dev/null
+    run_suite $1
+    popd
+done
+}
+
+function run_all {
+TESTDIR="test-$(date +"%Y%m%d-%H%M%S")"
+mkdir -p "$TESTDIR"
+pushd "$TESTDIR"
+
+echo "##### Running All Tests. #####"
+echo "Output Directory: $TESTDIR"
+
+for i in $(seq 1 4 8)
+do
+    SUITEDIR="${i}process"
+    mkdir "$SUITEDIR"
+    pushd "$SUITEDIR" >> /dev/null
+    multi_run_suite $i
+    popd >> /dev/null
+done
+
+popd >> /dev/null
+}
+
+run_all
