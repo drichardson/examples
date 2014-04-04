@@ -1,4 +1,5 @@
 #!/bin/bash
+# Run the tests. Normally this is called by run.sh in the same directory.
 
 set -e
 
