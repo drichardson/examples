@@ -99,7 +99,7 @@ do
     mkdir run$i
     pushd run$i >> /dev/null
     run_suite $1
-    popd
+    popd >> /dev/null
 done
 }
 
