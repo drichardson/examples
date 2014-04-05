@@ -112,7 +112,6 @@ do
     popd >> /dev/null
 done
 
-popd >> /dev/null
 }
 
 run_all
