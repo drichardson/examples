@@ -61,14 +61,19 @@ int to_int(char const* str)
 
 char* make_log_msg(int len)
 {
+    if (len < 2) {
+        cout << "Log message length must be at least 2 characters long. (newline and null terminator)" << endl;
+        abort();
+    }
+
     char* s = new char[len+2];
     int written = snprintf(s, len, "Test log message ");
     while(written < len) {
         s[written] = 'x';
         ++written;
     }
-    s[len] = '\n';
-    s[len+1] = 0;
+    s[len-1] = '\n';
+    s[len] = 0;
     return s;
 }
 
