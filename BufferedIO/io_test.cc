@@ -57,6 +57,7 @@ int to_int(char const* str)
         cerr << "Error parsing parameter. '" << str << "' is not an integer." << endl;
         abort();
     }
+    return i;
 }
 
 char* make_log_msg(int len)
