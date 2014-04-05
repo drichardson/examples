@@ -81,6 +81,9 @@ BUFSIZEBYTES=8000000
 run_test IObuffered8000k
 BUFSIZEBYTES=67108864
 run_test IObuffered64M
+
+echo "Suite Report ------------------"
+du -s *
 }
 
 function multi_run_suite {
