@@ -25,7 +25,7 @@ pushd "$1" >> /dev/null
 for i in $(seq 1 $NUMPROCESSES)
 do
     echo Starting process $i
-    "$CMD" $NUMTHREADS $BUFSIZEBYTES $BYTESPERLOG $TESTDURATION $MODE &
+    "$CMD" $NUMTHREADS $BUFSIZEBYTES $BASELOGLEN $TESTDURATION $MODE &
     pids[$i]=$!
 done
 
@@ -54,7 +54,7 @@ echo "#### Running suite with $1 processes ####"
 NUMPROCESSES=$1
 NUMTHREADS=4
 BUFSIZEBYTES=0
-BYTESPERLOG=173
+BASELOGLEN=140
 TESTDURATION=5
 
 MODE=NONE
@@ -83,7 +83,7 @@ BUFSIZEBYTES=67108864
 run_test IObuffered64M
 
 echo "Suite Report ------------------"
-du -s *
+du -s -m *
 }
 
 function multi_run_suite {

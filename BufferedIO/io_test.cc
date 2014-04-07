@@ -35,12 +35,12 @@ struct TestParameters
     // User provided
     int thread_count;
     int buffer_size;
-    int bytes_per_log;
+    int min_bytes_per_log;
     int test_duration;
     BufferingMode mode;
 
     // Other globals
-    char const* log_msg;
+    char const* log_msg_base;
     
     int fd_out;
     FILE* fp_out;
@@ -57,22 +57,18 @@ int to_int(char const* str)
         cerr << "Error parsing parameter. '" << str << "' is not an integer." << endl;
         abort();
     }
+    return i;
 }
 
-char* make_log_msg(int len)
+char* make_log_msg_base(int len)
 {
-    if (len < 2) {
-        cout << "Log message length must be at least 2 characters long. (newline and null terminator)" << endl;
-        abort();
-    }
-
-    char* s = new char[len+2];
+    char* s = new char[len+1];
     int written = snprintf(s, len, "Test log message ");
+    int i = 0;
     while(written < len) {
-        s[written] = 'x';
+        s[written] = 'a' + (i++ % 26);
         ++written;
     }
-    s[len-1] = '\n';
     s[len] = 0;
     return s;
 }
@@ -90,7 +86,7 @@ void read_parameters(int argc, char** argv, TestParameters* p)
         cerr << "Usage: io_test <NT> <NB> <NL> <T> <M>\n"
             << "  NT - number of logging threads per process\n"
             << "  NB - buffer size in bytes\n"
-            << "  NL - number of bytes to emit per log\n"
+            << "  NL - number of bytes to emit per log, not including thread id and counter\n"
             << "  T  - test duration in seconds (integer)\n"
             << "  M  - buffering mode. NONE, FILEPTR, or IOSTREAM\n"
             << std::flush;
@@ -99,7 +95,7 @@ void read_parameters(int argc, char** argv, TestParameters* p)
 
     p->thread_count  = to_int(argv[1]);
     p->buffer_size   = to_int(argv[2]);
-    p->bytes_per_log = to_int(argv[3]);
+    p->min_bytes_per_log = to_int(argv[3]);
     p->test_duration = to_int(argv[4]);
 
     char* mode = argv[5];
@@ -144,7 +140,7 @@ void read_parameters(int argc, char** argv, TestParameters* p)
         abort();
     }
 
-    p->log_msg = make_log_msg(p->bytes_per_log);
+    p->log_msg_base = make_log_msg_base(p->min_bytes_per_log);
 }
 
 void run_test(TestParameters * p);
@@ -157,7 +153,7 @@ int main(int argc, char** argv)
     cout << "Params: "
         << "NT=" << params.thread_count
         << " NB=" << params.buffer_size
-        << " NL=" << params.bytes_per_log
+        << " NL=" << params.min_bytes_per_log
         << " T=" << params.test_duration
         << " M=" << params.mode
         << endl;
@@ -167,25 +163,25 @@ int main(int argc, char** argv)
     return 0;
 }
 
-void log_fd(TestParameters* params)
+void log_fd(TestParameters* params, string const & msg)
 {
     params->log_mutex.lock();
-    int rc = write(params->fd_out, params->log_msg, params->bytes_per_log);
+    int rc = write(params->fd_out, msg.c_str(), msg.size());
     params->log_mutex.unlock();
 
-    if (rc != params->bytes_per_log) {
+    if (rc < 0 || static_cast<string::size_type>(rc) != msg.size()) {
         cerr << "log_fd failed. Wrote " << rc
-           <<  " bytes but expected " << params->bytes_per_log
+           <<  " bytes but expected " << msg.size()
            << ". Errno: " << errno << ". " << strerror(errno)
            << endl;
         abort();
     }
 }
 
-void log_fp(TestParameters* params)
+void log_fp(TestParameters* params, string const & msg)
 {
     params->log_mutex.lock();
-    int rc = fwrite(params->log_msg, params->bytes_per_log, 1, params->fp_out);
+    int rc = fwrite(msg.c_str(), msg.size(), 1, params->fp_out);
     params->log_mutex.unlock();
 
     if (rc != 1) {
@@ -194,10 +190,11 @@ void log_fp(TestParameters* params)
     }
 }
 
-void log_stream(TestParameters* params)
+void log_stream(TestParameters* params, string const & msg)
 {
     params->log_mutex.lock();
-    params->stream << params->log_msg;
+    params->stream << msg;
+    params->stream.write(msg.c_str(), msg.size());
     params->log_mutex.unlock();
 
     if (!params->stream.good()) {
@@ -208,7 +205,7 @@ void log_stream(TestParameters* params)
 
 void test_routine(TestParameters* params)
 {
-    void (*f)(TestParameters*);
+    void (*f)(TestParameters*, string const&);
     switch(params->mode) {
     case BufferingMode_None:
         f = log_fd;
@@ -224,8 +221,13 @@ void test_routine(TestParameters* params)
         abort();
     }
 
+    int i = 0;
+
     while(1) {
-        f(params);
+        ostringstream oss;
+        oss << &i << ':' << i << ' ' << params->log_msg_base << '\n';
+        ++i;
+        f(params, oss.str());
     }
 }
 
