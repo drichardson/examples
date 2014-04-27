@@ -14,7 +14,7 @@ using std::string;
 using std::exception;
 using std::ostringstream;
 
-#define LOG(x) puts(x)
+#define LOG_PRODUCTION(x) puts(x)
 
 /**
   Example things to parse:
@@ -102,6 +102,13 @@ enum Symbol {
     SymbolString,
 };
 
+static char const* symbolname[4] = {
+    "NONE",
+    "(",
+    ")",
+    "STRING"
+};
+
 #define MAX_STRING 10000
 
 class Parser
@@ -112,6 +119,7 @@ class Parser
     Form* root_;
     Symbol symbol_;
     int line_; // current line being parsed.
+    int c; // the last character read from input.
     char string_[MAX_STRING];
     int stringlen_;
 
@@ -120,8 +128,8 @@ class Parser
     FormList* forms();
     Form* form();
     void getsym();
-    void getstringsym(int first_char);
-    bool expect(Symbol);
+    void getstringsym();
+    void expect(Symbol);
     bool accept(Symbol);
 
 public:
@@ -147,9 +155,12 @@ FormList* Parser::parse()
     line_ = 1;
     FormList* result = NULL;
     try {
-        LOG("parse");
         getsym();
         result = lists();
+
+        if (symbol_ != SymbolNone || !feof(fp_)) {
+            throw std::runtime_error("Unexpected characters starting at .");
+        }
     } catch (std::exception & e) {
         cerr << "Exception occurred on line " << line_ << ": " << e.what() << endl;
     } catch(...) {
@@ -166,8 +177,6 @@ FormList* Parser::parse()
 
 void Parser::getsym()
 {
-    LOG("getsym");
-    int c;
     Symbol sym = SymbolNone;
 
     while(sym == SymbolNone && (c = fgetc(fp_)) != EOF) {
@@ -193,7 +202,7 @@ void Parser::getsym()
             break;
         default:
             sym = SymbolString;
-            getstringsym(c);
+            getstringsym();
             break;
         }
     }
@@ -201,32 +210,30 @@ void Parser::getsym()
     symbol_ = sym;
 }
 
-void Parser::getstringsym(int c)
+void Parser::getstringsym()
 {
-    LOG("getstringsym");
-    stringlen_ = 0;
-    bool recognized = false;
+    string_[0] = c;
+    stringlen_ = 1;
+    bool done = false;
 
-    do {
+    while(stringlen_ < MAX_STRING - 1 && (c = fgetc(fp_)) != EOF) {
         switch(c) {
         CASE_WS:
         case '(':
         case ')':
             ungetc(c, fp_);
-            recognized = true;
+            goto done;
             break;
         default:
             // note: no check of max string length here
             string_[stringlen_++] = c;
             break;
         }
-        c = fgetc(fp_);
-    } while(!recognized && c != EOF && stringlen_ < MAX_STRING - 1);
+    }
+
+done:
 
     if (stringlen_ == MAX_STRING - 1) {
-        fprintf(stderr, "String exceeded max string length of %d\n", MAX_STRING);
-        exit(1);
-
         ostringstream oss;
         oss << "String exceeded max string length of " << MAX_STRING;
         throw std::runtime_error(oss.str());
@@ -234,17 +241,17 @@ void Parser::getstringsym(int c)
 }
 
 
-bool Parser::expect(Symbol s)
+void Parser::expect(Symbol s)
 {
-    LOG("expect");
-    if (accept(s)) return true;
-    fprintf(stderr, "expect: unexpected symbol\n");
-    return false;
+    if (!accept(s)) {
+        ostringstream oss;
+        oss << "Expected " << symbolname[s] << " but got " << symbolname[symbol_];
+        throw std::runtime_error(oss.str());
+    }
 }
 
 bool Parser::accept(Symbol s)
 {
-    LOG("accept");
     if (symbol_ == s) {
         getsym();
         return true;
@@ -254,7 +261,7 @@ bool Parser::accept(Symbol s)
 
 FormList* Parser::lists()
 {
-    LOG("lists");
+    LOG_PRODUCTION("lists");
     FormList* result = new FormList();
     while(symbol_ == SymbolLeftParen) {
         result->push_back(list());
@@ -264,7 +271,7 @@ FormList* Parser::lists()
 
 Form* Parser::list()
 {
-    LOG("list");
+    LOG_PRODUCTION("list");
     expect(SymbolLeftParen);
     auto formList = forms();
     expect(SymbolRightParen);
@@ -274,7 +281,7 @@ Form* Parser::list()
 
 FormList* Parser::forms()
 {
-    LOG("forms");
+    LOG_PRODUCTION("forms");
     FormList* result = new FormList();
     Form* f;
     while((f = form()) != NULL) {
@@ -285,7 +292,7 @@ FormList* Parser::forms()
 
 Form* Parser::form()
 {
-    LOG("form");
+    LOG_PRODUCTION("form");
     Form* result = NULL;
     if (symbol_ == SymbolString) {
         result = new Form(string_, stringlen_);
@@ -303,6 +310,8 @@ int main(int argc, char** argv)
     if (list == NULL) {
         exit(1);
     }
+
+    std::cout << "Read " << list->size() << " sub-lists " << endl;
 
     return 0;
 }

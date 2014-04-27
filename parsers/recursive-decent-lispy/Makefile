@@ -5,5 +5,8 @@ CXX=/usr/local/bin/g++-4.8
 lispy: parser.cpp
 	$(CXX) -std=c++11 -g -o lispy parser.cpp
 
+test: lispy
+	echo hi
+
 clean:
 	$(RM) -r lispy lispy.dSYM
