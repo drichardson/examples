@@ -4,8 +4,12 @@
 #include <string>
 #include <stdexcept>
 #include <sstream>
+#include <iostream>
 
-using std::list;
+using std::endl;
+using std::cerr;
+
+// Do not do "using std::list" because the name conflicts with list() function.
 using std::string;
 using std::exception;
 using std::ostringstream;
@@ -27,12 +31,22 @@ using std::ostringstream;
   */
 
 /**
-form: literal | list
-list: '(' form* ')'
-literal: STRING
-STRING: [^ \t\n\r]+
+UPPERCASE are terminals, lowercase are non-terminals.
+No escaping is allowed in this language. All strings are
+raw and space separated. That means whitespace and comment
+characters cannot appear in a string. Comments must appear after
+whitespace, otherwise the semicolon comment character is treated
+as part of the string.
+
+file: lists
+lists: list lists | EMPTY
+list: '(' forms ')'
+forms: form forms | EMPTY
+form: STRING | list
+EMPTY: 
+STRING: [^ \n\r\t#]+
 WS: [ \n\r\t]*
-COMMENT : [#].*
+COMMENT : ';' [^\r\n]*
 */
 
 #define DISABLE_COPY_AND_ASSIGN(name) \
@@ -44,12 +58,15 @@ enum FormType {
     ListType
 };
 
+class Form;
+typedef std::list<Form*> FormList;
+
 class Form
 {
 public:
     DISABLE_COPY_AND_ASSIGN(Form);
     FormType const type_;
-    list<Form*>* forms_;
+    FormList* forms_;
     string* string_;
 
     // StringType
@@ -59,7 +76,7 @@ public:
         string_(new string(str, len)) {}
 
     // ListType
-    Form(list<Form*>* forms)
+    Form(FormList* forms)
         : type_(ListType),
         forms_(forms),
         string_(NULL) {}
@@ -94,12 +111,14 @@ class Parser
     FILE* fp_;
     Form* root_;
     Symbol symbol_;
+    int line_; // current line being parsed.
     char string_[MAX_STRING];
     int stringlen_;
 
-    Form* listForm();
+    FormList* lists();
+    Form* list();
+    FormList* forms();
     Form* form();
-    list<Form*> *forms();
     void getsym();
     void getstringsym(int first_char);
     bool expect(Symbol);
@@ -108,7 +127,7 @@ class Parser
 public:
     Parser(FILE* fp);
     ~Parser();
-    Form* parse();
+    FormList* parse();
 };
 
 Parser::Parser(FILE* fp)
@@ -123,15 +142,18 @@ Parser::~Parser()
     if (fp_) fclose(fp_);
 }
 
-Form* Parser::parse()
+FormList* Parser::parse()
 {
-    Form* result = NULL;
+    line_ = 1;
+    FormList* result = NULL;
     try {
         LOG("parse");
         getsym();
-        result = listForm();
-    } catch (...) {
-
+        result = lists();
+    } catch (std::exception & e) {
+        cerr << "Exception occurred on line " << line_ << ": " << e.what() << endl;
+    } catch(...) {
+        cerr << "Unknown exception on line " << line_ << "." << endl;
     }
     return result;
 }
@@ -151,6 +173,9 @@ void Parser::getsym()
     while(sym == SymbolNone && (c = fgetc(fp_)) != EOF) {
         switch(c) {
         CASE_WS:
+            if (c == '\n' || c == '\r') {
+                ++line_;
+            }
             // skip whitespace
             break;
         case '(':
@@ -158,6 +183,13 @@ void Parser::getsym()
             break;
         case ')':
             sym = SymbolRightParen;
+            break;
+        case ';':
+            // eat comment
+            while(c != EOF && c != '\n' && c != '\r') {
+                c = fgetc(fp_);
+            }
+            ungetc(c, fp_);
             break;
         default:
             sym = SymbolString;
@@ -220,31 +252,58 @@ bool Parser::accept(Symbol s)
     return false;
 }
 
-Form* Parser::listForm()
+FormList* Parser::lists()
 {
-    LOG("listForm");
+    LOG("lists");
+    FormList* result = new FormList();
+    while(symbol_ == SymbolLeftParen) {
+        result->push_back(list());
+    }
+    return result;
+}
+
+Form* Parser::list()
+{
+    LOG("list");
     expect(SymbolLeftParen);
-    auto result = forms();
+    auto formList = forms();
     expect(SymbolRightParen);
-    return new Form(result);
+    return new Form(formList);
 }
 
 
-list<Form*>* Parser::forms()
+FormList* Parser::forms()
 {
-    accept(SymbolRightParen);
-
     LOG("forms");
+    FormList* result = new FormList();
+    Form* f;
+    while((f = form()) != NULL) {
+        result->push_back(f);
+    }
+    return result;
+}
 
-    // TODO
-    abort();
-    return NULL;
+Form* Parser::form()
+{
+    LOG("form");
+    Form* result = NULL;
+    if (symbol_ == SymbolString) {
+        result = new Form(string_, stringlen_);
+        getsym();
+    } else if (symbol_ == SymbolLeftParen) {
+        result = list();
+    }
+    return result;
 }
 
 int main(int argc, char** argv)
 {
     Parser parser(stdin);
-    parser.parse();
+    FormList* list = parser.parse();
+    if (list == NULL) {
+        exit(1);
+    }
+
     return 0;
 }
 
