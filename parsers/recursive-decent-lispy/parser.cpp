@@ -8,6 +8,7 @@
 
 using std::endl;
 using std::cerr;
+using std::cout;
 
 // Do not do "using std::list" because the name conflicts with list() function.
 using std::string;
@@ -54,8 +55,8 @@ COMMENT : ';' [^\r\n]*
     name & operator=(const name&) = delete;
 
 enum FormType {
-    StringType,
-    ListType
+    FormStringType,
+    FormListType
 };
 
 class Form;
@@ -69,15 +70,15 @@ public:
     FormList* forms_;
     string* string_;
 
-    // StringType
+    // FormStringType
     Form(char const* str, int len)
-        : type_(StringType),
+        : type_(FormStringType),
         forms_(NULL),
         string_(new string(str, len)) {}
 
-    // ListType
+    // FormListType
     Form(FormList* forms)
-        : type_(ListType),
+        : type_(FormListType),
         forms_(forms),
         string_(NULL) {}
 
@@ -303,6 +304,31 @@ Form* Parser::form()
     return result;
 }
 
+static void printFormList(FormList* l);
+static void printForm(Form* f)
+{
+    switch(f->type_) {
+    case FormStringType:
+        cout << "STRING: " << f->string_->c_str() << '\n';
+        break;
+    case FormListType:
+        cout << "LIST(\n";
+        printFormList(f->forms_);
+        cout << ")\n";
+        break;
+    default:
+        cerr << "Unhandled form type " << f->type_ << endl;
+        abort();
+    }
+}
+
+static void printFormList(FormList* l)
+{
+    for(Form* f : *l) {
+        printForm(f);
+    }
+}
+
 int main(int argc, char** argv)
 {
     Parser parser(stdin);
@@ -310,6 +336,8 @@ int main(int argc, char** argv)
     if (list == NULL) {
         exit(1);
     }
+
+    printFormList(list);
 
     std::cout << "Read " << list->size() << " sub-lists " << endl;
 
