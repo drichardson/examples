@@ -169,7 +169,7 @@ void log_fd(TestParameters* params, string const & msg)
     int rc = write(params->fd_out, msg.c_str(), msg.size());
     params->log_mutex.unlock();
 
-    if (rc != msg.size()) {
+    if (rc < 0 || static_cast<string::size_type>(rc) != msg.size()) {
         cerr << "log_fd failed. Wrote " << rc
            <<  " bytes but expected " << msg.size()
            << ". Errno: " << errno << ". " << strerror(errno)
@@ -194,6 +194,7 @@ void log_stream(TestParameters* params, string const & msg)
 {
     params->log_mutex.lock();
     params->stream << msg;
+    params->stream.write(msg.c_str(), msg.size());
     params->log_mutex.unlock();
 
     if (!params->stream.good()) {
