@@ -1,5 +1,6 @@
-; my executable
-(executable
+; my binary
+(binary
+  (name mybinary)
   (sources
     file1.c
     file2.c
