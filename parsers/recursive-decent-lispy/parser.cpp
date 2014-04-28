@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <list>
 #include <string>
 #include <stdexcept>
@@ -17,18 +18,31 @@ using std::ostringstream;
 
 #define LOG_PRODUCTION(x) puts(x)
 
+#if __linux__
+#include <linux/limits.h>
+#else
 #include <sys/fcntl.h>
+#endif
 
 static string full_path_for_file(FILE* fp)
 {
     if (fp == stdin) return "<stdio>";
 
     char pathbuf[PATH_MAX+1];
+
+#if __linux__
+    ostringstream oss;
+    oss << "/proc/self/fd/" << fileno(fp);
+    if (readlink(oss.str().c_str(), pathbuf, sizeof(pathbuf)) > 0) {
+        return pathbuf;
+    }
+#else
     if (fcntl(fileno(fp), F_GETPATH, pathbuf) >= 0) {
         return pathbuf;
     }
+#endif
 
-    abort();
+    throw std::runtime_error("Couldn't convert FILE* to string");
 }
 
 /**
