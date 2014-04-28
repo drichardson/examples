@@ -44,4 +44,4 @@ else()
         --force-new-ctest-process --output-on-failure)
 endif()
 
-
+add_dependencies(check lispy)
