@@ -39,7 +39,7 @@ characters cannot appear in a string. Comments must appear after
 whitespace, otherwise the semicolon comment character is treated
 as part of the string.
 
-file: lists
+file: lists EOF
 lists: list lists | EMPTY
 list: '(' forms ')'
 forms: form forms | EMPTY
@@ -124,10 +124,13 @@ class Parser
     char string_[MAX_STRING];
     int stringlen_;
 
+    // recursive decent non-terminal production methods
+    FormList* file();
     FormList* lists();
     Form* list();
     FormList* forms();
     Form* form();
+
     void getsym();
     void getstringsym();
     void expect(Symbol);
@@ -142,8 +145,12 @@ public:
 Parser::Parser(FILE* fp)
     : fp_(fp),
     root_(NULL),
+    symbol_(SymbolNone),
+    line_(1),
+    c(0),
     stringlen_(0)
 {
+    string_[0] = 0;
 }
 
 Parser::~Parser()
@@ -153,22 +160,71 @@ Parser::~Parser()
 
 FormList* Parser::parse()
 {
-    line_ = 1;
-    FormList* result = NULL;
     try {
-        getsym();
-        result = lists();
-
-        if (symbol_ != SymbolNone || !feof(fp_)) {
-            throw std::runtime_error("Unexpected characters starting at .");
-        }
+        return file();
     } catch (std::exception & e) {
         cerr << "Exception occurred on line " << line_ << ": " << e.what() << endl;
     } catch(...) {
         cerr << "Unknown exception on line " << line_ << "." << endl;
     }
+    return NULL;
+}
+
+FormList* Parser::file()
+{
+    getsym();
+    FormList* result = lists();
+    if (!feof(fp_)) {
+        throw std::runtime_error("Unexpected characters starting at .");
+    }
     return result;
 }
+
+FormList* Parser::lists()
+{
+    LOG_PRODUCTION("lists");
+    FormList* result = new FormList();
+    while(symbol_ == SymbolLeftParen) {
+        result->push_back(list());
+    }
+    return result;
+}
+
+Form* Parser::list()
+{
+    LOG_PRODUCTION("list");
+    expect(SymbolLeftParen);
+    auto formList = forms();
+    expect(SymbolRightParen);
+    return new Form(formList);
+}
+
+
+FormList* Parser::forms()
+{
+    LOG_PRODUCTION("forms");
+    FormList* result = new FormList();
+    Form* f;
+    while((f = form()) != NULL) {
+        result->push_back(f);
+    }
+    return result;
+}
+
+Form* Parser::form()
+{
+    LOG_PRODUCTION("form");
+    Form* result = NULL;
+    if (symbol_ == SymbolString) {
+        result = new Form(string_, stringlen_);
+        getsym();
+    } else if (symbol_ == SymbolLeftParen) {
+        result = list();
+    }
+    return result;
+}
+
+
 
 #define CASE_WS \
     case '\n': \
@@ -260,50 +316,6 @@ bool Parser::accept(Symbol s)
     return false;
 }
 
-FormList* Parser::lists()
-{
-    LOG_PRODUCTION("lists");
-    FormList* result = new FormList();
-    while(symbol_ == SymbolLeftParen) {
-        result->push_back(list());
-    }
-    return result;
-}
-
-Form* Parser::list()
-{
-    LOG_PRODUCTION("list");
-    expect(SymbolLeftParen);
-    auto formList = forms();
-    expect(SymbolRightParen);
-    return new Form(formList);
-}
-
-
-FormList* Parser::forms()
-{
-    LOG_PRODUCTION("forms");
-    FormList* result = new FormList();
-    Form* f;
-    while((f = form()) != NULL) {
-        result->push_back(f);
-    }
-    return result;
-}
-
-Form* Parser::form()
-{
-    LOG_PRODUCTION("form");
-    Form* result = NULL;
-    if (symbol_ == SymbolString) {
-        result = new Form(string_, stringlen_);
-        getsym();
-    } else if (symbol_ == SymbolLeftParen) {
-        result = list();
-    }
-    return result;
-}
-
 static void printFormList(FormList* l);
 static void printForm(Form* f)
 {
@@ -331,7 +343,16 @@ static void printFormList(FormList* l)
 
 int main(int argc, char** argv)
 {
-    Parser parser(stdin);
+    FILE* file = stdin;
+    if (argc > 1) {
+        file = fopen(argv[1], "r");
+        if (file == NULL) {
+            cerr << "Error opening " << argv[1] << endl;
+            exit(1);
+        }
+    }
+
+    Parser parser(file);
     FormList* list = parser.parse();
     if (list == NULL) {
         exit(1);
