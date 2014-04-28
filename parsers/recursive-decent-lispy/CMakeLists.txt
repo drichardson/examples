@@ -18,19 +18,20 @@ macro (test_ok file)
     add_test(ok_${file} ${CMAKE_BINARY_DIR}/lispy "${CMAKE_SOURCE_DIR}/test/succeed/${file}.lisp")
 endmacro (test_ok)
 
-macro (test_fail file)
+macro (test_fail file match)
     add_test(fail_${file} ${CMAKE_BINARY_DIR}/lispy "${CMAKE_SOURCE_DIR}/test/fail/${file}.lisp")
     set_tests_properties(fail_${file} PROPERTIES
-        WILL_FAIL true)
+        PASS_REGULAR_EXPRESSION ${match})
 endmacro (test_fail)
 
 test_ok(1)
 test_ok(2)
 test_ok(3)
 test_ok(4)
+test_ok(5)
 
-test_fail(1)
-test_fail(2)
+test_fail(1 "Parse error[.] Expected end of file but got STRING = hi[.]")
+test_fail(2 "Parse error[.] Expected end of file but got [)][.]")
 
 #
 # Add check target that outputs test results on failure.

@@ -17,6 +17,20 @@ using std::ostringstream;
 
 #define LOG_PRODUCTION(x) puts(x)
 
+#include <sys/fcntl.h>
+
+static string full_path_for_file(FILE* fp)
+{
+    if (fp == stdin) return "<stdio>";
+
+    char pathbuf[PATH_MAX+1];
+    if (fcntl(fileno(fp), F_GETPATH, pathbuf) >= 0) {
+        return pathbuf;
+    }
+
+    abort();
+}
+
 /**
   Example things to parse:
   1. (a)
@@ -136,6 +150,8 @@ class Parser
     void expect(Symbol);
     bool accept(Symbol);
 
+    std::ostream & parse_error();
+
 public:
     Parser(FILE* fp);
     ~Parser();
@@ -158,14 +174,19 @@ Parser::~Parser()
     if (fp_) fclose(fp_);
 }
 
+std::ostream & Parser::parse_error()
+{
+    return cerr << full_path_for_file(fp_) << ':' << line_ << ' ';
+}
+
 FormList* Parser::parse()
 {
     try {
         return file();
     } catch (std::exception & e) {
-        cerr << "Exception occurred on line " << line_ << ": " << e.what() << endl;
+        parse_error() << "Parse error. " << e.what() << endl;
     } catch(...) {
-        cerr << "Unknown exception on line " << line_ << "." << endl;
+        parse_error() << "Unexpected parse error." << endl;
     }
     return NULL;
 }
@@ -175,7 +196,16 @@ FormList* Parser::file()
     getsym();
     FormList* result = lists();
     if (!feof(fp_)) {
-        throw std::runtime_error("Unexpected characters starting at .");
+        ostringstream oss;
+        oss << "Expected end of file but got "
+            << symbolname[symbol_];
+        if (symbol_ == SymbolString) {
+            string s(string_, stringlen_);
+            oss << " = " << s << ".";
+        } else {
+            oss << ".";
+        }
+        throw std::runtime_error(oss.str());
     }
     return result;
 }
