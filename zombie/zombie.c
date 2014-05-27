@@ -26,6 +26,26 @@ int main()
         execl("/usr/bin/ls", "/usr/bin/ls", NULL);
 #endif
 
+#if 1
+        // double fork.
+        pid = fork();
+        if (pid == (pid_t)-1) {
+            printf("child: double fork failed. %s\n", strerror(errno));
+            exit(1);
+        }
+
+        if (pid != 0) {
+            // child. exit immediately to parent's waitpid get's cleaned up.
+           exit(1); 
+        }
+
+        // grandchild. Will be reassigned to init.
+        puts("grandchild: sleeping 1 second for parent to die.");
+        puts("grandchild: sleeping");
+        sleep(to_sleep);
+        exit(0);
+#endif
+
         puts("child: sleeping");
         sleep(to_sleep);
         exit(0);
