@@ -1,4 +1,4 @@
-TARGETS=ofstream_test templates atomics system_error
+TARGETS=ofstream_test templates atomics system_error array
 CXXFLAGS=-std=c++1y -Wall -g -O0
 
 all: $(TARGETS)
@@ -16,6 +16,9 @@ templates: templates.o
 	$(CXX) -o $@ $<
 
 system_error: system_error.o
+	$(CXX) -o $@ $<
+	
+array: array.o
 	$(CXX) -o $@ $<
 	
 clean:
