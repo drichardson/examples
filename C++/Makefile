@@ -1,4 +1,4 @@
-TARGETS=ofstream_test templates atomics
+TARGETS=ofstream_test templates atomics system_error
 CXXFLAGS=-std=c++1y -Wall -g -O0
 
 all: $(TARGETS)
@@ -15,5 +15,8 @@ atomics: atomics.o
 templates: templates.o
 	$(CXX) -o $@ $<
 
+system_error: system_error.o
+	$(CXX) -o $@ $<
+	
 clean:
 	$(RM) -r $(TARGETS) *.dSYM a.txt *.o
