@@ -1,5 +1,6 @@
-TARGETS=ofstream_test templates atomics system_error array
-CXXFLAGS=-std=c++1y -Wall -g -O0
+TARGETS=ofstream_test templates atomics system_error array function function.S
+#CXXFLAGS=-std=c++1y -Wall -g -O0 -march=native -pthread
+CXXFLAGS=-std=c++1y -Wall -O3 -march=native -pthread
 
 all: $(TARGETS)
 
@@ -21,5 +22,11 @@ system_error: system_error.o
 array: array.o
 	$(CXX) -o $@ $<
 	
+function: function.o
+	$(CXX) -pthread -o $@ $<
+
+function.S: function.cc
+	$(CXX) -S $(CXXFLAGS) -o $@ $<
+	
 clean:
-	$(RM) -r $(TARGETS) *.dSYM a.txt *.o
+	$(RM) -r $(TARGETS) *.dSYM a.txt *.o *.S
