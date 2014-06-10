@@ -3,6 +3,7 @@
 #include <thread>
 #include <stdio.h>
 #include <unistd.h>
+#include <sstream>
 
 pid_t gettid()
 {
@@ -12,8 +13,10 @@ pid_t gettid()
 
 void dump()
 {
-    printf("tid is %d, thread id is %u\n",
-            gettid(), std::this_thread::get_id());
+    std::ostringstream oss;
+    oss << std::this_thread::get_id();
+    printf("tid is %d, thread id is %s\n",
+            gettid(), oss.str().c_str());
 }
 
 int main()
