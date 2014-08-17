@@ -1,3 +1,8 @@
+;
+; Text Adventure Game from chapter 2 of Land of Lisp.
+; To run, start clisp and enter (load "text-adventure.lisp")
+;
+
 (defparameter *nodes*
   '(
     (living-room (you are in the living room. a wizard
@@ -57,11 +62,19 @@
              (look))
       '(you cannot go that way.))))
 
-(defun nl () (write-char #\linefeed))
+(defun pickup (object)
+  (cond ((member object (objects-at *location* *objects* *object-locations*))
+         (push (list object 'body) *object-locations*)
+         `(you are now carrying the ,object))
+        (t '(you cannot get that.))))
 
-(princ "hi")
+(defun inventory ()
+  (cons 'items- (objects-at 'body *objects* *object-locations*)))
+
 (princ (look))
 
+; debugging stuff
+(defun nl () (write-char #\linefeed))
 ;(princ (describe-objects 'living-room *objects* *object-locations*))
 ;(nl)
 ;(princ (eq (cadr (assoc 'bucket *object-locations*)) 'living-room))
