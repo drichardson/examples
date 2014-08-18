@@ -1,6 +1,8 @@
 ;
 ; Text Adventure Game from chapter 2 of Land of Lisp.
-; To run, start clisp and enter (load "text-adventure.lisp")
+; To run, start clisp and enter:
+; (load "text-adventure.lisp")
+; (game-repl)
 ;
 
 (defparameter *nodes*
@@ -71,25 +73,43 @@
 (defun inventory ()
   (cons 'items- (objects-at 'body *objects* *object-locations*)))
 
-(princ (look))
+(defun game-repl ()
+  (loop (print (eval (read)))))
 
-; debugging stuff
-(defun nl () (write-char #\linefeed))
-;(princ (describe-objects 'living-room *objects* *object-locations*))
-;(nl)
-;(princ (eq (cadr (assoc 'bucket *object-locations*)) 'living-room))
-;(nl)
-;(princ (describe-paths 'living-room *edges*))
-;(nl)
-;(princ (objects-at 'garden *objects* *object-locations*))
-;(nl)
-;(princ (cdr (assoc 'garden *edges*)))
-;(nl)
-;(princ (mapcar #'describe-path (cdr (assoc 'living-room *edges*))))
-;(nl)
-;(princ (describe-location 'living-room *nodes*))
-;(nl)
-;(princ (describe-path '(garden west door)))
-;(nl)
-;(princ (describe-paths 'attic *edges*))
-;(nl)
+(defun game-repl ()
+  (let ((cmd (game-read)))
+    (unless (eq (car cmd) 'quit)
+      (game-print (game-eval cmd))
+      (game-repl))))
+
+(defun game-read ()
+  (let ((cmd (read-from-string (concatenate 'string "(" (read-line) ")"))))
+    (flet ((quote-it (x) (list 'quote x)))
+      (cons (car cmd) (mapcar #'quote-it (cdr cmd))))))
+
+(defparameter *allowed-commands* '(look walk pickup inventory))
+
+(defun game-eval (sexp)
+  (if (member (car sexp) *allowed-commands*)
+    (eval sexp)
+    '(i do not know that command.)))
+
+(defun tweak-text (lst caps lit)
+  (when lst
+    (let ((item (car lst))
+          (rest (cdr lst)))
+      (cond ((eq item #\space) (cons item (tweak-text rest caps lit)))
+            ((member item '(#\! #\? #\.)) (cons item (tweak-text rest t lit)))
+            ((eq item #\") (tweak-text rest caps (not lit)))
+            ((or caps lit) (cons (char-upcase item) (tweak-text rest nil lit)))
+            (t (cons (char-downcase item) (tweak-text rest nil nil)))))))
+
+(defun game-print (lst)
+  (princ (coerce (tweak-text (coerce (string-trim "() "
+                                                  (prin1-to-string lst))
+                                     'list)
+                             t
+                             nil)
+                 'string))
+  (fresh-line))
+
