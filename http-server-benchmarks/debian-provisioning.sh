@@ -2,7 +2,7 @@
 # Provision a Rackspace OnMetal Debian Wheezy instance
 # This script should be idempotent.
 # To run, do something like this:
-# ssh root@104.130.18.76 'bash -s' < rackspace-onmetal-provisioning.sh
+# ssh root@104.130.18.76 'bash -s' < debian-provisioning.sh
 
 set -e
 
