@@ -21,7 +21,7 @@ copy_roots_authorized_keys_to_user() {
 create_user () {
     # Create non-root user. If user already exists this will fail.
     set +e
-    useradd -m $1
+    useradd -m --shell /bin/bash $1
     set -e
 }
 
@@ -30,7 +30,7 @@ provision() {
 
     # Get some standard stuff I need
     apt-get --yes update
-    apt-get --yes install vim emacs gcc g++ git subversion sbcl sudo
+    apt-get --yes install vim emacs gcc g++ git subversion sbcl sudo curl
 
     local NONROOT_USER=doug
     create_user $NONROOT_USER
