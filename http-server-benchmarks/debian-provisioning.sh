@@ -30,7 +30,7 @@ provision() {
 
     # Get some standard stuff I need
     apt-get --yes update
-    apt-get --yes install vim emacs gcc g++ git subversion sbcl sudo curl
+    apt-get --yes install vim emacs gcc g++ git subversion sbcl sudo curl make
 
     local NONROOT_USER=doug
     create_user $NONROOT_USER
