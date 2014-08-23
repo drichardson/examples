@@ -8,12 +8,14 @@ set -e
 
 # Use same ssh key for non-root user
 copy_roots_authorized_keys_to_user() {
-    echo "Installing roots authorized_keys for $1"
-    mkdir -p ~$1/.ssh
-    cp $HOME/.ssh/authorized_keys ~$1/.ssh/authorized_keys
-    chown $1:$1 ~$1/.ssh ~$1/.ssh/authorized_keys
-    chmod 600 ~$1/.ssh/authorized_keys
-    chmod 700 ~d$1/.ssh
+    echo "Installing root's authorized_keys for $1"
+    local UD=/home/$1
+    local AUTHKEYS=$UD/.ssh/authorized_keys
+    mkdir -p $UD/.ssh
+    cp /root/.ssh/authorized_keys $AUTHKEYS
+    chown $1:$1 $UD/.ssh $AUTHKEYS
+    chmod 600 $AUTHKEYS
+    chmod 700 $UD/.ssh
 }
 
 create_user () {
@@ -27,16 +29,18 @@ provision() {
     echo Provisioning host
 
     # Get some standard stuff I need
-    apt-get update
+    apt-get --yes update
     apt-get --yes install vim emacs gcc g++ git subversion sbcl sudo
 
     local NONROOT_USER=doug
     create_user $NONROOT_USER
     copy_roots_authorized_keys_to_user $NONROOT_USER
-
-    RESULT=OK    
 }
 
 RESULT=FAILURE
-trap "{ echo $RESULT; }" EXIT
+report_result() {
+    echo $RESULT
+}
+trap "report_result;" EXIT
 provision
+RESULT=OK
