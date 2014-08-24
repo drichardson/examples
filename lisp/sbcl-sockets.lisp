@@ -21,8 +21,16 @@
 	 (sb-bsd-sockets:socket-send c *data* (length *data*) :external-format :utf-8)
       (sb-bsd-sockets:socket-close c))))
 
+(defun accept-one-stream (l)
+  (let ((c (sb-bsd-sockets:socket-accept l)))
+    (unwind-protect
+	 (let ((stream (sb-bsd-sockets:socket-make-stream c :output t)))
+	   (format stream "test~&"))
+      (sb-bsd-sockets:socket-close c))))
+
 (defun runloop (l)
-  (accept-one l)
+  ;(accept-one l)
+  (accept-one-stream l)
   (runloop l))
 
 (defun main ()
