@@ -31,6 +31,7 @@
 
 (defun game-tree (board player spare-dice first-move)
   (list player
+	board
 	(add-passing-move board
 			  player
 			  spare-dice
@@ -137,3 +138,9 @@
 			 (not (eq (cdr x) best)))
 		       Totals))))
 
+(defun annouce-winner (board)
+  (fresh-line)
+  (let ((w (winners board)))
+    (if (> (length w) 1)
+	(format t "The game is a tie between ~a" (mapcar #'player-letter w))
+	(format t "The winner is ~a" (player-letter (car w))))))
