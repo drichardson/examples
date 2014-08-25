@@ -46,8 +46,53 @@
 		   (funcall request-handler stream path header params))))
       (socket-server-close socket))))
 
+(defun crlf (stream)
+  (format stream "~C~C" #\return #\linefeed))
+
+(defun http-line (stream line)
+  (princ line stream)
+  (crlf stream))
+
+(defun http-status (stream code reason)
+  (http-line stream (format nil "HTTP/1.1 ~a ~a" code reason)))
+
+(defun http-ok-status (stream) (http-status stream 200 "OK"))
+(defun http-not-found (stream)
+  (http-status stream 404 "Not found")
+  (crlf stream))
+
+(defun http-ok (stream body)
+  (http-ok-status stream)
+  (http-line stream (format nil "Content-Length: ~a" (length body)))
+  (crlf stream)
+  (princ body stream))
+
+(defun hello-show-form (stream)
+  (http-ok stream "<html>
+<head><title>Land of Lisp HTTP Server</title></head>
+<body>
+<form>
+What is your name?
+<input name='name' />
+</form>
+</body>
+</html>"))
+
+(defun hello-show-greeting (stream name)
+  (http-ok
+   stream
+   (format nil "<html>
+Nice to meet  you, ~a!
+</html>" (cdr name))))
+
 (defun hello-request-handler (stream path header params)
-  (format stream "response~&~A, ~A, ~A" path header params))
+  (declare (ignore header))
+  (if (equal path "greeting")
+      (let ((name (assoc 'name params)))
+	(if name
+	    (hello-show-greeting stream name)
+	    (hello-show-form stream)))
+      (http-not-found stream)))
 
 (defun main-hello-http ()
   (http-serve #'hello-request-handler))
