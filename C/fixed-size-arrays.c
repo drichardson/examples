@@ -1,10 +1,15 @@
 /**
-  * Summary
+  * ===========================================================================
+  * Abstract 
+  * ===========================================================================
   * Perform some compile time fixed size array experiments to see what warnings
   * and errors compilers provide. Use gcc 4.9.1 and clang 3.4.2.
   *
+  * ===========================================================================
   * Results: 
-  * 
+  * ===========================================================================
+  *
+  * ---------------------------------------------------------------------------
   * Experiments with fixed sized arrays using gcc (GCC) 4.9.1
   * ---------------------------------------------------------------------------
   * Calls to functions declared with the form typeX foo(typeY a[N]) are
@@ -26,12 +31,31 @@
   * For example, given void foo(char const (*p)[4]), a call to it
   * with foo(a), where char a[4] will fail with incompatible pointer type.
   *
+  * When using the point to first element of array technique
+  * (typeX foo(typeY a[N])) gcc will automatically convert from non-const
+  * to const versions.
+  *
+  * Fixed size arrays are passed by reference.
+  *
+  * ---------------------------------------------------------------------------
   * Experiments with clang 3.4.2
   * ---------------------------------------------------------------------------
   * Similar results to gcc, with the exception that clang automatically
-  * converts from non-const to const types that are otherwise identical, which
-  * appears to be out of spec with C11 draft section 6.7.3 (Type qualifiers)
-  * paragraph that starts with "For two qualified types to be compatible..."
+  * converts from non-const to const types that are otherwise identical.
+  *
+  * ===========================================================================
+  * Summary
+  * ===========================================================================
+  * C11 draft section 6.7.3 (Type qualifiers) paragraph that starts with
+  * "For two qualified types to be compatible..." suggests that
+  * two qualified types (e.g., char * const and char const*) are incomptable
+  * unless they are identally qualified. I do not, however, see anything
+  * talking about compatibility of non-qualified types with qualified types.
+  * Semantically, I'd guess allowing conversion from non-const to otherwise
+  * identical const types is safe in all situations, but gcc doesn't always
+  * allow this, at least not when the form of the pointer to a fixed size
+  * array (e.g., gcc will not make char (*p)[4] compatible with
+  * char const (*p)[4]).
   */
 #include <stdio.h>
 
@@ -50,6 +74,10 @@ static int sum_4(char (*p)[4]) {
     return (*p)[0] + (*p)[1] + (*p)[2] + (*p)[3] + (*p)[4] + (*p)[5];
 }
 #endif
+
+void a3_modify(char a[3]) {
+    a[0] += 1;
+}
 
 int main(int argc, char const** argv) {
 
@@ -71,7 +99,6 @@ int main(int argc, char const** argv) {
     printf("sum_3(a2) = %d\n", sum_3(a2));
 #endif
 
-
     // **********************************
     // Test form typeX foo(typeY (*p)[N])
     // **********************************
@@ -83,6 +110,11 @@ int main(int argc, char const** argv) {
     // compile time error: incompatible pointer type printf("sum_4(&u4) = %d\n", sum_4(&u4));
     char const c4[4] = { 1, 2, 4, 8 };
     printf("sum_4(&c4) = %d\n", sum_4(&c4));
+
+    // by value or reference?
+    char a3_0_prev = a3[0];
+    a3_modify(a3);
+    printf("a3[0] = %hhd (was passed by %s)\n", a3[0], a3[0] != a3_0_prev ? "reference" : "value");
 
     return 0;
 }
