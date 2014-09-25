@@ -56,6 +56,12 @@
   * allow this, at least not when the form of the pointer to a fixed size
   * array (e.g., gcc will not make char (*p)[4] compatible with
   * char const (*p)[4]).
+  *
+  * Some stack overflow post suggest that either gcc got it right or that the
+  * standard is open to interpretation.
+  * http://stackoverflow.com/questions/17122727/assignment-pointer-to-array-of-constants-pointer-to-array-incompatible-po
+  * Specifically this answer: http://stackoverflow.com/a/17123107/196964
+  * Also read this: http://c-faq.com/ansi/constmismatch.html
   */
 #include <stdio.h>
 
