@@ -2,6 +2,7 @@
 #define _BSD_SOURCE
 
 #include <pcap/pcap.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -57,6 +58,110 @@ print_hex_dump(unsigned char const* data, size_t len) {
 static int
 min(int a, int b) {
     return a < b ? a : b;
+}
+
+typedef unsigned char u8;
+typedef unsigned short u16;
+
+struct ethernet_frame {
+    u8 dst_mac_address[6];
+    u8 src_mac_address[6];
+    u8 ethertype[2];
+};
+
+static bool
+ethernet_frame_ethertype_equals(struct ethernet_frame const* e, u16 ethertype) {
+    return e->ethertype[0] == (ethertype >> 8) &&
+        e->ethertype[1] == (ethertype & 15);
+}
+
+struct ipv4_packet {
+    u8 version_ihl;
+    u8 dscp_ecn;
+    u8 total_length[2];
+    u8 identification[2];
+    u8 flags_fragment_offset[2];
+    u8 time_to_live;
+    u8 protocol;
+    u8 header_checksum[2];
+    u8 src_ip_address[4];
+    u8 dst_ip_address[4];
+    u8 options[0]; // if ihl > 5
+};
+
+static int
+ipv4_total_length(struct ipv4_packet const* p) {
+    int t = p->total_length[0];
+    t = (t << 8) | p->total_length[1];
+    return t;
+}
+
+struct udp_packet {
+    u8 src_port[2];
+    u8 dst_port[2];
+    u8 length[2];
+    u8 checksum[2];
+};
+
+struct tcp_packet {
+    u8 src_port[2];
+    u8 dst_port[2];
+    u8 sequence_number[4];
+    u8 acknowledgement_number[4];
+    u8 data_offset_reserved_flag1;
+    u8 flag2_thru_9;
+    u8 window_size[2];
+    u8 checksum[2];
+    u8 urgent_pointer[2];
+    u8 options[0]; // if data offset > 5
+};
+
+static void
+print_ethernet_frame(struct ethernet_frame const* e) {
+    printf("Ethernet: src_mac=");
+    print_hex_dump(e->src_mac_address, sizeof(e->src_mac_address));
+    printf(", dst_mac=");
+    print_hex_dump(e->dst_mac_address, sizeof(e->dst_mac_address));
+    printf(", ethertype=");
+    print_hex_dump(e->ethertype, sizeof(e->ethertype));
+}
+
+static void
+print_parsed_ipv4_packet(struct ipv4_packet const* p) {
+    unsigned ihl = p->version_ihl & 15;
+    printf("IPv4: ihl=%u", ihl);
+    printf(", total_len=%d", ipv4_total_length(p));
+    printf(", protocol=%X", p->protocol);
+    printf(", src_ip=");
+    print_hex_dump(p->src_ip_address, sizeof(p->src_ip_address));
+    printf(", dst_ip=");
+    print_hex_dump(p->dst_ip_address, sizeof(p->dst_ip_address));
+}
+
+static void
+print_parsed_frame(u8 const* data, int data_len) {
+    if (data_len < sizeof(struct ethernet_frame)) {
+        printf("ppf: didn't capture enough to parse ethernet frame. len=%d\n", data_len);
+        return;
+    }
+
+    struct ethernet_frame const* e = (struct ethernet_frame*)data;
+    putchar('\t'); print_ethernet_frame(e); putchar('\n');
+
+    if (ethernet_frame_ethertype_equals(e, 0x0800)) {
+        if (data_len < sizeof(struct ethernet_frame) + sizeof(struct ipv4_packet)) {
+            printf("ppf: didn't capture enough to parse IPv4 header. len=%d\n", data_len);
+            return;
+        }
+        // IPv4
+        struct ipv4_packet const* ip4 = (struct ipv4_packet*)(data + sizeof(struct ethernet_frame));
+        putchar('\t'); print_parsed_ipv4_packet(ip4); putchar('\n');
+
+    } else if (ethernet_frame_ethertype_equals(e, 0x86DD)) {
+        // IPv6
+    } else {
+        printf("ppf: unhandled ethertype\n");
+    }
 }
 
 int main(int argc, char const** argv) {
@@ -125,6 +230,7 @@ int main(int argc, char const** argv) {
             printf("read packet: caplen=%4d, len=%4d data=", hdr->caplen, hdr->len);
             print_hex_dump(data, min(hdr->caplen, 50));
             putchar('\n');
+            print_parsed_frame(data, hdr->caplen);
             break;
         case 0: // timeout expired
             break;
