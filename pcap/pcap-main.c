@@ -62,6 +62,21 @@ min(int a, int b) {
 
 typedef unsigned char u8;
 typedef unsigned short u16;
+typedef unsigned int u32;
+
+static u16
+u8s_to_u16(u8 const u[2]) {
+    u16 r0 = u[0], r1 = u[1];
+    return (r0 << 8) | r1;
+}
+
+#if 0
+static u32
+u8s_to_u32(u8 const u[4]) {
+    u32 r0 = u[0], r1 = u[1], r2 = u[2], r3 = u[4];
+    return (r0 << 24) | (r1 << 16) | (r2 << 8) | r3;
+}
+#endif
 
 struct ethernet_frame {
     u8 dst_mac_address[6];
@@ -69,10 +84,62 @@ struct ethernet_frame {
     u8 ethertype[2];
 };
 
-static bool
-ethernet_frame_ethertype_equals(struct ethernet_frame const* e, u16 ethertype) {
-    return e->ethertype[0] == (ethertype >> 8) &&
-        e->ethertype[1] == (ethertype & 15);
+u16 const ETHERTYPE_IPV4 = 0x0800;
+u16 const ETHERTYPE_ARP = 0x0806;
+u16 const ETHERTYPE_WAKE_ON_LAN = 0x0842;
+u16 const ETHERTYPE_IETF_TRILL = 0x22F3;
+u16 const ETHERTYPE_DECNET_PHASE_IV = 0x6003;
+u16 const ETHERTYPE_REVERSE_ARP = 0x8035;
+u16 const ETHERTYPE_APPLETALK = 0x809B;
+u16 const ETHERTYPE_APPLETALK_ARP = 0x80F3;
+u16 const ETHERTYPE_VLAN_TAGGED_FRAME = 0x8100;
+u16 const ETHERTYPE_IPX_1 = 0x8137;
+u16 const ETHERTYPE_IPX_2 = 0x8138;
+u16 const ETHERTYPE_QNX_QNET = 0x8204;
+u16 const ETHERTYPE_IPV6 = 0x86DD;
+u16 const ETHERTYPE_ETHERNET_FLOW_CONTROL = 0x8808;
+u16 const ETHERTYPE_SLOW_PROTOCOLS = 0X8809;
+u16 const ETHERTYPE_COBRANET = 0x8819;
+u16 const ETHERTYPE_MPLS_UNICAT = 0x8847;
+u16 const ETHERTYPE_MPLS_MULTICAST = 0x8848;
+u16 const ETHERTYPE_PPPOE_DISCOVERY_STAGE = 0x8863;
+u16 const ETHERTYPE_PPPOE_SESSION_STAGE = 0x8864;
+u16 const ETHERTYPE_JUMBO_FRAMES = 0x8870;
+u16 const ETHERTYPE_HOMEPLUG_1DOT0_MME = 0x887B;
+u16 const ETHERTYPE_EAP_OVER_LAN = 0x888E;
+u16 const ETHERTYPE_PROFINET_PROTOCOL = 0x8892;
+u16 const ETHERTYPE_HYPERSCSI = 0x889A;
+u16 const ETHERTYPE_ATA_OVER_ETHERNET = 0x88A2;
+u16 const ETHERTYPE_ETHERCAT_PROTOCOL = 0x88A4;
+u16 const ETHERTYPE_PROVIDER_BRIDGING = 0x88A8;
+u16 const ETHERTYPE_ETHERNET_POWERLINK = 0x88AB;
+u16 const ETHERTYPE_LINK_LAYER_DISCOVERY_PROTOCOL = 0x88CC;
+u16 const ETHERTYPE_SERCOS_III = 0x88CD;
+u16 const ETHERTYPE_HOMEPLUG_AV_MME = 0x88E1;
+u16 const ETHERTYPE_MEDIA_REDUNDANCY_PROTOCOL = 0x88E3;
+u16 const ETHERTYPE_MAC_SECURITY = 0x88E5;
+u16 const ETHERTYPE_PRECISION_TIME_PROTOCOL = 0x88F7;
+u16 const ETHERTYPE_IEEE_CONNECTIVITY_FAULT_MANAGEMENT_PROTOCOL = 0x8902;
+u16 const ETHERTYPE_FIBRE_CHANNEL_OVER_ETHERNET = 0x8906;
+u16 const ETHERTYPE_FCOE_INITIALIZATION_PROTOCOL = 0x8914;
+u16 const ETHERTYPE_RDMA_OVER_CONVERGED_ETHERNET = 0x8915;
+u16 const ETHERTYPE_HIGH_AVAILABILITY_SEAMLESS_REDUNDANCY = 0x892F;
+u16 const ETHERTYPE_ETHERNET_CONFIGURATION_TESTING_PROTOCOL= 0x9000;
+u16 const ETHERTYPE_Q_I_Q = 0x9100;
+u16 const ETHERTYPE_VERITAS_LOW_LATENCY_TRANSPORT = 0xCAFE;
+
+static void
+mac_address_print(u8 const a[6]) {
+    printf("%02X:%02X:%02X:%02X:%02X:%02X", a[0], a[1], a[2], a[3], a[4], a[5]);
+}
+
+static void
+ethernet_frame_print(struct ethernet_frame const* e) {
+    printf("Ethernet: src_mac=");
+    mac_address_print(e->src_mac_address);
+    printf(", dst_mac=");
+    mac_address_print(e->dst_mac_address);
+    printf(", ethertype=0x%hu", u8s_to_u16(e->ethertype));
 }
 
 struct ipv4_packet {
@@ -89,11 +156,33 @@ struct ipv4_packet {
     u8 options[0]; // if ihl > 5
 };
 
-static int
-ipv4_total_length(struct ipv4_packet const* p) {
-    int t = p->total_length[0];
-    t = (t << 8) | p->total_length[1];
-    return t;
+#define IPV4_PROTOCOL_ICMP 1
+#define IPV4_PROTOCOL_IGMP 2
+#define IPV4_PROTOCOL_TCP 6
+#define IPV4_PROTOCOL_UDP 17
+#define IPV4_PROTOCOL_ENCAP 41
+#define IPV4_PROTOCOL_OSPF 89
+#define IPV4_PROTOCOL_SCTP 132
+
+static void
+ipv4_address_print(u8 const addr[4]) {
+    printf("%hhu.%hhu.%hhu.%hhu", addr[0], addr[1], addr[2], addr[4]);
+}
+
+static u8
+ipv4_packet_ihl(struct ipv4_packet const* p) {
+    return p->version_ihl & 0xf;
+}
+
+static void
+ipv4_packet_print(struct ipv4_packet const* p) {
+    printf("IPv4: ihl=%hhu", ipv4_packet_ihl(p));
+    printf(", total_len=%hu", u8s_to_u16(p->total_length));
+    printf(", protocol=%hhX", p->protocol);
+    printf(", src_ip=");
+    ipv4_address_print(p->src_ip_address);
+    printf(", dst_ip=");
+    ipv4_address_print(p->src_ip_address);
 }
 
 struct udp_packet {
@@ -102,6 +191,11 @@ struct udp_packet {
     u8 length[2];
     u8 checksum[2];
 };
+
+static void udp_packet_print(struct udp_packet const* udp) {
+    printf("UDP: src_port=%hu, dst_port=%hu", u8s_to_u16(udp->src_port),
+            u8s_to_u16(udp->dst_port));
+}
 
 struct tcp_packet {
     u8 src_port[2];
@@ -117,50 +211,66 @@ struct tcp_packet {
 };
 
 static void
-print_ethernet_frame(struct ethernet_frame const* e) {
-    printf("Ethernet: src_mac=");
-    print_hex_dump(e->src_mac_address, sizeof(e->src_mac_address));
-    printf(", dst_mac=");
-    print_hex_dump(e->dst_mac_address, sizeof(e->dst_mac_address));
-    printf(", ethertype=");
-    print_hex_dump(e->ethertype, sizeof(e->ethertype));
+tcp_packet_print(struct tcp_packet const* tcp) {
+    printf("TCP: src_port=%hu, dst_port=%hu", u8s_to_u16(tcp->src_port),
+            u8s_to_u16(tcp->dst_port));
 }
 
 static void
-print_parsed_ipv4_packet(struct ipv4_packet const* p) {
-    unsigned ihl = p->version_ihl & 15;
-    printf("IPv4: ihl=%u", ihl);
-    printf(", total_len=%d", ipv4_total_length(p));
-    printf(", protocol=%X", p->protocol);
-    printf(", src_ip=");
-    print_hex_dump(p->src_ip_address, sizeof(p->src_ip_address));
-    printf(", dst_ip=");
-    print_hex_dump(p->dst_ip_address, sizeof(p->dst_ip_address));
-}
-
-static void
-print_parsed_frame(u8 const* data, int data_len) {
+print_captured_data(u8 const* data, int data_len) {
     if (data_len < sizeof(struct ethernet_frame)) {
         printf("ppf: didn't capture enough to parse ethernet frame. len=%d\n", data_len);
         return;
     }
 
     struct ethernet_frame const* e = (struct ethernet_frame*)data;
-    putchar('\t'); print_ethernet_frame(e); putchar('\n');
+    putchar('\t'); ethernet_frame_print(e); putchar('\n');
 
-    if (ethernet_frame_ethertype_equals(e, 0x0800)) {
+    u16 ethertype = u8s_to_u16(e->ethertype);
+
+    if (ethertype == ETHERTYPE_IPV4) {
         if (data_len < sizeof(struct ethernet_frame) + sizeof(struct ipv4_packet)) {
             printf("ppf: didn't capture enough to parse IPv4 header. len=%d\n", data_len);
             return;
         }
         // IPv4
         struct ipv4_packet const* ip4 = (struct ipv4_packet*)(data + sizeof(struct ethernet_frame));
-        putchar('\t'); print_parsed_ipv4_packet(ip4); putchar('\n');
+        putchar('\t'); ipv4_packet_print(ip4); putchar('\n');
+        
+        u8 const* payload = (((u8*)ip4)+ipv4_packet_ihl(ip4)*4);
+        putchar('\t');
 
-    } else if (ethernet_frame_ethertype_equals(e, 0x86DD)) {
+        switch(ip4->protocol) {
+        case IPV4_PROTOCOL_ICMP:
+            printf("ICMP");
+            break;
+        case IPV4_PROTOCOL_IGMP:
+            printf("IGMP");
+            break;
+        case IPV4_PROTOCOL_TCP:
+            tcp_packet_print((struct tcp_packet*)payload);
+            break;
+        case IPV4_PROTOCOL_UDP: 
+            udp_packet_print((struct udp_packet*)payload);
+            break;
+        case IPV4_PROTOCOL_ENCAP:
+            printf("ENCAP");
+            break;
+        case IPV4_PROTOCOL_SCTP:
+            printf("SCTP");
+            break;
+        default:
+            printf("Unknown IP protocol %hhu", ip4->protocol);
+            break;
+        }
+        putchar('\n');
+    } else if (ethertype == ETHERTYPE_IPV6) {
         // IPv6
+        printf("\tIPv6\n");
+    } else if (ethertype == ETHERTYPE_ARP) {
+        printf("\tARP\n");
     } else {
-        printf("ppf: unhandled ethertype\n");
+        printf("\tUnhandled ethertype: %0xX\n", ethertype);
     }
 }
 
@@ -223,14 +333,16 @@ int main(int argc, char const** argv) {
     puts("Capture source activated");
     struct pcap_pkthdr* hdr = NULL;
     const u_char* data = NULL;
+    unsigned long counter = 0;
     while(1) {
         rc = pcap_next_ex(pc, &hdr, &data);
         switch(rc) {
         case 1: // packet read
-            printf("read packet: caplen=%4d, len=%4d data=", hdr->caplen, hdr->len);
-            print_hex_dump(data, min(hdr->caplen, 50));
-            putchar('\n');
-            print_parsed_frame(data, hdr->caplen);
+            ++counter;
+            printf("packet %lu: caplen=%d, len=%d data=", counter, hdr->caplen, hdr->len);
+            print_hex_dump(data, min(hdr->caplen, 20));
+            puts("...");
+            print_captured_data(data, hdr->caplen);
             break;
         case 0: // timeout expired
             break;
