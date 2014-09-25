@@ -1,4 +1,4 @@
-TARGETS=fixed-size-arrays
+TARGETS=fixed-size-arrays const-structs
 CC=gcc
 CC=clang
 CFLAGS=-Wall -Werror -O3 -std=c11
@@ -6,6 +6,9 @@ CFLAGS=-Wall -Werror -O3 -std=c11
 all: $(TARGETS)
 
 fixed-size-arrays: fixed-size-arrays.o fixed-size-arrays-other-module.o
+	$(CC) -o $@ $^
+
+const-structs: const-structs.o
 	$(CC) -o $@ $^
 
 clean:
