@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/fanotify.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 int main(int argc, char const* const* argv) {
@@ -41,9 +43,11 @@ int main(int argc, char const* const* argv) {
     while(1) {
         struct fanotify_event_metadata buf[200];
         ssize_t len = read(fd, &buf, sizeof(buf));
-        if (len == -1 && errno != EAGAIN && errno != EINTR) {
+        if (len < 0) {
             perror("read failed");
-            exit(1);
+            if (errno != EAGAIN && errno != EINTR) {
+                exit(1);
+            }
         }
 
         struct fanotify_event_metadata const* metadata = buf;
