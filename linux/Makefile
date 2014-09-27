@@ -1,6 +1,6 @@
 CXXFLAGS=-std=c++1y -Wall -O0 -g
 CFLAGS=-O0 -g -Wall -std=c11 -D_GNU_SOURCE=1
-TARGETS=thread_id capabilities fanotify inotify
+TARGETS=thread_id capabilities fanotify inotify epoll
 
 all: $(TARGETS)
 
@@ -14,6 +14,9 @@ fanotify: fanotify.o
 	gcc $< -o $@
 
 inotify: inotify.o
+	gcc $< -o $@
+
+epoll: epoll.o
 	gcc $< -o $@
 
 clean:
