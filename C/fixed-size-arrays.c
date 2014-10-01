@@ -122,7 +122,7 @@ int main(int argc, char const** argv) {
     a3_modify(a3);
     printf("a3[0] = %hhd (was passed by %s)\n", a3[0], a3[0] != a3_0_prev ? "reference" : "value");
 
-#if 1
+#if 0
     // gcc says incompatible pointer type
     // clang allows
     char (*p1)[4] = NULL;
