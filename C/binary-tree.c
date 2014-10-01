@@ -1,4 +1,5 @@
 #define _GNU_SOURCE
+#include <assert.h>
 #include <search.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +14,6 @@ int uint_count_compare(const void* p1, const void* p2) {
     uint_count const* uc2 = (uint_count const*)p2;
     return uc2->value - uc1->value;
 }
-
 
 static void uint_count_print_action(const void *nodep, const VISIT which, const int depth) {
     //printf("nodep: %p, which: %d, depth: %d\n", nodep, which, depth);
@@ -31,6 +31,16 @@ static void uint_count_print_action(const void *nodep, const VISIT which, const 
     }
 }
 
+static void uint_count_free(void* nodep) {
+    free(nodep);
+}
+
+static uint_count* uint_count_malloc(void) {
+    uint_count* r = (uint_count*)malloc(sizeof(uint_count));
+    r->counter = 1;
+    return r;
+}
+
 int main(int argc, char* const* argv) {
 
     unsigned int data_set[] = {
@@ -38,33 +48,22 @@ int main(int argc, char* const* argv) {
         8, 7, 2, 3, 4, 5, 4, 1, 7, 8, 4, 0
     };
 
-//#define USE_INFINITE_LOOP
-#if USE_INFINITE_LOOP
-    while(1) {
-#endif
-
     // count frequency of values in data_set
-    uint_count* new_count = malloc(sizeof(uint_count));
-    new_count->counter = 1;
     void* root = NULL;
+    uint_count* new_count = uint_count_malloc();
     for(int i = 0; i < sizeof(data_set)/sizeof(data_set[0]); ++i) {
         new_count->value = data_set[i];
         uint_count** count = tsearch(new_count, &root, uint_count_compare);
         if (new_count == *count) {
-            new_count = malloc(sizeof(uint_count));
-            new_count->counter = 1;
+            new_count = uint_count_malloc();
         } else {
             ++(*count)->counter;
         }
     }
-    free(new_count);
+    uint_count_free(new_count);
 
     twalk(root, uint_count_print_action);
-    tdestroy(root, free);
-
-#if USE_INFINITE_LOOP
-    }
-#endif
+    tdestroy(root, uint_count_free);
 
     return 0;
 }
