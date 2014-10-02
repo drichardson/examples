@@ -58,6 +58,26 @@ void put_long(long l) {
     put_ulong(ul);
 }
 
+static inline char nibble_to_char(unsigned char n) {
+    if (n < 10) {
+        return '0' + n;
+    } else {
+        return 'a' + n - 10;
+    }
+}
+
+void put_hex(void const* p, unsigned long plen) {
+    unsigned char const* u = (unsigned char const*)p;
+    unsigned char const* uend = u+plen;
+    char buf[3];
+    buf[2] = 0;
+    for(; u < uend; ++u) {
+        buf[0] = nibble_to_char(*u >> 4);
+        buf[1] = nibble_to_char(*u & 0x0f);
+        put(buf);
+    }
+}
+
 void __libc_start_main (int (*main) (int, char **),
         int argc, char **argv,
         void (*init) (void), void (*fini) (void),
@@ -65,6 +85,7 @@ void __libc_start_main (int (*main) (int, char **),
     exit(main(argc, argv));
 }
 
+// nolibc-start.S wants to set these.
 void* __libc_csu_fini; 
 void* __libc_csu_init;
 
@@ -74,29 +95,8 @@ int main(int argc, char const* const* argv) {
         put("argv["); put_long(i); put("]="); put(argv[i]); put("\n");
     }
 
-#if 0
-    put_long(0);
-    put("\n");
-    put_long(1);
-    put("\n");
-    put_long(12);
-    put("\n");
-    put_long(-123);
-    put("\n");
-    put_long(0xffffffffffffffff);
-    put("\n");
-    put_ulong(0xffffffffffffffff);
-    put("\n");
-    put_ulong(18446744073709551615UL);
-    put("\n");
-    put_long(9223372036854775807);
-    put("\nwhatever... the following works in spite of the gcc warning.\n");
-    put_long(-9223372036854775808);
-    put("\n");
-    put_long(0x8000000000000000);
-    put("\n");
-    return 0;
-#endif
+    put("__libc_csu_fini: "); put_hex(&__libc_csu_fini, sizeof(__libc_csu_fini)); put("\n");
+    put("__libc_csu_init: "); put_hex(&__libc_csu_init, sizeof(__libc_csu_init)); put("\n");
 
     return 0;
 }

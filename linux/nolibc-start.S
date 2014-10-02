@@ -98,17 +98,6 @@ _start:
 	   which grow downwards).  */
 	pushq %rsp
 
-#ifdef SHARED
-	/* Pass address of our own entry points to .fini and .init.  */
-	mov __libc_csu_fini@GOTPCREL(%rip), %R8_LP
-	mov __libc_csu_init@GOTPCREL(%rip), %RCX_LP
-
-	mov main@GOTPCREL(%rip), %RDI_LP
-
-	/* Call the user's main function, and exit with its value.
-	   But let the libc call main.	  */
-	call __libc_start_main@PLT
-#else
 	/* Pass address of our own entry points to .fini and .init.  */
 	mov $__libc_csu_fini, %R8
 	mov $__libc_csu_init, %RCX
@@ -118,7 +107,6 @@ _start:
 	/* Call the user's main function, and exit with its value.
 	   But let the libc call main.	  */
 	call __libc_start_main
-#endif
 
 	hlt			/* Crash if somehow `exit' does return.	 */
 	/* doug cfi_endproc */
