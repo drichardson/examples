@@ -1,6 +1,8 @@
 CXXFLAGS=-std=c++1y -Wall -O0 -g
-CFLAGS=-O0 -g -Wall -std=c11 -D_GNU_SOURCE
-TARGETS=thread_id capabilities fanotify inotify epoll perf-tester
+#CFLAGS=-O0 -g -Wall -std=c11 -D_GNU_SOURCE
+CFLAGS=-O3 -g -Wall -std=c11 -D_GNU_SOURCE
+TARGETS=thread_id capabilities fanotify inotify epoll perf-tester nolibc
+CC=gcc
 
 all: $(TARGETS)
 
@@ -19,8 +21,17 @@ inotify: inotify.o
 epoll: epoll.o
 	gcc $< -o $@
 
+perf-tester.o: perf-tester.c
+	gcc $(CFLAGS) -nostdinc -I/opt/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.1/include -c -o $@ $<
+
 perf-tester: perf-tester.o
-	gcc $< -o $@
+	gcc -Wl,--rpath=/opt/lib -Wl,--dynamic-linker=/opt/lib/ld-2.20.so $< -o $@
+
+nolibc: nolibc.c nolibc-syscall.S nolibc-start.S
+	gcc -c nolibc-syscall.S -o nolibc-syscall.o
+	gcc -c nolibc-start.S -o nolibc-start.o
+	gcc -g -O0 -nostdinc -c nolibc.c -o nolibc.o -std=c11 -fno-builtin -Wall
+	gcc -nostdlib nolibc.o nolibc-start.o nolibc-syscall.o -o nolibc
 
 clean:
 	$(RM) $(TARGETS) *.o
