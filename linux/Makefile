@@ -1,7 +1,7 @@
 CXXFLAGS=-std=c++1y -Wall -O0 -g
 #CFLAGS=-O0 -g -Wall -std=c11 -D_GNU_SOURCE
 CFLAGS=-O3 -g -Wall -std=c11 -D_GNU_SOURCE
-TARGETS=thread_id capabilities fanotify inotify epoll perf-tester nolibc
+TARGETS=thread_id capabilities fanotify inotify epoll perf-tester nolibc dir
 CC=gcc
 
 all: $(TARGETS)
@@ -19,6 +19,9 @@ inotify: inotify.o
 	gcc $< -o $@
 
 epoll: epoll.o
+	gcc $< -o $@
+
+dir: dir.o
 	gcc $< -o $@
 
 perf-tester.o: perf-tester.c
