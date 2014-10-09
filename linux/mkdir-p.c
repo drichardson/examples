@@ -14,7 +14,7 @@ int mkdirp(char const* dir, mode_t mode) {
     if (*p == '/') ++p;
 
     while(1) {
-        char* slash = strstr(p, "/");
+        char* slash = strchr(p, '/');
         if (slash) {
             *slash = 0;
         }
