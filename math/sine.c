@@ -1,16 +1,17 @@
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-int
-factorial(int n) {
-    int r = 1;
+double 
+factorial(unsigned n) {
+    double r = 1;
     for(; n > 0; --n) r *= n;
     return r;
 }
 
-float
-exponent(float x, int power) {
-    float r = 1;
+double
+exponent(double x, int power) {
+    double r = 1;
     bool neg = false;
     if (power < 0) {
         neg = true;
@@ -21,21 +22,26 @@ exponent(float x, int power) {
     return r;
 }
 
-float
-sine(float radians, int iterations) {
+double
+sine_internal(double radians, int iterations) {
     int power_fac = 3;
-    int sign = -1;
-    float r = radians;
+    double sign = -1;
+    double r = radians;
     for(; iterations > 0; --iterations) {
-        float fac = factorial(power_fac);
+        double fac = factorial(power_fac);
         r += sign * exponent(radians, power_fac) / fac;
         power_fac += 2;
-        sign *= -1;
+        sign = -sign;
     }
     return r;
 }
 
-double const PI = 3.14159;
+double
+sine(double radians) {
+    return sine_internal(radians, 15);
+}
+
+double const PI = 3.14159265358979323846264338327950288419716939937510;
 
 int
 main(int const argc, char const* const* argv) {
@@ -44,10 +50,10 @@ main(int const argc, char const* const* argv) {
     printf("exp(100,0) = %f\n", exponent(100,0));
     printf("exp(100,-1) = %f\n", exponent(100,-1));
     printf("exp(10,-3) = %f\n", exponent(10,-3));
-    printf("fac(5) = %d\n", factorial(5));
-    printf("sin(0,0) = %f\n", sine(0, 0));
-    printf("sin(0,0) = %f\n", sine(PI, 0));
-    printf("sin(0,10) = %f\n", sine(PI, 9));
+    printf("fac(5) = %f\n", factorial(5));
+    printf("sin(0) = %f\n", sine(0));
+    printf("sin(PI) = %f\n", sine(PI));
+    printf("sin(2*PI) = %f\n", sine(2*PI));
     return 0;
 }
 
