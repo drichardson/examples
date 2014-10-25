@@ -21,6 +21,8 @@ var gFragmentShaderSrc =
 "  if(d < u_hardRadius) {\n" + 
 "    gl_FragColor = u_fillColor;\n" +
 "  } else if (d < u_softRadius) {\n" +
+// could switch the gradient calculations to all multiplications if I changed
+// the uniforms to precalculate the ratios.
 "    float gradient = 1.0 - (d - u_hardRadius) / (u_softRadius - u_hardRadius);\n" +
 "    gl_FragColor = vec4(gradient * vec3(u_fillColor), 1.0);\n" +
 "  } else {\n" +
