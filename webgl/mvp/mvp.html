@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>webgl test1</title>
+        <script type="text/javascript" src="common.js"></script>
+        <script type="text/javascript" src="mat4.js"></script>
+        <script type="text/javascript" src="mvp.js"></script>
+    </head>
+    <body onload="draw()">
+        <h1>webgl model view project example</h1>
+        <p>
+        <ul>
+            <li>model - model to world matrix
+            <li>view - world to view matrix
+            <li>projection - view to projection matrix
+        </ul>
+        </p>
+        <textarea id="data" rows="20" cols="80">
+{
+"model":
+        [1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1],
+"view":
+        [1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1],
+"projection":
+        [1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1],
+"verticies":
+        [0,0.75,0,
+        0,-0.75,1,
+        0.86602540378444, -0.75, -0.5,
+        -0.86602540378444, -0.75, -0.5],
+"indices": [0,1,2,3,0,1]
+}
+        </textarea>
+        <button onclick="draw()">Draw</button>
+        <br>
+        <canvas id="mainCanvas" width="200" height="200"></canvas>
+    </body>
+</html>
