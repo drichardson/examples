@@ -7,10 +7,20 @@ var gVertexShaderSrc =
 "uniform mat4 u_modelToWorld;\n" +
 "uniform mat4 u_worldToView;\n" +
 "uniform mat4 u_viewToProjection;\n" +
-"void main() { gl_Position = u_viewToProjection * u_worldToView * u_modelToWorld * a_position; }";
+"varying vec4 v_position;\n" +
+"void main() {\n" +
+"  v_position = a_position;\n" +
+"  gl_Position = u_viewToProjection * u_worldToView * u_modelToWorld * a_position;\n" +
+"}";
 
 // Make everything red.
-var gFragmentShaderSrc = "void main() { gl_FragColor = vec4(1,0,0,1); }";
+var gFragmentShaderSrc = 
+"precision mediump float;\n" +
+"varying vec4 v_position;\n" +
+"void main() {\n" +
+//"  gl_FragColor = vec4(1,0,0,1);\n" +
+"  gl_FragColor = vec4(v_position.rgb, 1);\n" +
+"}";
 
 function compileShader(gl, src, type) {
     var shader = gl.createShader(type);
@@ -48,10 +58,31 @@ function draw() {
     var uModelToWorld = gl.getUniformLocation(program, "u_modelToWorld");
     var uWorldToView = gl.getUniformLocation(program, "u_worldToView");
     var uViewToProjection = gl.getUniformLocation(program, "u_viewToProjection");
+
+    // Position the model into the world.
+    var model = mat4.create();
+    mat4.translate(model, model, data.modelToWorld.translate);
+    mat4.scale(model, model, data.modelToWorld.scale);
+    mat4.rotateX(model, model, data.modelToWorld.x_rotate * Math.PI / 180);
+    mat4.rotateY(model, model, data.modelToWorld.y_rotate * Math.PI / 180);
+    mat4.rotateZ(model, model, data.modelToWorld.z_rotate * Math.PI / 180);
+
+    // Position the camera. Identity for nothing.
+    var view = mat4.create();
+    mat4.translate(view, view, data.camera.translate);
+    mat4.rotateX(view, view, data.camera.x_rotate * Math.PI / 180);
+    mat4.rotateY(view, view, data.camera.y_rotate * Math.PI / 180);
+    mat4.rotateZ(view, view, data.camera.z_rotate * Math.PI / 180);
+
+    var projection = mat4.create();
+    mat4.perspective(projection,
+            Math.PI*data.perspective.field_of_view_y/180,
+            canvas.width/canvas.height,
+            data.perspective.near, data.perspective.far);
     
-    gl.uniformMatrix4fv(uModelToWorld, false, new Float32Array(data.model));
-    gl.uniformMatrix4fv(uWorldToView, false, new Float32Array(data.view));
-    gl.uniformMatrix4fv(uViewToProjection, false, new Float32Array(data.projection));
+    gl.uniformMatrix4fv(uModelToWorld, false, model);
+    gl.uniformMatrix4fv(uWorldToView, false, view);
+    gl.uniformMatrix4fv(uViewToProjection, false, projection);
 
     gl.enableVertexAttribArray(aPosition);
     

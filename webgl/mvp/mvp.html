@@ -7,37 +7,36 @@
         <script type="text/javascript" src="mvp.js"></script>
     </head>
     <body onload="draw()">
-        <h1>webgl model view project example</h1>
+        <h1>webgl model view projection</h1>
         <p>
-        <ul>
-            <li>model - model to world matrix
-            <li>view - world to view matrix
-            <li>projection - view to projection matrix
-        </ul>
+        This example uses 3 matricies to transform verticies: a model, view, and projection matrix.
         </p>
-        <textarea id="data" rows="20" cols="80">
+        <ul>
+            <li>The model matrix can be modified via the modelToWorld parameters.
+            <li>The view matrix can be modified via the camera parameters.
+            <li>The projection parameters can be modified via the perspective parameters.
+        </ul>
+        <textarea id="data" rows="20" cols="60">
 {
-"model":
-        [1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 1],
-"view":
-        [1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 1],
-"projection":
-        [1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 1],
-"verticies":
-        [0,0.75,0,
+"verticies": [0,0.75,0,
         0,-0.75,1,
         0.86602540378444, -0.75, -0.5,
         -0.86602540378444, -0.75, -0.5],
-"indices": [0,1,2,3,0,1]
+"indices": [0,1,2,3,0,1],
+"modelToWorld": {
+  "translate": [0, 0, -20],
+  "x_rotate": 0, "y_rotate": 0, "z_rotate": 0,
+  "scale": [5, 5, 5]
+},
+"camera": {
+  "translate": [0, 0, 0],
+  "x_rotate": 0, "y_rotate": 0, "z_rotate": 0
+  },
+"perspective": {
+    "field_of_view_y": 35,
+    "near": 0,
+    "far": 10
+}
 }
         </textarea>
         <button onclick="draw()">Draw</button>
