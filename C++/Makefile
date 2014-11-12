@@ -1,6 +1,6 @@
 TARGETS=ofstream_test templates atomics system_error array \
 		function function.S condition priority_q chrono \
-		crash
+		crash playground typeid
 
 CXXFLAGS=-std=c++1y -Wall -g -O0 -march=native -pthread
 #CXXFLAGS=-std=c++1y -Wall -O3 -march=native -pthread
@@ -41,6 +41,12 @@ chrono: chrono.o
 	$(CXX) -o $@ $<
 
 crash: crash.o
+	$(CXX) -pthread -o $@ $<
+
+typeid: typeid.o
+	$(CXX) -pthread -o $@ $<
+
+playground: playground.o
 	$(CXX) -pthread -o $@ $<
 
 clean:
