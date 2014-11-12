@@ -1,6 +1,6 @@
 TARGETS=ofstream_test templates atomics system_error array \
 		function function.S condition priority_q chrono \
-		crash playground typeid
+		crash playground typeid casting
 
 CXXFLAGS=-std=c++1y -Wall -g -O0 -march=native -pthread
 #CXXFLAGS=-std=c++1y -Wall -O3 -march=native -pthread
@@ -8,46 +8,49 @@ CXXFLAGS=-std=c++1y -Wall -g -O0 -march=native -pthread
 all: $(TARGETS)
 
 ofstream_test: ofstream_test.o
-	$(CXX) -o $@ $<
+	$(CXX) -o $@ $^
 
 glog: glog.cc
 	$(CXX) -g -O0 -o glog glog.cc -lglog
 
 atomics: atomics.o
-	$(CXX) -o $@ $<
+	$(CXX) -o $@ $^
 	
 templates: templates.o
-	$(CXX) -o $@ $<
+	$(CXX) -o $@ $^
 
 system_error: system_error.o
-	$(CXX) -o $@ $<
+	$(CXX) -o $@ $^
 	
 array: array.o
-	$(CXX) -o $@ $<
+	$(CXX) -o $@ $^
 	
 function: function.o
-	$(CXX) -pthread -o $@ $<
+	$(CXX) -pthread -o $@ $^
 
 function.S: function.cc
-	$(CXX) -S $(CXXFLAGS) -o $@ $<
+	$(CXX) -S $(CXXFLAGS) -o $@ $^
 
 condition: condition.o
-	$(CXX) -pthread -o $@ $<
+	$(CXX) -pthread -o $@ $^
 
 priority_q: priority_q.o
-	$(CXX) -o $@ $<
+	$(CXX) -o $@ $^
 
 chrono: chrono.o
-	$(CXX) -o $@ $<
+	$(CXX) -o $@ $^
 
 crash: crash.o
-	$(CXX) -pthread -o $@ $<
+	$(CXX) -pthread -o $@ $^
 
 typeid: typeid.o
-	$(CXX) -pthread -o $@ $<
+	$(CXX) -pthread -o $@ $^
+
+casting: casting.o
+	$(CXX) -pthread -o $@ $^
 
 playground: playground.o
-	$(CXX) -pthread -o $@ $<
+	$(CXX) -pthread -o $@ $^
 
 clean:
 	$(RM) -r $(TARGETS) *.dSYM a.txt *.o *.S
