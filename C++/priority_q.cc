@@ -6,7 +6,7 @@ class MyThing
 {
     char const* _s;
 public:
-    MyThing(char const* s) : _s(s) {}
+    MyThing(char const* s) : _s{s} {}
 
     // ordered by length of string
     bool operator<(MyThing const & other) const {
@@ -45,7 +45,7 @@ int main()
     dump(q);
 
     std::priority_queue<MyThing> q2;
-    q2.push(MyThing("hi"));
+    q2.push(MyThing{"hi"});
     dump(q2);
 
     q2.push("aa"); q2.push("aaa"); q2.push("a"); q2.push("A"); q2.push("AAAAA");

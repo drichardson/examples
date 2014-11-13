@@ -10,12 +10,12 @@ int val = 0;
 
 void waiter()
 {
-    std::unique_lock<std::mutex> lock(g_mutex);
+    std::unique_lock<std::mutex> lock{g_mutex};
 
     auto now = std::chrono::steady_clock::now();
-    auto end_time = now + std::chrono::seconds(2);
+    auto end_time = now + std::chrono::seconds{2};
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds{200});
 
     for(;;) {
         std::cv_status status = g_cond.wait_until(lock, end_time);
@@ -34,7 +34,7 @@ void signaller()
     // val == 0
     g_cond.notify_one();
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    std::this_thread::sleep_for(std::chrono::milliseconds{500});
     g_mutex.lock();
     val = 1;
     g_mutex.unlock();

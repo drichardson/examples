@@ -23,8 +23,8 @@ void reader()
 
 int main()
 {
-    std::thread t1(writer);
-    std::thread t2(reader);
+    std::thread t1{writer};
+    std::thread t2{reader};
 
     t1.join();
     t2.join();

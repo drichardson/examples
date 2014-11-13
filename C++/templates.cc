@@ -24,9 +24,9 @@ public:
 
 int main()
 {
-    Derived<int> d(12);
+    Derived<int> d{12};
     d.foo();
-    decltype(d) d2(11);
+    decltype(d) d2{11};
     d2.foo();
     return 0;
 }
