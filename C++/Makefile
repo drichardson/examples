@@ -1,6 +1,6 @@
 TARGETS=ofstream_test templates atomics system_error array \
 		function function.S condition priority_q chrono \
-		crash playground typeid casting
+		crash playground typeid casting placement_new
 
 CXXFLAGS=-std=c++1y -Wall -g -O0 -march=native -pthread
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
