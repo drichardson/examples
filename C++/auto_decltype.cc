@@ -20,6 +20,12 @@ auto returnElementAtIndex(Container& c, Index i) -> decltype(c[i]) {
     return c[i];
 }
 
+// ditto, except use C++14's decltype(auto) feature.
+template <typename Container, typename Index>
+decltype(auto) returnElementAtIndexCpp14(Container & c, Index i) {
+    return c[i];
+}
+
 int main() {
     // see how auto/decltype handle braced initialization (std::initializer_list),
     // parens (like assignment), and assignment (like parens).
@@ -44,5 +50,6 @@ int main() {
     print_type_internal<int()>("void()");
     int f2(void); print_type(f2);
     print_type_internal<decltype(f2())>("decltype(f2())");
+    auto f_cpp_14 = returnElementAtIndexCpp14<std::array<int, 3>, unsigned>; print_type(f_cpp_14);
 }
 
