@@ -3,7 +3,8 @@ TARGETS=ofstream_test templates atomics system_error array \
 		crash playground typeid casting placement_new \
 		initialization
 
-CXXFLAGS=-std=c++1y -Wall -g -O0 -march=native -pthread
+CXX=clang++
+CXXFLAGS=-std=c++14 -Wall -g -O0 -march=native -pthread
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
 all: $(TARGETS)
