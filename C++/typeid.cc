@@ -24,6 +24,17 @@ public:
     int x;
 };
 
+// My simple version that dumps the typename info, using the current
+// function macro provided by the compiler. Boost does a more work to get
+// const, ref, volatileness out.
+template <typename T>
+void my_typename(char const* msg, T) {
+    cout << "my_typename_with_crv: " << BOOST_CURRENT_FUNCTION << endl;
+
+    // equivalently, on clang++/g++
+    //cout << "my_typename_with_crv: " << __PRETTY_FUNCTION__ << endl;
+}
+
 int main(int const argc, char const* const* argv) {
     typedef int myi;
     using myi2 = int;
@@ -43,6 +54,11 @@ int main(int const argc, char const* const* argv) {
     print_type(swc_array);
     print_type(swc_array_ref);
     print_type(swc_array_ptr);
+
+    cout << "something:" << endl;
+    my_typename("i1", i1);
+    my_typename("swc_ref", swc_ref);
+    my_typename("swc_array_ref", swc_array_ref);
 
     return 0;
 }
