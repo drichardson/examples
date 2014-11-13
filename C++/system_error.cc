@@ -10,5 +10,4 @@ int main() {
           std::system_error(EPIPE, std::system_category()));
   display("EPIPE generic_category",
           std::system_error(EPIPE, std::generic_category()));
-  return 0;
 }

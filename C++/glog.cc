@@ -13,6 +13,5 @@ int main(int argc, char* argv[]) {
     for(int i = 0; i < 20; ++i) {
         LOG_FIRST_N(INFO, 2) << "Logging first 2 " << i;
     }
-    return 0;
 }
 

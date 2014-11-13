@@ -76,7 +76,7 @@ A makeA(char const* t) {
     return random() % 2 == 0 ? a : b;
 }
 
-int main(int const argc, char const* const* argv) {
+int main() {
 
     A a{"this is a test"};
 //    cout << "a is " << a.str() << endl;
@@ -91,6 +91,4 @@ int main(int const argc, char const* const* argv) {
     A g = makeA("testing");
     cout << "after makeA" << endl;
 //    cout << "b is " << b.str() << endl;
-
-    return 0;
 }

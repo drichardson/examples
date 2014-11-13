@@ -28,6 +28,5 @@ int main()
     d.foo();
     decltype(d) d2{11};
     d2.foo();
-    return 0;
 }
 

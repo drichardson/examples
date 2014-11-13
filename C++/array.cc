@@ -24,6 +24,4 @@ int main() {
 
     // Bad things are going to happen. Probably set fault.
     std::cout << "a[50000000] (way out of bounds): " << a[500000000] << std::endl;
-
-    return 0;
 }

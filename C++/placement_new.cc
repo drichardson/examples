@@ -15,7 +15,7 @@ public:
     }
 };
 
-int main(int const argc, char const* const* argv) {
+int main() {
     A a{1, 'a'};
     unsigned char* blob[10000];
     int next {0};
@@ -25,6 +25,5 @@ int main(int const argc, char const* const* argv) {
     next += sizeof(A);
     p->~A();
     p2->~A();
-    return 0;
 }
 

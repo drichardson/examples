@@ -50,7 +50,5 @@ int main()
 
     q2.push("aa"); q2.push("aaa"); q2.push("a"); q2.push("A"); q2.push("AAAAA");
     dump(q2);
-
-    return 0;
 }
 

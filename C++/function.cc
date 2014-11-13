@@ -62,7 +62,7 @@ void doGlobalF()
 
 
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 #if USE_SET_AFFINITY
     printf("setting affinity\n");
@@ -149,8 +149,6 @@ int main(int argc, char** argv)
     printf("Average is %f\n", static_cast<double>(sum)/static_cast<double>(todo));
 
     doGlobalF();
-
-    return 0;
 }
 
 

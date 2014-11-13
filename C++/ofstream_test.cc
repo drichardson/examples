@@ -6,6 +6,4 @@ int main() {
     if (o.good()) {
         o << "Hi";
     }
-
-    return 0;
 }

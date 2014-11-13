@@ -20,5 +20,4 @@ int main()
     std::chrono::duration<float, std::milli> millis{102.352};
     cout << "Float: " << millis.count() << endl;
     cout << "Float+Nonfloat: " << (millis + (1s)).count() << endl;
-    return 0;
 }

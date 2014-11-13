@@ -62,7 +62,5 @@ int main()
 
     waiter_t.join();
     signaller_t.join();
-
-    return 0;
 }
 

@@ -47,7 +47,7 @@ A* getD() {
 }
 
 
-int main(int const argc, char const* const* argv) {
+int main() {
     A a;
     B b;
     C c;
@@ -78,5 +78,4 @@ int main(int const argc, char const* const* argv) {
     A const* pa_const = &a;
     A* pa_not_const = const_cast<A*>(pa_const);
     cout << "pa_not_const: " << pa_not_const->foo() << endl;
-    return 0;
 }

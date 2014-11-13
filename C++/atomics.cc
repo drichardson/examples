@@ -4,7 +4,7 @@
 using std::cout;
 using std::endl;
 
-int main(int argc, char* argv[]) {
+int main() {
 
     std::atomic<int> val{0};
 
@@ -17,7 +17,5 @@ int main(int argc, char* argv[]) {
     int ten = 10;
     ok = val.compare_exchange_strong(ten, 5);
     cout << "ok is " << ok << endl;
-
-    return 0;
 }
 

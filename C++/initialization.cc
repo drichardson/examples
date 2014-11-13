@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int main(int const argc, char const* const* argv) {
+int main() {
     unsigned int i = 0xdeadbeef;
     cout << "i is " << hex << i << endl;
 
@@ -10,6 +10,5 @@ int main(int const argc, char const* const* argv) {
     // so that I know what the memory is set to.
     decltype(i)* pi = new(&i) decltype(i){};
     cout << "pi is " << *pi << endl;
-    return 0;
 }
 

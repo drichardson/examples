@@ -35,7 +35,7 @@ void my_typename(char const* msg, T) {
     //cout << "my_typename_with_crv: " << __PRETTY_FUNCTION__ << endl;
 }
 
-int main(int const argc, char const* const* argv) {
+int main() {
     typedef int myi;
     using myi2 = int;
     myi i1 = 123;
@@ -59,6 +59,4 @@ int main(int const argc, char const* const* argv) {
     my_typename("i1", i1);
     my_typename("swc_ref", swc_ref);
     my_typename("swc_array_ref", swc_array_ref);
-
-    return 0;
 }

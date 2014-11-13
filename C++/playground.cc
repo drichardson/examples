@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int main(int const argc, char const* const* argv) {
+int main() {
     typedef int myi;
     using myi2 = int;
     myi i1 = 123;
@@ -14,5 +14,4 @@ int main(int const argc, char const* const* argv) {
     cout << ", i2=" << typeid(i2).name();
     cout << ", myi2=" << typeid(myi2).name();
     cout << endl;
-    return 0;
 }
