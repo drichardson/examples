@@ -1,7 +1,8 @@
 TARGETS=ofstream_test templates atomics system_error array \
 		function function.S condition priority_q chrono \
 		crash playground typeid casting placement_new \
-		initialization ctor auto_decltype
+		initialization ctor auto_decltype operators \
+		literals
 
 CXX=clang++
 CXXFLAGS=-std=c++14 -Wall -g -O0 -march=native -pthread
