@@ -23,7 +23,7 @@ template<typename Container, typename LessThan>
 void stupid_sort(Container & items, LessThan lt)
 {
     auto count = items.size();
-    for(decltype(count) i = 0; i < count; ++i) {
+    for(decltype(count) i = 1; i < count; ++i) {
         for(decltype(count) j = 0; j < count; ++j) {
             if(lt(items[i], items[j])) {
                 swap(items[i], items[j]);
