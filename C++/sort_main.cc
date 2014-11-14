@@ -46,7 +46,7 @@ struct sorting_algorithms
         { "bubble", &sort::bubble_sort<C, L> },
         { "quicksort", &sort::quick_sort<C,L> },
         { "insertion", &sort::insertion_sort<C,L> },
-        //{ "selection", &sort::selection_sort<C,L> },
+        { "selection", &sort::selection_sort<C,L> },
     }};
 };
 

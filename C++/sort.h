@@ -145,7 +145,7 @@ void selection_sort(Container & items, LessThan lt) {
         // find minimum value in unsorted portion.
         int min = i;
         for(index j = i+1; j < len; ++j) {
-            if (lt(items[min], items[j])) {
+            if (lt(items[j], items[min])) {
                 min = j;
             }
         }
