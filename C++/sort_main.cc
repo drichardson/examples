@@ -1,13 +1,11 @@
+#include "sort.h"
+#include <boost/type_index.hpp>
+#include <functional>
 #include <iostream>
 #include <vector>
-#include "sort.h"
-#include <functional>
-#include <boost/type_index.hpp>
-
-using namespace std;
 
 template<typename T>
-ostream& operator<<(ostream& out, vector<T> const & v) {
+std::ostream& operator<<(std::ostream& out, std::vector<T> const & v) {
     char const* space = "";
     for(auto const & e : v) {
         out << space << e;
@@ -28,7 +26,7 @@ struct sorting_algorithms
         sorter_function<E> function;
     };
 
-    vector<named_algorithm<typename Container::value_type>> values = {{
+    std::vector<named_algorithm<typename Container::value_type>> values = {{
         { "stupid", &sort::stupid_sort<C, L> },
         { "bubble", &sort::bubble_sort<C, L> }
     }};
@@ -43,6 +41,9 @@ void run_sort_tests(Container const& a, LessThan lt) {
         comparisons++;
         return lt(a, b);
     };
+
+    using std::cout;
+    using std::endl;
 
     cout << "=== Sort "
         << boost::typeindex::type_id_with_cvr<typename Container::value_type>().pretty_name()
@@ -64,8 +65,8 @@ void run_sort_tests(Container const& a, LessThan lt) {
 }
 
 int main() {
-    vector<char> ac = { 'D', 'A', 'Z', 'U', 'N', 'M', 'B', 'A', 'C', 'E' };
+    std::vector<char> ac = { 'D', 'A', 'Z', 'U', 'N', 'M', 'B', 'A', 'C', 'E' };
     run_sort_tests(ac, [](char a, char b) { return a < b; });
-    vector<int> ai = { 1, 5, 10, -100, 2, 5, 0, 1, 5 };
+    std::vector<int> ai = { 1, 5, 10, -100, 2, 5, 0, 1, 5 };
     run_sort_tests(ai, [](int a, int b) { return a < b; });
 }
