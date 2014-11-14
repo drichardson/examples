@@ -25,5 +25,7 @@ glog: glog.cc
 function.S: function.cc
 	$(CXX) -S $(CXXFLAGS) -o $@ $^
 
+sort_main.o: sort.h
+
 clean:
 	$(RM) -r $(TARGETS) *.dSYM a.txt *.o *.S

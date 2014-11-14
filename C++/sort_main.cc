@@ -3,15 +3,15 @@
 #include <functional>
 #include <iostream>
 #include <vector>
-
+#include <array>
+ 
 template<typename T>
-std::ostream& operator<<(std::ostream& out, std::vector<T> const & v) {
+void print_elements(std::ostream& out, T const & v) {
     char const* space = "";
     for(auto const & e : v) {
         out << space << e;
         space = " ";
     }
-    return out;
 }
 
 template <typename Container, typename LessThan>
@@ -52,21 +52,23 @@ void run_sort_tests(Container const& a, LessThan lt) {
         << boost::typeindex::type_id_with_cvr<Container>().pretty_name()
         << "\n";
     cout << "input size: " << a.size() << "\n";
-    cout << "input: {" << a << "}\n";
+    cout << "input: {"; print_elements(cout, a); cout << "}\n";
 
     sorting_algorithms<Container, decltype(cmp)> algorithms;
     for(auto const & algo : algorithms.values) {
         Container a_copy = a;
         comparisons = 0; // reset comparisons (incremented in cmp lambda above).
         algo.function(a_copy, cmp);
-        cout << " * " << algo.name << "=>{" << a_copy << "} in "
-            << comparisons << " comparisons.\n";
+        cout << " * " << algo.name << "=>{"; print_elements(cout, a_copy);
+        cout << "} in " << comparisons << " comparisons.\n";
     }
 }
 
 int main() {
-    std::vector<char> ac = { 'D', 'A', 'Z', 'U', 'N', 'M', 'B', 'A', 'C', 'E' };
-    run_sort_tests(ac, [](char a, char b) { return a < b; });
+    std::array<char, 10> ac = { 'D', 'A', 'Z', 'U', 'N', 'M', 'B', 'A', 'C', 'E' };
+    run_sort_tests(ac, [](auto a, auto b) { return a < b; });
     std::vector<int> ai = { 1, 5, 10, -100, 2, 5, 0, 1, 5 };
-    run_sort_tests(ai, [](int a, int b) { return a < b; });
+    run_sort_tests(ai, [](auto a, auto b) { return a < b; });
+    std::vector<std::string> as = {{ "hello", "computer", "space", "zero", "about", "fortunate" }};
+    run_sort_tests(as, [](auto & a, auto & b) { return a < b; });
 }
