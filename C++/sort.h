@@ -16,15 +16,17 @@ void swap(T &a, T &b) {
     b = tmp;
 }
 
+// TODO:DOUG Analyze this. Explain how it works.
 // Number of iterations through loop is count^2.
 // Time complexity is O(n^2)
 // Space complexity is O(1) auxillary space.
 template<typename Container, typename LessThan>
 void stupid_sort(Container & items, LessThan lt)
 {
+    using index = decltype(items.size());
     auto count = items.size();
-    for(decltype(count) i = 1; i < count; ++i) {
-        for(decltype(count) j = 0; j < count; ++j) {
+    for(index i = 0; i < count; ++i) {
+        for(index j = 0; j < count; ++j) {
             if(lt(items[i], items[j])) {
                 swap(items[i], items[j]);
             }
@@ -41,11 +43,12 @@ void stupid_sort(Container & items, LessThan lt)
 // Space complexity is O(1) auxillary space.
 template<typename Container, typename LessThan>
 void bubble_sort(Container & items, LessThan lt) {
+    using index = decltype(items.size());
     auto n = items.size();
     bool swapped;
     do {
         swapped = false;
-        for(decltype(n) i = 1; i < n; ++i) {
+        for(index i = 1; i < n; ++i) {
             auto & left = items[i-1];
             auto & right = items[i];
             if (lt(right, left)) {
@@ -64,15 +67,14 @@ void bubble_sort(Container & items, LessThan lt) {
 
 template <typename Container, typename LessThan> 
 struct quicksort_internal {
-    using IndexType = typename Container::size_type;
+    using index = decltype(((Container*)0)->size());
 
-    static IndexType choosePivot(Container & items,
-            IndexType left, IndexType right) {
+    static index choosePivot(Container & items,
+            index left, index right) {
         return right;
     }
 
-    static IndexType partition(Container & items, LessThan lt,
-            IndexType left, IndexType right) {
+    static index partition(Container & items, LessThan lt, index left, index right) {
         auto pivotIndex = choosePivot(items, left, right);
         auto pivotValue = items[pivotIndex];
         swap(items[pivotIndex], items[right]);
@@ -87,8 +89,7 @@ struct quicksort_internal {
         return storeIndex;
     }
 
-    static void quicksort(Container & items, LessThan lt,
-            IndexType i, IndexType k) {
+    static void quicksort(Container & items, LessThan lt, index i, index k) {
         if (i < k) {
             auto p = partition(items, lt, i, k);
             if (p > 0) quicksort(items, lt, i, p-1);
@@ -98,10 +99,58 @@ struct quicksort_internal {
 };
 
 template <typename Container, typename LessThan> 
-void quicksort(Container & items, LessThan lt) {
+void quick_sort(Container & items, LessThan lt) {
     auto size = items.size();
+    // make sure size != 0, otherwise size-1 will underflow if size is an unsigned type.
     if (size == 0) return;
     quicksort_internal<Container,LessThan>::quicksort(items, lt, 0, size - 1);
+}
+
+// Insertion sort inspired by psuedo code on http://en.wikipedia.org/wiki/Insertion_sort
+// Worst case array is reverse sorted, so the inner
+// loop has to perform i compares and swaps for each run of the outer loop. That's
+// (1+2+3+4+...+N) = N(N+1)/2 = (N^2+N)/2 compares and swaps, which means quadratic worst
+// case behavior.
+// Time complexity: O(n^2)
+// Space complexity: O(1)
+template <typename Container, typename LessThan> 
+void insertion_sort(Container & items, LessThan lt) {
+    using index = decltype(items.size());
+    auto len = items.size();
+    for(index i = 1; i < len; ++i) {
+        for(auto j = i; j > 0 and lt(items[j], items[j-1]); --j) {
+            swap(items[j], items[j-1]);
+        }
+    }
+}
+
+// Divide list into sorted and unsorted portions. Initially
+// sorted contains no items and unsorted contains all items.
+// Select the minimum value in the unsorted portion and swap it
+// with the first value in the unsorted portion. Now, the sorted has
+// increased in length by 1 and unsorted has decreased in length by one.
+// Continue doing this until the unsorted portion is empty.
+// To select the minimum value in the unsorted portion requires
+// |unsorted| comparisons. This must be done N times, since only one
+// value is moved from the unsorted to sorted at a time. Therefore,
+// the number of comparisons is N+(N-1)+...+1=N(N+1)/2=(N^2+N)/2.
+// Time complexity: O(n^2)
+// Space complexity: O(1)
+template <typename Container, typename LessThan> 
+void selection_sort(Container & items, LessThan lt) {
+    using index = decltype(items.size());
+    auto len = items.size();
+    index sorted = 0;
+    for(index i = 0; i < len; ++i) {
+        // find minimum value in unsorted portion.
+        int min = i;
+        for(index j = i+1; j < len; ++j) {
+            if (lt(items[min], items[j])) {
+                min = j;
+            }
+        }
+        swap(items[min], items[i]);
+    }
 }
 
 }

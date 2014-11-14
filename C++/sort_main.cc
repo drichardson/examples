@@ -34,24 +34,27 @@ struct sorting_algorithms
     using C = Container;
     using L = LessThan;
     template <typename E> using sorter_function = std::function<void(C&, L)>;
+    using value_type = decltype(((Container*)0)[0]);
 
     template <typename E> struct named_algorithm {
         const char* name;
         sorter_function<E> function;
     };
 
-    std::vector<named_algorithm<typename Container::value_type>> values = {{
+    std::vector<named_algorithm<value_type>> values = {{
         { "stupid", &sort::stupid_sort<C, L> },
         { "bubble", &sort::bubble_sort<C, L> },
-        { "quicksort", &sort::quicksort<C,L> }
+        { "quicksort", &sort::quick_sort<C,L> },
+        { "insertion", &sort::insertion_sort<C,L> },
+        //{ "selection", &sort::selection_sort<C,L> },
     }};
 };
 
 template <typename Container, typename LessThan>
-void sort_and_report_for_each_algorithm(std::ostream & out, Container a, LessThan lt) {
+void sort_and_report_for_each_algorithm(std::ostream & out, Container const & a, LessThan lt) {
 
     int comparisons = 0;
-    using E = typename Container::value_type;
+    using E = decltype(a[0]);
     auto cmp = [&comparisons, &lt](E const & a, E const & b) {
         comparisons++;
         return lt(a, b);
@@ -61,7 +64,7 @@ void sort_and_report_for_each_algorithm(std::ostream & out, Container a, LessTha
 
     sorting_algorithms<Container, decltype(cmp)> algorithms;
     for(auto const & algo : algorithms.values) {
-        Container a_copy = a;
+        Container a_copy(a);
         comparisons = 0; // reset comparisons (incremented in cmp lambda above).
 
         // run sort
@@ -69,7 +72,8 @@ void sort_and_report_for_each_algorithm(std::ostream & out, Container a, LessTha
 
         // verify sort is correct
         bool sorted = true;
-        for(typename Container::size_type i = 1; i < a_copy.size(); ++i) {
+        using index = decltype(a_copy.size());
+        for(index i = 1; i < a_copy.size(); ++i) {
             if (lt(a_copy[i], a_copy[i-1])) {
                 sorted = false;
                 break;
@@ -141,19 +145,36 @@ bool int_greater_than(int const & a, int const & b) {
 
 template <typename T>
 class MinimalContainer {
-public:
-    using value_type = T;
-    using size_type = size_t;
-
-    MinimalContainer(T* a, size_type s) : _array(a), _size(s) {}
-
-    value_type & operator[](size_type index) { return _array[index]; }
-    value_type const & operator[] (size_type index) const { return _array[index]; }
-    size_type size() const { return _size; }
-
 private:
+    using size_type = size_t;
+    using value_type = T;
     value_type* _array = nullptr;
     size_type _size = 0;
+
+public:
+    // The following two functions are the required container interface for
+    // all algorithms in the sort namespace.
+    // 1. non-const container subscript operator
+    value_type & operator[](size_type index) { return _array[index]; }
+    // 2. container size operator
+    size_type size() const { return _size; }
+
+
+    // Other public functions are not required by algorithms in the sort
+    // namespace, but are used to construct and display objects in this file.
+public:
+    // Weak, unsafe reference to underlying array. Don't do this in real life.
+    explicit MinimalContainer(T* a, size_type s) : _array(a), _size(s) {}
+    // copy constructor used by test runner, to copy input array so it can sort
+    // multiple times.
+    explicit MinimalContainer(MinimalContainer const& rhs) : _array(rhs._array), _size(rhs._size) {}
+
+    MinimalContainer() = delete;
+    MinimalContainer(MinimalContainer&&) = delete;
+    MinimalContainer& operator=(MinimalContainer const&) = delete;
+
+    // required by print_elements
+    value_type const & operator[] (size_type index) const { return _array[index]; }
 };
 
 
