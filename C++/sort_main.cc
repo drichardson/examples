@@ -1,9 +1,9 @@
 #include "sort.h"
+#include <array>
 #include <boost/type_index.hpp>
 #include <functional>
 #include <iostream>
 #include <vector>
-#include <array>
  
 template<typename T>
 void print_elements(std::ostream& out, T const & v) {
@@ -28,7 +28,8 @@ struct sorting_algorithms
 
     std::vector<named_algorithm<typename Container::value_type>> values = {{
         { "stupid", &sort::stupid_sort<C, L> },
-        { "bubble", &sort::bubble_sort<C, L> }
+        { "bubble", &sort::bubble_sort<C, L> },
+        { "quicksort", &sort::quicksort<C,L> }
     }};
 };
 
@@ -42,33 +43,57 @@ void run_sort_tests(Container const& a, LessThan lt) {
         return lt(a, b);
     };
 
-    using std::cout;
-    using std::endl;
+    std::ostream & out = std::cout;
 
-    cout << "=== Sort "
+    out << "=== Sort "
         << boost::typeindex::type_id_with_cvr<typename Container::value_type>().pretty_name()
         << " Test ===\n";
-    cout << "container type: "
+    out << "container type: "
         << boost::typeindex::type_id_with_cvr<Container>().pretty_name()
         << "\n";
-    cout << "input size: " << a.size() << "\n";
-    cout << "input: {"; print_elements(cout, a); cout << "}\n";
+    out << "input size: " << a.size() << "\n";
+    out << "input: {"; print_elements(out, a); out << "}\n";
 
     sorting_algorithms<Container, decltype(cmp)> algorithms;
     for(auto const & algo : algorithms.values) {
         Container a_copy = a;
         comparisons = 0; // reset comparisons (incremented in cmp lambda above).
+
+        // run sort
         algo.function(a_copy, cmp);
-        cout << " * " << algo.name << "=>{"; print_elements(cout, a_copy);
-        cout << "} in " << comparisons << " comparisons.\n";
+
+        // verify sort is correct
+        bool sorted = true;
+        for(typename Container::size_type i = 1; i < a_copy.size(); ++i) {
+            if (lt(a_copy[i], a_copy[i-1])) {
+                sorted = false;
+                break;
+            }
+        }
+
+        // display status
+        out << " * " << algo.name << "=>{"; print_elements(out, a_copy);
+        out << "} in " << comparisons << " comparisons. "
+            << (sorted ? "sorted" : "!!!NOT SORTED!!!")
+            << "\n";
+
+        if (!sorted) abort();
     }
 }
 
 int main() {
+#if 0
+    std::vector<int> ad{{ 1, 3, 2 }};
+    run_sort_tests(ad, [](auto a, auto b) { return a < b; });
+#endif
+#if 1
     std::array<char, 10> ac{{ 'D', 'A', 'Z', 'U', 'N', 'M', 'B', 'A', 'C', 'E' }};
     run_sort_tests(ac, [](auto a, auto b) { return a < b; });
+
     std::vector<int> ai{{ 1, 5, 10, -100, 2, 5, 0, 1, 5 }};
     run_sort_tests(ai, [](auto a, auto b) { return a < b; });
+
     std::vector<std::string> as{{ "hello", "computer", "space", "zero", "about", "fortunate" }};
     run_sort_tests(as, [](auto & a, auto & b) { return a < b; });
+#endif
 }
