@@ -57,6 +57,10 @@ void bubble_sort(Container & items, LessThan lt) {
 }
 
 // Quicksort inspired by pseudo code on http://en.wikipedia.org/wiki/Quicksort
+// Time complexity O(n^2)
+// Average case O(n log n)
+// Space complexity O(n) auxillary space since the partition could
+// in the worst case have one recursive call for each item in the list.
 
 template <typename Container, typename LessThan> 
 struct quicksort_internal {
