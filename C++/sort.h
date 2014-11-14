@@ -16,18 +16,74 @@ void swap(T &a, T &b) {
     b = tmp;
 }
 
-// TODO:DOUG Analyze this. Explain how it works.
-// Number of iterations through loop is count^2.
+// TODO: Figure out how lucky_sort works.
+// Background:
+// lucky sort is so called, because it works, in spite of me not originally understanding
+// why it works and with it's seemlying opposite of what you'd think is correct use of
+// the lt comparison.
+//
+// Description:
+// For each position I in the array, lucky passes over every item in the array.
+// During this inner loop pass, if the item at I is less than the other item,
+// item I is swapped with the other item. After the first pass through the
+// outer loop, position 0 will have been compared against every other position
+// in the array, and if it was found to be less than any of the other elements
+// it would have been swapped, therefore it contains the max element in the array.
+// So, we now have:
+// [MAX | ?]
+// In the second pass through the outer loop, position 1 is compared against
+// every other item in the array. When it ends, it will be
+// [? MAX | ?]
+
+//
+// A more descriptive name for lucky sort would be greedy sort or max sort, since
+// each outer loop is taking the max element in the array for itself.
+//
+// ? even vs odd imporant for analysis?
+// 
+// Analysis:
+// lucky sort's outer loop passes through each item A in the array
+// in order. For each item A, it passes through the entire array
+// again, swapping A with another value if A is less than that value.
 // Time complexity is O(n^2)
-// Space complexity is O(1) auxillary space.
+// Space complexity is O(1).
 template<typename Container, typename LessThan>
-void stupid_sort(Container & items, LessThan lt)
+void lucky_sort(Container & items, LessThan lt)
 {
     using index = decltype(items.size());
     auto count = items.size();
     for(index i = 0; i < count; ++i) {
         for(index j = 0; j < count; ++j) {
             if(lt(items[i], items[j])) {
+                swap(items[i], items[j]);
+            }
+        }
+    }
+}
+
+// TODO: Figure out why this works.
+// Description:
+// stupid sort is a variation of lucky sort, but instead of the inner loop
+// going from 0 to n-1, it goes from i (outer loop index) to n-1. Also, the
+// lt comparison is reversed.
+//
+// As with lucky sort, I don't know why this works yet.
+//
+// Analysis:
+// The outer loop runs N times. For each run through the outer loop, the inner
+// performs N-i comparisons. Therefore, the number of comparisons, given
+// by runs through the outer loop are: (N-1)+(N-2)+...1
+// which equals N^2/2 comparisons.
+// Time complexity is O(n^2)
+// Space complexity is O(1).
+template<typename Container, typename LessThan>
+void stupid_sort(Container & items, LessThan lt)
+{
+    using index = decltype(items.size());
+    auto count = items.size();
+    for(index i = 0; i < count; ++i) {
+        for(index j = i+1; j < count; ++j) {
+            if(lt(items[j], items[i])) {
                 swap(items[i], items[j]);
             }
         }
@@ -151,5 +207,7 @@ void selection_sort(Container & items, LessThan lt) {
         swap(items[min], items[i]);
     }
 }
+
+
 
 }

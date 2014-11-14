@@ -42,6 +42,7 @@ struct sorting_algorithms
     };
 
     std::vector<named_algorithm<value_type>> values = {{
+        { "lucky", &sort::lucky_sort<C, L> },
         { "stupid", &sort::stupid_sort<C, L> },
         { "bubble", &sort::bubble_sort<C, L> },
         { "quicksort", &sort::quick_sort<C,L> },
