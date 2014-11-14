@@ -29,11 +29,7 @@ struct factorial_cpp11<0> {
 
 // C++11 way using constexpr and no struct
 constexpr int factorial_constexpr(int n) {
-    if (n > 1) {
-        return n*factorial_constexpr(n-1);
-    } else {
-        return 1;
-    }
+    return n > 1 ?  n * factorial_constexpr(n-1) : 1;
 }
 
 // notice results of all factorial calculations can be stored

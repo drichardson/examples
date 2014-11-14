@@ -4,8 +4,17 @@ TARGETS=ofstream_test templates atomics system_error array \
 		initialization ctor auto_decltype operators \
 		literals template_meta_programming
 
-CXX=clang++
-CXXFLAGS=-std=c++14 -Wall -g -O0 -march=native -pthread
+
+//CXX=clang++
+CXX=g++
+CXXFLAGS=-Wall -g -O0 -march=native -pthread
+
+ifeq ($(CXX), clang++)
+	CXXFLAGS+=-std=c++14
+else
+	CXXFLAGS+=-std=c++1y
+endif
+
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
 all: $(TARGETS)
