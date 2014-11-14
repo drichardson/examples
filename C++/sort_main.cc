@@ -8,12 +8,12 @@
 #include <queue>
 
 template <typename T>
-constexpr std::string typestring() {
+std::string typestring() {
     return boost::typeindex::type_id_with_cvr<T>().pretty_name();
 }
 
 template <typename T>
-constexpr std::string typestring(T t) {
+std::string typestring(T t) {
     return typestring<T>();
 }
  
@@ -99,7 +99,7 @@ void print_title(std::ostream & out, std::string const & title) {
 }
 
 template <typename Container>
-constexpr std::string test_battery_title() {
+std::string test_battery_title() {
     return "Test Battery for Container: " + typestring<Container>();
 }
 
@@ -113,10 +113,10 @@ void run_int_sort_test_battery(std::ostream & out, Compare compare) {
     };
 
     // empty
-    test(Container());
+    test(Container{});
 
     // single element
-    test(Container{{1}}); 
+    test(Container{1}); 
 
     // 2 elements
     test(Container{{1, 2}}); // arragenement 1 of 2

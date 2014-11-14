@@ -140,7 +140,6 @@ template <typename Container, typename LessThan>
 void selection_sort(Container & items, LessThan lt) {
     using index = decltype(items.size());
     auto len = items.size();
-    index sorted = 0;
     for(index i = 0; i < len; ++i) {
         // find minimum value in unsorted portion.
         int min = i;
