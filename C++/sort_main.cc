@@ -65,10 +65,10 @@ void run_sort_tests(Container const& a, LessThan lt) {
 }
 
 int main() {
-    std::array<char, 10> ac = { 'D', 'A', 'Z', 'U', 'N', 'M', 'B', 'A', 'C', 'E' };
+    std::array<char, 10> ac{{ 'D', 'A', 'Z', 'U', 'N', 'M', 'B', 'A', 'C', 'E' }};
     run_sort_tests(ac, [](auto a, auto b) { return a < b; });
-    std::vector<int> ai = { 1, 5, 10, -100, 2, 5, 0, 1, 5 };
+    std::vector<int> ai{{ 1, 5, 10, -100, 2, 5, 0, 1, 5 }};
     run_sort_tests(ai, [](auto a, auto b) { return a < b; });
-    std::vector<std::string> as = {{ "hello", "computer", "space", "zero", "about", "fortunate" }};
+    std::vector<std::string> as{{ "hello", "computer", "space", "zero", "about", "fortunate" }};
     run_sort_tests(as, [](auto & a, auto & b) { return a < b; });
 }
