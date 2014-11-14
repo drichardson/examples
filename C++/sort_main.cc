@@ -112,27 +112,53 @@ void run_int_sort_test_battery(std::ostream & out, Compare compare) {
         sort_and_report_for_each_algorithm(out, v, compare);
     };
 
-    // empty
+    // empty (0! = 1 permuation)
     test(Container{});
 
-    // single element
+    // single object (1! = 1 permuation)
     test(Container{1}); 
 
-    // 2 elements
-    test(Container{{1, 2}}); // arragenement 1 of 2
-    test(Container{{2, 1}}); // arragenement 2 of 2
+    // 2 objects (2! = 2 permuation)
+    test(Container{{1,2}});
+    test(Container{{2,1}});
 
-    // 3 elements
-    test(Container{{1, 2, 3}}); // arrangement 1 of 6
-    test(Container{{1, 3, 2}}); // arrangement 2 of 6
-    test(Container{{2, 1, 3}}); // arrangement 3 of 6
-    test(Container{{2, 3, 1}}); // arrangement 4 of 6
-    test(Container{{3, 1, 2}}); // arrangement 5 of 6
-    test(Container{{3, 2, 1}}); // arrangement 6 of 6
+    // 3 objects (3! = 6 permuation)
+    test(Container{{1,2,3}});
+    test(Container{{1,3,2}});
+    test(Container{{2,1,3}});
+    test(Container{{2,3,1}});
+    test(Container{{3,1,2}});
+    test(Container{{3,2,1}});
 
-    // duplicates
+    // 4 objects (4! = 24 permuation)
+    test(Container{{1,2,3,4}});
+    test(Container{{1,2,4,3}});
+    test(Container{{1,3,2,4}});
+    test(Container{{1,3,4,2}});
+    test(Container{{1,4,2,3}});
+    test(Container{{1,4,3,2}});
+    test(Container{{2,1,4,3}});
+    test(Container{{2,1,3,4}});
+    test(Container{{2,3,4,1}});
+    test(Container{{2,3,1,4}});
+    test(Container{{2,4,3,1}});
+    test(Container{{2,4,1,3}});
+    test(Container{{3,1,2,4}});
+    test(Container{{3,1,4,2}});
+    test(Container{{3,2,1,4}});
+    test(Container{{3,2,4,1}});
+    test(Container{{3,4,1,2}});
+    test(Container{{3,4,2,1}});
+    test(Container{{4,1,3,2}});
+    test(Container{{4,1,2,3}});
+    test(Container{{4,2,3,1}});
+    test(Container{{4,2,1,3}});
+    test(Container{{4,3,2,1}});
+    test(Container{{4,3,1,2}});
+
+    // duplicate objects
     test(Container{{1, 1}}); 
-    test(Container{{1, 1, 1}}); 
+    test(Container{{1, 2, 1, 3, 2}}); 
 }
 
 bool int_less_than(int const & a, int const & b) {
