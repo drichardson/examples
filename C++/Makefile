@@ -3,7 +3,7 @@ TARGETS=ofstream_test templates atomics system_error array \
 		crash playground typeid casting placement_new \
 		initialization ctor auto_decltype operators \
 		literals template_meta_programming sort_main \
-		heap_main
+		heap_main bigsort ifstream
 
 
 //CXX=clang++
@@ -29,6 +29,8 @@ function.S: function.cc
 sort_main.o: sort.h
 
 heap_main.o: heap.h
+
+bigsort.o: sort.h
 
 clean:
 	$(RM) -r $(TARGETS) *.dSYM a.txt *.o *.S
