@@ -187,9 +187,9 @@ void insertion_sort(Container & items, LessThan lt) {
 // increased in length by 1 and unsorted has decreased in length by one.
 // Continue doing this until the unsorted portion is empty.
 // To select the minimum value in the unsorted portion requires
-// |unsorted| comparisons. This must be done N times, since only one
+// |unsorted|-1 comparisons. This must be done N times, since only one
 // value is moved from the unsorted to sorted at a time. Therefore,
-// the number of comparisons is N+(N-1)+...+1=N(N+1)/2=(N^2+N)/2.
+// the number of comparisons is (N-1)+(N-2)+...+0=N(N-1)/2=(N^2-N)/2.
 // Time complexity: O(n^2)
 // Space complexity: O(1)
 template <typename Container, typename LessThan> 
@@ -209,5 +209,8 @@ void selection_sort(Container & items, LessThan lt) {
 }
 
 
+template <typename Container, typename LessThan> 
+void heap_sort(Container & items, LessThan lt) {
+}
 
 }
