@@ -110,8 +110,8 @@ int main(int argc, char* argv[]) {
     }
     cout << "data read\n";
     cout << "n=" << n 
-        << ", lg(n)=" << log2(n)
-        << ", n*lg(n)=" << n*log2(n)
+        << ", log2(n)=" << log2(n)
+        << ", n*log2(n)=" << n*log2(n)
         << ", n^2=" << n*n
         << "\n";
     sort_and_report_for_each_algorithm(data, lessthan);
