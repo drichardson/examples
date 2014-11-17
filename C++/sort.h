@@ -2,6 +2,9 @@
 
 #include "heap.h"
 
+// thread needed for parallel merge sort
+#include <thread>
+
 namespace sort {
 
 // All sort algorithms sort their input in acending order, assuming
@@ -321,6 +324,75 @@ void merge_sort(Container & items, LessThan lt) {
     // of SequenceContainer (http://en.cppreference.com/w/cpp/concept/SequenceContainer).
     Container items_tmp(items);
     divide_and_merge(items, 0, items.size(), lt, items_tmp);
+}
+
+
+template <typename Container, typename LessThan, typename ThreadCount> 
+void parallel_divide_and_merge(Container & items,
+        decltype(items.size()) begin,
+        decltype(items.size()) end,
+        LessThan lt,
+        Container & items_tmp,
+        ThreadCount threads_available) {
+
+    auto size = end - begin;
+    auto middle = (begin+end)/2;
+
+    if (size > 2) {
+        // more than 2 need a divide
+        if (threads_available > 1) {
+            std::thread t1([&items, begin, middle, lt, &items_tmp, threads_available]() {
+                    parallel_divide_and_merge(items, begin, middle, lt, items_tmp, threads_available-1);
+                   });
+            parallel_divide_and_merge(items, middle, end, lt, items_tmp, threads_available-1);
+            t1.join();
+        } else {
+            parallel_divide_and_merge(items, begin, middle, lt, items_tmp, 0);
+            parallel_divide_and_merge(items, middle, end, lt, items_tmp, 0);
+        }
+    }
+
+    // merge
+    auto i0 = begin;
+    auto i1 = middle;
+    for(auto o = begin; o < end; ++o) {
+        if (i0 < middle and i1 < end) {
+            // select the smaller item
+            if (lt(items[i0], items[i1])) {
+                items_tmp[o] = items[i0];
+                i0++;
+            } else {
+                items_tmp[o] = items[i1];
+                i1++;
+            }
+        } else if (i0 < middle) {
+            // take from left
+            items_tmp[o] = items[i0];
+            i0++;
+        } else {
+            // take from right
+            items_tmp[o] = items[i1];
+            i1++;
+        }
+    }
+    
+    // copy merged items_tmp back to items
+    for(auto i = begin; i < end; ++i) {
+        items[i] = items_tmp[i];
+    }
+}
+
+
+
+template <typename Container, typename LessThan> 
+void parallel_merge_sort(Container & items, LessThan lt) {
+    // Don't really need a copy of items, rather, we really just need a scratch space
+    // that's the same size as items. The initialization below assumes this is a type
+    // of SequenceContainer (http://en.cppreference.com/w/cpp/concept/SequenceContainer).
+    Container items_tmp(items);
+    auto max_threads = std::thread::hardware_concurrency(); // can return 0 if unable to detect
+    if (max_threads > 1) --max_threads; // account for the fact we already have 1 thread
+    parallel_divide_and_merge(items, 0, items.size(), lt, items_tmp, max_threads);
 }
 
 // taken from http://en.cppreference.com/w/cpp/types/remove_reference

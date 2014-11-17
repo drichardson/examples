@@ -7,8 +7,10 @@ TARGETS=ofstream_test templates atomics system_error array \
 
 
 //CXX=clang++
+OPTIMIZATION=-O3
+DEBUG=
 CXX=g++
-CXXFLAGS=-Wall -g -O0 -march=native -pthread
+CXXFLAGS=-Wall ${DEBUG} ${OPTIMIZATION} -O0 -march=native -pthread
 
 ifeq ($(CXX), clang++)
 	CXXFLAGS+=-std=c++14

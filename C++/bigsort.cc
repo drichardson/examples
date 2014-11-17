@@ -40,6 +40,7 @@ struct sorting_algorithms
     };
 
     std::vector<named_algorithm<value_type>> values = {{
+        { "parallel_merge", &sort::parallel_merge_sort<C,L> },
         { "quicksort", &sort::quick_sort<C,L> },
         { "merge", &sort::merge_sort<C,L> },
         { "heap", &sort::heap_sort<C,L> },
@@ -52,20 +53,30 @@ struct sorting_algorithms
     }};
 };
 
+// comparisons disabled by default because it significantly slows down the parallel 
+// merge sort. Probably because caches are being invalidated.
+#define USE_COMPARISON_TRACKING 0
+
 template <typename Container, typename LessThan>
 void sort_and_report_for_each_algorithm(Container const & a, LessThan lt, ostream & out=cout) {
 
+#if USE_COMPARISON_TRACKING
     int comparisons = 0;
     using E = decltype(a[0]);
     auto cmp = [&comparisons, &lt](E const & a, E const & b) {
         comparisons++;
         return lt(a, b);
     };
+#else
+    auto cmp = lt;
+#endif
 
     sorting_algorithms<Container, decltype(cmp)> algorithms;
     for(auto const & algo : algorithms.values) {
         Container a_copy(a);
+#if USE_COMPARISON_TRACKING
         comparisons = 0; // reset comparisons (incremented in cmp lambda above).
+#endif
 
         out << " * " << algo.name << "..." << flush;
 
@@ -74,8 +85,11 @@ void sort_and_report_for_each_algorithm(Container const & a, LessThan lt, ostrea
         algo.function(a_copy, cmp);
         auto end_time = chrono::high_resolution_clock::now();
         
-        out << "complete. comparisons=" << static_cast<double>(comparisons)
-            << " duration="
+        out << "complete.";
+#if USE_COMPARISON_TRACKING
+        out << " comparisons=" << static_cast<double>(comparisons);
+#endif
+        out << " duration="
             << chrono::duration_cast<chrono::milliseconds>(end_time-start_time).count()
             << "ms" << flush;
 

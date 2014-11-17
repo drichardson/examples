@@ -51,6 +51,7 @@ struct sorting_algorithms
         { "selection", &sort::selection_sort<C,L> },
         { "merge", &sort::merge_sort<C,L> },
         { "heap", &sort::heap_sort<C,L> },
+        { "parallel_merge", &sort::parallel_merge_sort<C,L> },
     }};
 };
 
