@@ -209,8 +209,9 @@ void selection_sort(Container & items, LessThan lt) {
 }
 
 // notes
-// y = b^x <=> x=logb(y)
-// y = 2^x <=> x=log2(y)
+// y=b^x <=> x=logb(y)
+// y=2^x <=> x=log2(y)
+// logb(m^n)=n*logb(m), therefore logm(m^n)=n*logm(m)=n*1=n
 
 // Divide input into two arrays, sort them, and then merge the results.
 // Analysis:
