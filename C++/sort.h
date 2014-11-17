@@ -208,9 +208,121 @@ void selection_sort(Container & items, LessThan lt) {
     }
 }
 
+// notes
+// y = b^x <=> x=logb(y)
+// y = 2^x <=> x=log2(y)
 
+// Divide input into two arrays, sort them, and then merge the results.
+// Analysis:
+// For input size n, the arrays are recursively divided into 2 n/2 sub arrays.
+// level #arrays size_array
+// 0     1       n
+// 1     2       n/2
+// 2     4       n/4
+// 3     8       n/8
+// ...
+// From this, it's apparent that the #arrays at each recursion is 2^level and
+// the size of each array is n/(2^level).
+// The recursion continues until size_array == 1, at which point the
+// arrays are already sorted, having only 1 element each.
+// To repeat, when size_array = floor(n/(2^level)) == 1, the array dividing stops.
+// This implies array dividing stops when 2^level >= n, and taking log2 of both
+// sides gives level >= log2(n), which means the number of levels reached (aka
+// recursions) is no more than log2(n).
+//
+// After each division, the divided arrays must be merged. The number of operations
+// is 2 * size_array = 2 * n/(2^level).
+//
+// So, let n be the size of the input, and f(n) is the number of operations required
+// to sort. f(n)=2*f(n/2)+n=n+2*f(n/2) (because at each level, we split the array into two
+// subarrays of size n/2 and then do n operations to merge them together).
+// If this is expanded log2(n) times, we have:
+// f(0) = 0 (no operations required to sort array of size 0)
+// f(1) = 0 (ditto for size 1)
+// For n > 1
+// f(n)
+// = n+2*f(n/2) (level 0)
+// = n+2*[n/2+2*f(n/4)] = 2n+4f(n/4) (level 1)
+// = n+2*[n/2+2*[n/4+2*f(n/8)]] = 3n+8f(n/8) (level 2)
+// = n+2*[n/2+2*[n/4+2*[n/8+2*f(n/16)]]] = 4n+16f(n/16) (level 3)
+// and so on until the argument to f is 1.
+//
+// So, our final recurrence will have two terms:
+// f(n) = Cn + Df(1)
+// but notice that f(1) is zero, so forget about that term.
+// That means we're going to have:
+// f(n) = Cn
+// Now to find C.
+// Generalizing 4n+16f(n/16) using it's relationship to the number of
+// levels (aka recursions) required, we have:
+// C = level+1.
+// Since the upper bound for level is log2(n), the upper bound
+// for C is log2(n)+1.
+// Substituting back into f(n) = Cn, we have:
+// O(f(n)) = O(log2(n)*n) = O(n*log2(n))
+//
+// Time complexity: O(n log2 n)
+// Space complexity: O(n) (although can be O(1) with an in place version of the algorithm)
+
+template <typename Container, typename LessThan> 
+void divide_and_merge(Container & items,
+        decltype(items.size()) begin,
+        decltype(items.size()) end,
+        LessThan lt,
+        Container & items_tmp) {
+
+    auto size = end - begin;
+    auto middle = (begin+end)/2;
+
+    if (size > 2) {
+        // more than 2 need a divide
+        divide_and_merge(items, begin, middle, lt, items_tmp);
+        divide_and_merge(items, middle, end, lt, items_tmp);
+    }
+
+    // merge
+    auto i0 = begin;
+    auto i1 = middle;
+    for(auto o = begin; o < end; ++o) {
+        if (i0 < middle and i1 < end) {
+            // select the smaller item
+            if (lt(items[i0], items[i1])) {
+                items_tmp[o] = items[i0];
+                i0++;
+            } else {
+                items_tmp[o] = items[i1];
+                i1++;
+            }
+        } else if (i0 < middle) {
+            // take from left
+            items_tmp[o] = items[i0];
+            i0++;
+        } else {
+            // take from right
+            items_tmp[o] = items[i1];
+            i1++;
+        }
+    }
+    
+    // copy merged items_tmp back to items
+    for(auto i = begin; i < end; ++i) {
+        items[i] = items_tmp[i];
+    }
+}
+
+
+template <typename Container, typename LessThan> 
+void merge_sort(Container & items, LessThan lt) {
+    Container items_tmp = items; // trying a "generic" way to create tmp container of the same size.
+    //vector<decltype(items[0])>
+    divide_and_merge(items, 0, items.size(), lt, items_tmp);
+}
+
+
+#if 0
 template <typename Container, typename LessThan> 
 void heap_sort(Container & items, LessThan lt) {
 }
+#endif
 
 }

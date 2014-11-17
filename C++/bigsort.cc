@@ -36,6 +36,7 @@ struct sorting_algorithms
 
     std::vector<named_algorithm<value_type>> values = {{
         { "quicksort", &sort::quick_sort<C,L> },
+        { "merge", &sort::merge_sort<C,L> },
         { "insertion", &sort::insertion_sort<C,L> },
         { "selection", &sort::selection_sort<C,L> },
         { "bubble", &sort::bubble_sort<C, L> },
