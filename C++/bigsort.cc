@@ -22,6 +22,11 @@ void print_elements(T const & v) {
 }
 
 template <typename Container, typename LessThan>
+void radix_sort_facade(Container & c, LessThan lt) {
+    sort::radix_sort(c);
+}
+
+template <typename Container, typename LessThan>
 struct sorting_algorithms
 {
     using C = Container;
@@ -37,6 +42,8 @@ struct sorting_algorithms
     std::vector<named_algorithm<value_type>> values = {{
         { "quicksort", &sort::quick_sort<C,L> },
         { "merge", &sort::merge_sort<C,L> },
+        { "heap", &sort::heap_sort<C,L> },
+        { "radix", &radix_sort_facade<C,L> },
         { "insertion", &sort::insertion_sort<C,L> },
         { "selection", &sort::selection_sort<C,L> },
         { "bubble", &sort::bubble_sort<C, L> },

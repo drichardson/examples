@@ -1,5 +1,7 @@
 #pragma once
 
+#include "heap.h"
+
 namespace sort {
 
 // All sort algorithms sort their input in acending order, assuming
@@ -321,11 +323,110 @@ void merge_sort(Container & items, LessThan lt) {
     divide_and_merge(items, 0, items.size(), lt, items_tmp);
 }
 
+// taken from http://en.cppreference.com/w/cpp/types/remove_reference
+// normally, you'd just use the version in std::, but I'm trying to keep this
+// file self contained for learning purposes.
+template< class T > struct remove_reference      {typedef T type;};
+template< class T > struct remove_reference<T&>  {typedef T type;};
+template< class T > struct remove_reference<T&&> {typedef T type;};
 
-#if 0
+// radix - sorts an array of integers by comparing the digits in each
+// integer. The outer loop runs d times, where d is the number of digits.
+// The inner loop runs n times, where n is the size of the array.
+// Time complexity: O(d*n), if d is constant O(n)
+// Space complexity: O(2*n) = O(n), since two buckets are created of size n.
+template <typename Container> 
+void radix_sort(Container & items) {
+    constexpr auto digits = sizeof(items[0])*8;
+    using size_t = decltype(items.size());
+    auto const size = items.size();
+    Container bucket_one(items.size());
+    Container bucket_zero(items.size());
+
+    // could use Container::value_type here, but trying to minimize number of things
+    // a container has to implement to work with this sorting routine.
+    typename remove_reference<decltype(items[0])>::type mask = 1;
+
+    for(size_t digit = 0; digit < digits; ++digit, mask <<= 1) {
+        size_t one_i = 0;
+        size_t zero_i = 0;
+        for(size_t i = 0; i < size; ++i) {
+            auto v = items[i] & mask;
+            if (v) {
+                bucket_one[one_i++] = items[i];
+            } else {
+                bucket_zero[zero_i++] = items[i];
+            }
+        }
+
+        size_t i = 0; 
+        for(size_t j = 0; j < zero_i; ++j) {
+            items[i++] = bucket_zero[j];
+        }
+        for(size_t j = 0; j < one_i; ++j) {
+            items[i++] = bucket_one[j];
+        }
+    }
+
+
+    // If there are negative values, they are now incorrectly at the end of the array.
+    // They need to be moved to the front. Reuse bucket_one as scratch space.
+
+    // copy all the negatives to bucket_one.
+    size_t negative_count = 0;
+    for(size_t i = size; i > 0; ) {
+        --i;
+        if (items[i] < 0) {
+            bucket_one[i] = items[i];
+            negative_count++;
+        } else {
+            break;
+        }
+    }
+
+    if (negative_count > 0) {
+        // move the positive values to the bucket_zero.
+        size_t positive_count = size - negative_count;
+        for(size_t i = 0; i < positive_count; ++i) {
+            bucket_zero[i] = items[i];
+        }
+        // move the negative values to the front
+        for(size_t i = 0; i < negative_count; ++i) {
+            items[i] = bucket_one[positive_count+i];
+        }
+        // move the positive values back to items
+        for(size_t i = negative_count; i < size; ++i) {
+            items[i] = bucket_zero[i - negative_count];
+        }
+    }
+}
+
+// heap sort - build a heap out of the input array, and then select
+// and delete the root element n times, inserting that element into
+// an output array.
+// This function performs build_heap(n)+heapify(1)+heapify(2)+...+heapify(n) comparisons.
+// build_heap is heapify(n/2)+heapify(n/2+1)+...+heapify(n) comparisons.
+// Adding those together we have:
+// 2*[heapify(n)+heapify(n-1)+...+heapify(n/2)]+heapify(n/2-1)+ ...+heapify(1)
+// which is
+// 2*[log2(n)+log2(n-1)+...+log2(n/2)]+log2(n/2-1)+...+log2(1)
+// which is less than 2*[n*log2(n)] = 2nlog2(n), which gives...
+// Time complexity: O(nlog(n))
+// Space complexity: O(n)
 template <typename Container, typename LessThan> 
 void heap_sort(Container & items, LessThan lt) {
+    Container h(items);
+    using size_t = decltype(h.size());
+    auto h_size = h.size();
+    heap::build_heap(h, h_size, lt);
+    for(size_t i = 0; i < items.size(); ++i) {
+        items[i] = h[0];
+        if (h_size > 1) {
+            h[0] = h[h_size-1];
+            h_size--;
+            heap::heapify(h, static_cast<size_t>(0), h_size, lt);
+        }
+    }
 }
-#endif
 
 }

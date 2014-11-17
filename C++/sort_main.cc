@@ -3,6 +3,7 @@
 #include <boost/type_index.hpp>
 #include <functional>
 #include <iostream>
+#include <climits>
 #include <vector>
 #include <deque>
 #include <queue>
@@ -49,8 +50,30 @@ struct sorting_algorithms
         { "insertion", &sort::insertion_sort<C,L> },
         { "selection", &sort::selection_sort<C,L> },
         { "merge", &sort::merge_sort<C,L> },
+        { "heap", &sort::heap_sort<C,L> },
     }};
 };
+
+template <typename Container>
+void sort_and_report_for_radix(std::ostream & out, Container const & a) {
+    // sorting routines that don't take a comparison function
+    Container a_copy(a);
+    sort::radix_sort(a_copy);
+    out << " * radix ={"; print_elements(out, a_copy); out << "}\n";
+    for(decltype(a_copy.size()) i = 1; i < a_copy.size(); ++i) {
+        if (a_copy[i-1] > a_copy[i]) {
+            out << "ERROR: Radix sort failed at index " << i << std::endl;
+            abort();
+        }
+    }
+}
+
+// can't sort containers of std::string using my implementation of radix sort, so use
+// SFINAE to skip this sort for strings.
+template <>
+void sort_and_report_for_radix(std::ostream & out, std::vector<std::string> const & a) {
+    out << " * radix skipped for vector<string>" << std::endl;
+}
 
 template <typename Container, typename LessThan>
 void sort_and_report_for_each_algorithm(std::ostream & out, Container const & a, LessThan lt) {
@@ -93,6 +116,8 @@ void sort_and_report_for_each_algorithm(std::ostream & out, Container const & a,
             abort();
         }
     }
+
+    sort_and_report_for_radix(out, a);
 }
 
 void print_title(std::ostream & out, std::string const & title) {
@@ -159,8 +184,18 @@ void run_int_sort_test_battery(std::ostream & out, Compare compare) {
     test(Container{{4,3,1,2}});
 
     // duplicate objects
-    test(Container{{1, 1}}); 
-    test(Container{{1, 2, 1, 3, 2}}); 
+    test(Container{{1,1}}); 
+    test(Container{{1,2,1,3,2}}); 
+
+    // negative values
+    test(Container{{1,-1}}); 
+    test(Container{{-1,1}}); 
+
+    // edge values
+    test(Container{{INT_MAX,INT_MIN}});
+    test(Container{{INT_MIN,INT_MAX}});
+    test(Container{{INT_MIN,-1,0,1,INT_MAX}}); 
+    test(Container{{INT_MAX,1,0,-1,INT_MIN}});
 }
 
 bool int_less_than(int const & a, int const & b) {
@@ -178,6 +213,7 @@ private:
     using value_type = T;
     value_type* _array = nullptr;
     size_type _size = 0;
+    bool _owns_array = false;
 
 public:
     // The following two functions are the required container interface for
@@ -195,7 +231,25 @@ public:
     explicit MinimalContainer(T* a, size_type s) : _array(a), _size(s) {}
     // copy constructor used by test runner, to copy input array so it can sort
     // multiple times.
-    explicit MinimalContainer(MinimalContainer const& rhs) : _array(rhs._array), _size(rhs._size) {}
+    explicit MinimalContainer(MinimalContainer const& rhs) :
+        _array(nullptr), _size(rhs._size), _owns_array(true)
+    {
+        _array = new T[_size];
+        for(size_type i = 0; i < _size; ++i) {
+            _array[i] = rhs._array[i];
+        }
+    }
+
+    explicit MinimalContainer(size_type size) :
+        _array(nullptr), _size(size), _owns_array(true) {
+       _array = new T[_size];     
+    }
+
+    ~MinimalContainer() {
+        if (_owns_array) {
+            delete[] _array;
+        }
+    }
 
     MinimalContainer() = delete;
     MinimalContainer(MinimalContainer&&) = delete;
@@ -218,15 +272,13 @@ int main() {
     sort_and_report_for_each_algorithm(out, std::array<int, 3>{{1, 3, 2}}, int_less_than); // array test
 #endif
 
-    // TODO: merge_sort broke the MinimalContainer test. Fix.
-#if 0
     // test minimal container
     print_title(out, "MinimalContainer Test");
     int data[] = { 3, 1, 2 };
     MinimalContainer<int> min_container{static_cast<int*>(data), static_cast<size_t>(3)};
     sort_and_report_for_each_algorithm(out, min_container, int_less_than); // array test
-#endif
 
+    // TODO: radix sort breaks this. Fix.
     // test something besides ints
     print_title(out, "string Test");
     std::vector<std::string> as{{ "hello", "computer", "space", "zero", "about", "fortunate" }};
