@@ -313,8 +313,10 @@ void divide_and_merge(Container & items,
 
 template <typename Container, typename LessThan> 
 void merge_sort(Container & items, LessThan lt) {
-    Container items_tmp = items; // trying a "generic" way to create tmp container of the same size.
-    //vector<decltype(items[0])>
+    // Don't really need a copy of items, rather, we really just need a scratch space
+    // that's the same size as items. The initialization below assumes this is a type
+    // of SequenceContainer (http://en.cppreference.com/w/cpp/concept/SequenceContainer).
+    Container items_tmp(items);
     divide_and_merge(items, 0, items.size(), lt, items_tmp);
 }
 
