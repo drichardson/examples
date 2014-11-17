@@ -1,12 +1,13 @@
 // a big sort, but still the size that can fit in memory.
 #include "sort.h"
-#include <iostream>
-#include <fstream>
+#include <algorithm>
+#include <chrono>
 #include <cmath>
+#include <fstream>
 #include <functional>
+#include <iostream>
 #include <iterator>
 #include <vector>
-#include <chrono>
 
 using namespace std;
 
@@ -26,6 +27,12 @@ void radix_sort_facade(Container & c, LessThan lt) {
     sort::radix_sort(c);
 }
 
+
+template <typename Container, typename LessThan>
+void std_sort_facade(Container & c, LessThan lt) {
+    std::sort(c.begin(), c.end(), lt);
+}
+
 template <typename Container, typename LessThan>
 struct sorting_algorithms
 {
@@ -40,6 +47,7 @@ struct sorting_algorithms
     };
 
     std::vector<named_algorithm<value_type>> values = {{
+        { "std::sort", &std_sort_facade<C,L> },
         { "parallel_merge", &sort::parallel_merge_sort<C,L> },
         { "quicksort", &sort::quick_sort<C,L> },
         { "merge", &sort::merge_sort<C,L> },
