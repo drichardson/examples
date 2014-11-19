@@ -11,9 +11,17 @@ else
 	CXXFLAGS+=-std=c++1y
 endif
 
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Linux)
+endif
+ifeq ($(UNAME_S),Darwin)
+LDFLAGS+=-framework OpenCL
+endif
+
+
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
-LDFLAGS=-framework OpenCL
 
 all: $(TARGETS)
 
