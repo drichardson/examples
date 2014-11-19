@@ -10,7 +10,12 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+
+#ifdef __APPLE__
 #include <OpenCL/OpenCL.h>
+#elif __linux__
+#include <CL/cl.h>
+#endif
 
 template <typename T>
 void ok(T rc) {
@@ -61,7 +66,7 @@ StringResult read_file_contents(char const* filename) {
         contents.resize(in.tellg());
         in.seekg(0, std::ios::beg);
         in.read(&contents[0], contents.size());
-        if (in.gcount() != contents.size()) {
+        if (in.gcount() != static_cast<std::streamsize>(contents.size())) {
             return {false, ""};
         }
         return {true, contents};
@@ -192,7 +197,7 @@ int main(int argc, const char * argv[]) {
     // Set input values
     //
     float in_values[count];
-    for(int i = 0; i < count; ++i) {
+    for(size_t i = 0; i < count; ++i) {
         in_values[i] = static_cast<float>(i);
     }
     cl_event write_event;
@@ -222,7 +227,7 @@ int main(int argc, const char * argv[]) {
     out << "task complete\n";
 
     out << "Read output values" << endl;
-    for(int i = 0; i < count; ++i) {
+    for(size_t i = 0; i < count; ++i) {
         out << "out_values[" << i << "]=" << out_values[i] << endl;
     }
         
