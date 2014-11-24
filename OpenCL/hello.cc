@@ -1,11 +1,3 @@
-//
-//  main.cpp
-//  hello-opencl
-//
-//  Created by Douglas Richardson on 11/18/14.
-//  Copyright (c) 2014 Doug Richardson. All rights reserved.
-//
-
 #include <cstdlib>
 #include <iostream>
 #include <vector>
