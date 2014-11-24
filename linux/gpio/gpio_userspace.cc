@@ -154,6 +154,103 @@ int read_pin_value(std::string const & pin) {
     return -1;
 }
 
+bool write_pin_value(std::string const & pin, std::string const & value) {
+    std::string filename = pin_gpio_dir(pin) + "/value";
+    FileDescriptor file = open_write_only(filename);
+    if (!file.ok()) {
+        std::perror(("Error opening " + filename).c_str());
+        return false;
+    }
+
+    auto rc = ::write(file.fd(), value.c_str(), value.size());
+    if (rc == -1) {
+        std::perror(("Error writing to " + filename).c_str());
+        return false;
+    }
+
+    return true;
+}
+
+class PinExporter {
+    std::string _pin;
+    bool _exported;
+public:
+    PinExporter(std::string const & pin) : _pin(pin) {
+        _exported = export_pin(_pin);
+        if (!_exported) {
+            std::cerr << "Error exporting pin " << _pin << std::endl;
+        }
+    }
+    PinExporter(PinExporter&& rhs) {
+        _pin = rhs._pin;
+        _exported = rhs._exported;
+        rhs._exported = false;
+    }
+    ~PinExporter() {
+        if (_exported) {
+            if (!unexport_pin(_pin)) {
+                std::cerr << "Error unexporting pin " << _pin <<
+                    " in ~PinExport()" << std::endl;
+            }
+        }
+    }
+    bool ok() const { return _exported; }
+};
+
+// Returns 0 on success, 1 on failure.
+int do_read(std::string const & pin) {
+    using std::cerr;
+    PinExporter exporter(pin);
+    if (!exporter.ok()) {
+        return 1;
+    }
+    if (!set_pin_direction(pin, pin_direction::in)) {
+        cerr << "Error setting pin direction\n";
+        return 1;
+    }
+    auto value = read_pin_value(pin);
+    if (value == -1) {
+        cerr << "Error reading pin value\n";
+        return 1;
+    }
+    std::cout << value << std::endl;
+    return 0;
+}
+
+int do_write(std::string const & pin, std::string const & value) {
+    using std::cout;
+    using std::cerr;
+    cout << "WARNING: Make sure you do not have pin " << pin <<
+        " connected to ground, or you'll have a short. Enter 'ok' to continue: "
+        << std::flush;
+    std::string answer;
+    std::cin >> answer;
+    if (answer != "ok") {
+        return 1;
+    }
+    PinExporter exporter(pin);
+    if (!exporter.ok()) {
+        cerr << "Error exporting pin " << pin << std::endl;
+        return 1;
+    }
+
+    if (!set_pin_direction(pin, pin_direction::out)) {
+        cerr << "Error setting pin direction\n";
+        return 1;
+    }
+
+    if (!write_pin_value(pin, value)) {
+        cerr << "Error writing " << value << " to pin " << pin << std::endl;
+        return 1;
+    }
+
+    return 0;
+}
+
+int do_wait(std::string const & pin, std::string const & value) {
+    return 0;
+}
+
 int main(int argc, char *argv[]) {
     using std::cout;
     using std::cerr;
@@ -161,44 +258,30 @@ int main(int argc, char *argv[]) {
 
     if (argc < 2) {
         usage("missing command");
-        std::exit(1);
+        return 1;
     }
 
     std::string command = argv[1];
-    bool ok = true;
+
+    if (argc < 3) {
+        usage("missing pin");
+        return 1;
+    }
+    std::string pin = argv[2];
 
     if (command == "read") {
-        if (argc < 3) {
-            usage("missing pin");
-            std::exit(1);
-        }
-        std::string pin = argv[2];
-        if (!export_pin(pin)) {
-            std::exit(1);
-        }
-        if (!set_pin_direction(pin, pin_direction::in)) {
-            cerr << "Error setting pin direction\n";
-            ok = false;
-        }
-        auto value = read_pin_value(pin);
-        if (value == -1) {
-            cerr << "Error reading pin value\n";
-            ok = false;
-        }
-        cout << value << std::endl;
-        if (!unexport_pin(pin)) {
-            cerr << "Error unexporting pin " << pin << "\n";
-            ok = false;
-        }
+        return do_read(pin);
     } else if (command == "write") {
-        cout << "TODO\n";
+        if (argc < 4) {
+            usage("missing pin value");
+            std::exit(1);
+        }
+        std::string value = argv[3];
+        return do_write(pin, value);
     } else if (command == "wait") {
-        cout << "TODO\n";
+        return do_wait(pin, "");
     }
 
-    if (!ok) {
-        cerr << "Error occurred" << std::endl;
-    }
-
-    return ok ? 0 : 1;
+    usage((std::string("Unknown command " ) + command).c_str());
+    return -1;
 }
