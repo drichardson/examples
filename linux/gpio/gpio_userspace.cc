@@ -1,8 +1,10 @@
-#include <iostream>
 #include <cstdlib>
-#include <fstream>
+#include <cstring>
+#include <fcntl.h>
+#include <iostream>
 #include <sstream>
 #include <thread>
+#include <unistd.h>
 
 void usage(char const* msg) {
     using namespace std;
@@ -14,69 +16,142 @@ void usage(char const* msg) {
         << endl;
 }
 
-using pin_t = int;
-
 enum class pin_direction {
     in,
     out
 };
 
-bool export_pin(pin_t pin) {
-    std::ofstream f("/sys/class/gpio/export");
-    if (!f) {
-        std::cerr << "Couldn't open export file." << std::endl;
-        return false;
+class FileDescriptor {
+private:
+    int _fd = -1;
+public:
+    FileDescriptor(int fd) : _fd(fd) {
     }
-    f << pin << std::flush;
-    return f.good();
+
+    FileDescriptor(FileDescriptor&& rhs) {
+        _fd = rhs._fd;
+        rhs._fd = -1;
+    }
+
+    ~FileDescriptor() {
+        if (_fd >= 0) {
+            ::close(_fd);
+        }
+    }
+
+    int fd() const {
+        return _fd;
+    }
+
+    bool ok() const {
+        return _fd != -1;
+    }
+};
+
+FileDescriptor open_file_descriptor(std::string const & filename, int flags) {
+    return FileDescriptor(::open(filename.c_str(), flags));
 }
 
-bool unexport_pin(pin_t pin) {
-    std::ofstream f("/sys/class/gpio/unexport");
-    if (!f) {
-        std::cerr << "Couldn't open unexport file." << std::endl;
-        return false;
-    }
-    f << pin << std::flush;
-    return f.good();
+FileDescriptor open_write_only(std::string const & filename) {
+    return open_file_descriptor(filename, O_WRONLY);
 }
 
-std::string pin_gpio_dir(pin_t pin) {
+FileDescriptor open_read_only(std::string const & filename) {
+    return open_file_descriptor(filename, O_RDONLY);
+}
+
+bool export_pin(std::string const & pin) {
+    std::string filename = "/sys/class/gpio/export";
+    auto file = open_write_only(filename);
+    if (!file.ok()) {
+        std::perror(("Couldn't open " + filename).c_str());
+        return false;
+    }
     std::ostringstream oss;
-    oss << "/sys/class/gpio" << pin;
+    oss << pin;
+    auto const & s = oss.str();
+    auto rc = ::write(file.fd(), s.c_str(), s.size());
+    if (rc == -1) {
+        std::perror(("Error writing to " + filename).c_str());
+        return false;
+    }
+    return true;
+}
+
+bool unexport_pin(std::string const & pin) {
+    std::string filename = "/sys/class/gpio/unexport";
+    FileDescriptor file = open_write_only(filename);
+    if (!file.ok()) {
+        std::perror(("Error opening " + filename).c_str());
+        return false;
+    }
+    std::ostringstream oss;
+    oss << pin;
+    auto const & s = oss.str();
+    auto rc = ::write(file.fd(), s.c_str(), s.size());
+    if (rc == -1) {
+        std::perror(("Error writing to " + filename).c_str());
+        return false;
+    }
+
+    return true;
+}
+
+std::string pin_gpio_dir(std::string const & pin) {
+    std::ostringstream oss;
+    oss << "/sys/class/gpio/gpio" << pin;
     return oss.str();
 }
 
-bool set_pin_direction(pin_t pin, pin_direction direction) {
+bool set_pin_direction(std::string const & pin, pin_direction direction) {
     auto filename = pin_gpio_dir(pin) + "/direction";
-    std::ofstream o(filename);
-    if (!o) {
-        std::cerr << "Error opening " << filename << std::endl;
+    FileDescriptor file = open_write_only(filename);
+    if (!file.ok()) {
+        std::perror(("Error opening " + filename).c_str());
+        return false;
+    }
+    char const* str_direction = nullptr;
+    switch(direction) {
+    case pin_direction::in:
+        str_direction = "in";
+        break;
+    case pin_direction::out:
+        str_direction = "out";
+        break;
+    }
+    if (str_direction == nullptr) {
+        return false;
+    }
+    auto rc = ::write(file.fd(), str_direction, std::strlen(str_direction));
+    if (rc == -1) {
+        std::perror(("Error writing to " + filename).c_str());
         return false;
     }
 
-    switch(direction) {
-        case pin_direction::in:
-            o << "in" << std::flush;
-            break;
-        case pin_direction::out:
-            o << "out" << std::flush;
-            break;
-    }
-
-    return o.good();
+    return true;
 }
 
 // -1 on error, 0 or 1 on succeess
-int read_pin_value(pin_t pin) {
+int read_pin_value(std::string const & pin) {
     std::string filename = pin_gpio_dir(pin) + "/value";
-    std::ifstream in(filename);
-    if (!in) {
+    FileDescriptor file = open_read_only(filename);
+    if (!file.ok()) {
+        std::perror(("Error opening " + filename).c_str());
         return -1;
     }
-    int result;
-    in >> result;
-    return in.good() ? result : -1;
+    char c = -1;
+    auto rc = ::read(file.fd(), &c, sizeof(c));
+    if (rc != 1) {
+        std::perror(("Error reading " + filename).c_str());
+        return -1;
+    }
+    switch(c) {
+    case '0':
+        return 0;
+    case '1':
+        return 1;
+    }
+    return -1;
 }
 
 int main(int argc, char *argv[]) {
@@ -93,17 +168,14 @@ int main(int argc, char *argv[]) {
     bool ok = true;
 
     if (command == "read") {
-        cout << "TODO\n";
         if (argc < 3) {
             usage("missing pin");
             std::exit(1);
         }
-        auto pin = std::atoi(argv[2]);
+        std::string pin = argv[2];
         if (!export_pin(pin)) {
-            cerr << "Error exporting pin " << pin << "\n";
-            ok = false;
+            std::exit(1);
         }
-        std::this_thread::sleep_for(100ms);
         if (!set_pin_direction(pin, pin_direction::in)) {
             cerr << "Error setting pin direction\n";
             ok = false;
@@ -113,7 +185,7 @@ int main(int argc, char *argv[]) {
             cerr << "Error reading pin value\n";
             ok = false;
         }
-        cout << "Pin " << pin << " value: " << value << std::endl;
+        cout << value << std::endl;
         if (!unexport_pin(pin)) {
             cerr << "Error unexporting pin " << pin << "\n";
             ok = false;

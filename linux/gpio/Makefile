@@ -14,10 +14,10 @@ CXXFLAGS+=-std=c++1y
 
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
-all: $(TARGETS)
-
-rsync: $(TARGETS)
+rsync: all
 	rsync $(TARGETS) gpio_script.sh $(RPI_SSH_DEST)
+
+all: $(TARGETS)
 
 clean:
 	$(RM) -r $(TARGETS) *.o
