@@ -1,7 +1,11 @@
+// Access gpio via sysfs interface as described here:
+// https://www.kernel.org/doc/Documentation/gpio/sysfs.txt
+
 #include <cstdlib>
 #include <cstring>
 #include <fcntl.h>
 #include <iostream>
+#include <poll.h>
 #include <sstream>
 #include <thread>
 #include <unistd.h>
@@ -12,7 +16,7 @@ void usage(char const* msg) {
         << "\nUsage:\n"
         << "  gpio_userspace read <pin>\n"
         << "  gpio_userspace write <pin> <value>\n"
-        << "  gpio_userspace wait <pin>\n"
+        << "  gpio_userspace watch <pin> <rising|falling|both>\n"
         << endl;
 }
 
@@ -128,6 +132,21 @@ bool set_pin_direction(std::string const & pin, pin_direction direction) {
         return false;
     }
 
+    return true;
+}
+
+bool set_pin_edge_trigger(std::string const & pin, std::string const & trigger) {
+    auto filename = pin_gpio_dir(pin) + "/edge";
+    FileDescriptor file = open_write_only(filename);
+    if (!file.ok()) {
+        std::perror(("Error opening " + filename).c_str());
+        return false;
+    }
+    auto rc = ::write(file.fd(), trigger.c_str(), trigger.size());
+    if (rc == -1) {
+        std::perror(("Error writing trigger to " + filename).c_str());
+        return false;
+    }
     return true;
 }
 
@@ -247,7 +266,76 @@ int do_write(std::string const & pin, std::string const & value) {
     return 0;
 }
 
-int do_wait(std::string const & pin, std::string const & value) {
+int do_watch(std::string const & pin, std::string const & edge_trigger) {
+    using std::cerr;
+    using std::cout;
+    using std::endl;
+    PinExporter exporter(pin);
+    if (!exporter.ok()) {
+        cerr << "Error exporting pin " << pin << endl;
+        return 1;
+    }
+    if (!set_pin_direction(pin, pin_direction::in)) {
+        cerr << "Error setting pin direction to input" << endl;
+        return 1;
+    }
+    if (!set_pin_edge_trigger(pin, edge_trigger)) {
+        cerr << "Error setting pin edge trigger" << endl;
+        return 1;
+    }
+
+    auto filename = pin_gpio_dir(pin) + "/value";
+    FileDescriptor file = open_read_only(filename);
+    if (!file.ok()) {
+        std::perror(("Error opening pin value file " + filename).c_str());
+        return 1;
+    }
+
+    struct pollfd pfd;
+    // TODO: remove, doesn't matter
+    char xxx;
+    ::read(file.fd(), &xxx, 1);
+    std::memset(&pfd, 0, sizeof(pfd));
+    pfd.fd = file.fd();
+    pfd.events = POLLPRI | POLLERR;
+    int constexpr timeout_ms = 5000;
+    while(true) {
+        auto rc = ::poll(&pfd, 1, timeout_ms);
+        if (rc > 0) {
+            // file descriptor was selected
+
+            // lseek back to beginning, per gpio sysfs spec
+            auto off = ::lseek(pfd.fd, 0, SEEK_SET);
+            if (off == -1) {
+                std::perror("Error seeking to beginning of file.");
+                break;
+            }
+
+            if (pfd.revents & POLLPRI) { 
+                cout << "got some high priority data" << endl;
+                char buf;
+                auto rc = ::read(pfd.fd, &buf, 1);
+                if (rc == -1) {
+                    std::perror("Error reading value after poll signalled it was available.");
+                    break;
+                }
+                cout << buf << endl;
+            }
+            if (pfd.revents & POLLERR) {
+                cout << "Got POLLERR while polling value file." << endl;
+                //break;
+            }
+        } else if (rc == 0) {
+            // timeout occurred
+            cout << "Timeout occurred" << endl;
+            break;
+        } else if (rc == -1) {
+            // other error
+            std::perror("poll failed");
+            break;
+        }
+    }
+
     return 0;
 }
 
@@ -278,8 +366,17 @@ int main(int argc, char *argv[]) {
         }
         std::string value = argv[3];
         return do_write(pin, value);
-    } else if (command == "wait") {
-        return do_wait(pin, "");
+    } else if (command == "watch") {
+        if (argc < 4) {
+            usage("missing edge trigger");
+            std::exit(1);
+        }
+        std::string edge_trigger = argv[3];
+        if (edge_trigger != "rising" && edge_trigger != "falling" && edge_trigger != "both") {
+            usage("invalid edge trigger");
+            std::exit(1);
+        }
+        return do_watch(pin, edge_trigger);
     }
 
     usage((std::string("Unknown command " ) + command).c_str());

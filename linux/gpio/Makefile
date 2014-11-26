@@ -1,5 +1,6 @@
 TARGETS=gpio_userspace cross_compile_hello_world
 RPI_SSH_DEST=doug@192.168.1.31:/home/doug
+#RPI_SSH_DEST=pi@192.168.1.34:/home/pi
 
 # XTOOLSDIR is where you've extracted your cross compilation
 # environment. You can get one for ArchLinuxARM here:
