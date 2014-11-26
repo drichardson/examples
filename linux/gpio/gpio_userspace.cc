@@ -292,18 +292,14 @@ int do_watch(std::string const & pin, std::string const & edge_trigger) {
     }
 
     struct pollfd pfd;
-    // TODO: remove, doesn't matter
-    char xxx;
-    ::read(file.fd(), &xxx, 1);
-    std::memset(&pfd, 0, sizeof(pfd));
     pfd.fd = file.fd();
-    pfd.events = POLLPRI | POLLERR;
+    pfd.events = POLLPRI;
     int constexpr timeout_ms = 5000;
     while(true) {
+        pfd.events = POLLPRI;
+        pfd.fd = file.fd();
         auto rc = ::poll(&pfd, 1, timeout_ms);
         if (rc > 0) {
-            // file descriptor was selected
-
             // lseek back to beginning, per gpio sysfs spec
             auto off = ::lseek(pfd.fd, 0, SEEK_SET);
             if (off == -1) {
@@ -312,19 +308,15 @@ int do_watch(std::string const & pin, std::string const & edge_trigger) {
             }
 
             if (pfd.revents & POLLPRI) { 
-                cout << "got some high priority data" << endl;
                 char buf;
-                auto rc = ::read(pfd.fd, &buf, 1);
+                auto rc = ::read(pfd.fd, &buf, sizeof(buf));
                 if (rc == -1) {
                     std::perror("Error reading value after poll signalled it was available.");
                     break;
                 }
                 cout << buf << endl;
             }
-            if (pfd.revents & POLLERR) {
-                cout << "Got POLLERR while polling value file." << endl;
-                //break;
-            }
+            // Ignore POLLERR. sysfs files always return POLLERR on poll (see fs/sysfs/file.c).
         } else if (rc == 0) {
             // timeout occurred
             cout << "Timeout occurred" << endl;
