@@ -1,5 +1,5 @@
-TARGETS=gpio_userspace cross_compile_hello_world
-RPI_SSH_DEST=doug@192.168.1.31:/home/doug
+TARGETS=gpio_userspace cross_compile_hello_world hy_srf05_ultrasonic_ranging_sensor 
+RPI_SSH_DEST=doug@192.168.1.16:/home/doug
 #RPI_SSH_DEST=pi@192.168.1.34:/home/pi
 
 # XTOOLSDIR is where you've extracted your cross compilation
@@ -19,6 +19,10 @@ rsync: all
 	rsync $(TARGETS) gpio_script.sh $(RPI_SSH_DEST)
 
 all: $(TARGETS)
+
+gpio_userspace: pins.o file_descriptor.o
+
+hy_srf05_ultrasonic_ranging_sensor: pins.o file_descriptor.o
 
 clean:
 	$(RM) -r $(TARGETS) *.o
