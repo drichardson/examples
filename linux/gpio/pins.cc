@@ -2,6 +2,7 @@
 #include "file_descriptor.hpp"
 #include <sstream>
 #include <cstring>
+#include <unistd.h>
 
 namespace gpio {
 
