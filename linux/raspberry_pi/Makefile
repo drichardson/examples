@@ -1,4 +1,4 @@
-TARGETS=gpio_userspace cross_compile_hello_world hy_srf05_ultrasonic_ranging_sensor 
+TARGETS=gpio_userspace cross_compile_hello_world hy_srf05_ultrasonic_ranging_sensor init
 RPI_SSH_DEST=doug@192.168.1.16:/home/doug
 #RPI_SSH_DEST=pi@192.168.1.34:/home/pi
 
@@ -6,6 +6,7 @@ OPTIMIZATION=-O3
 DEBUG=
 CXXFLAGS=-Wall ${DEBUG} ${OPTIMIZATION} -pthread
 CXXFLAGS+=-std=c++1y
+CFLAGS=-Wall ${DEBUG} ${OPTIMIZATION}
 
 # CROSS_COMPILE is the prefix of your cross compilation
 # tools. You can get one for ArchLinuxARM here:
@@ -13,6 +14,7 @@ CXXFLAGS+=-std=c++1y
 # or create your own using crosstool-ng
 CROSS_COMPILE?=~/x-tools6h/arm-unknown-linux-gnueabihf/bin/
 CXX=$(CROSS_COMPILE)g++
+CC=$(CROSS_COMPILE)gcc
 
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
