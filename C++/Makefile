@@ -7,8 +7,8 @@ TARGETS=ofstream_test templates atomics system_error array \
 
 
 //CXX=clang++
-OPTIMIZATION=-O3
-DEBUG=
+OPTIMIZATION=-O0
+DEBUG=-g
 CXX=g++
 CXXFLAGS=-Wall ${DEBUG} ${OPTIMIZATION} -march=native -pthread
 
