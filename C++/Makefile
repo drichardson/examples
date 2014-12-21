@@ -3,7 +3,7 @@ TARGETS=ofstream_test templates atomics system_error array \
 		crash playground typeid casting placement_new \
 		initialization ctor auto_decltype operators \
 		literals template_meta_programming sort_main \
-		heap_main bigsort ifstream vector
+		heap_main bigsort ifstream vector graph destructors 
 
 
 //CXX=clang++
