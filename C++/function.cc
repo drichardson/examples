@@ -1,11 +1,12 @@
+#include <array>
 #include <functional>
 #include <future>
+#include <sched.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <sched.h>
 
 #define USE_SHAREDPTR 0
-#define USE_SET_AFFINITY 1
+#define USE_SET_AFFINITY 0
 
 inline uint64_t start_rdtsc(void)
 {

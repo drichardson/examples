@@ -1,6 +1,7 @@
 #include <iostream>
 #include <typeinfo>
 #include <boost/type_index.hpp>
+#include <boost/current_function.hpp>
 
 using namespace std;
 
