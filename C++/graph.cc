@@ -1,5 +1,7 @@
-#include <iostream>
 #include <cassert>
+#include <iostream>
+#include <queue>
+#include <vector>
 
 using namespace std;
 
@@ -12,7 +14,7 @@ void assert_equal(int v1, int v2) {
 
 /*
    Graph interface
-    unsigned vertex_count() const = 0;
+    unsigned size() const = 0;
     unsigned edge(unsigned v1, unsigned v2) = 0;
     void set_edge(unsigned v1, unsigned v2, int weight) = 0;
     void set_undirected_edge(unsigned v1, unsigned v2, int weight) = 0;
@@ -47,7 +49,7 @@ public:
     ~AdjacencyMatrix() {
         delete[] _m;
     }
-    unsigned vertex_count() const { return _vertex_count; }
+    unsigned size() const { return _vertex_count; }
     unsigned edge_weight(unsigned v1, unsigned v2) {
         return edge_weight_internal(v1,v2);
     }
@@ -68,6 +70,17 @@ public:
             if (_m[row_base+i] > 0) ++result;
         }
         return result;
+    }
+
+    void neighbors(unsigned v, vector<int>* out) const {
+        assert(v < _vertex_count);
+        assert(out);
+        unsigned row_base = v * _vertex_count;
+        for(unsigned i = 0; i < _vertex_count; ++i) {
+            if (_m[row_base+i] > 0) {
+                (*out).push_back(i);
+            }
+        }
     }
 };
 
@@ -109,7 +122,7 @@ public:
         }
         free(_verticies);
     }
-    unsigned vertex_count() const { return _vertex_count; }
+    unsigned size() const { return _vertex_count; }
 
     unsigned edge_weight(unsigned v1, unsigned v2) {
         auto p = list_for_edge(v1, v2);
@@ -142,53 +155,134 @@ public:
         }
         return result;
     }
+
+
+    void neighbors(unsigned v, vector<int>* out) const {
+        assert(v < _vertex_count);
+        assert(out);
+        for(VertexList* p = _verticies[v]; p; p = p->next) {
+            (*out).push_back(p->vertex_index);
+        }
+    }
 };
 
 template <typename Graph>
+void bfs(Graph const & graph, unsigned start_v, vector<int>* distance_out, vector<int>* parent_out) {
+    assert(start_v < graph.size());
+    assert(distance_out);
+    assert(parent_out);
+
+    // Inspired by Intro to Algorithms psuedo code
+
+    // initialize output parameters
+    vector<int> & parent = *parent_out;
+    vector<int> & distance = *distance_out;
+
+    parent.assign(graph.size(), -1);
+    distance.assign(graph.size(), -1);
+
+    // bookkeeping        
+    vector<bool> discovered(graph.size(), false);
+
+    discovered[start_v] = true;
+    distance[start_v] = 0;
+    parent[start_v] = -1;
+
+    queue<int> q;
+    q.push(start_v);
+    vector<int> neigh;
+
+    while(q.size() != 0) {
+        unsigned u = q.front();
+        q.pop();
+
+        neigh.clear();
+        graph.neighbors(u, &neigh);
+        //cout << "n: " << neigh.size() << endl;
+        for(unsigned i = 0; i < neigh.size(); ++i) {
+            unsigned v = neigh[i];
+            if (!discovered[v]) {
+                discovered[v] = true;
+                distance[v] = distance[u] + 1;
+                parent[v] = u;
+                q.push(v);
+            }
+        }
+    }
+}
+
+template <typename Graph>
 void basic_graph_test() {
-    Graph g(5);
+    Graph g(6);
     g.set_undirected_edge_weight(0, 1, 5);
     g.set_undirected_edge_weight(1, 2, 4);
     g.set_undirected_edge_weight(1, 3, 10);
     g.set_undirected_edge_weight(2, 3, 7);
-    // don't connect anything to 4
+    g.set_undirected_edge_weight(3, 4, 100);
+    // don't connect anything to 5
 
-    for(unsigned i = 0; i < g.vertex_count(); ++i) {
-        for(unsigned j = 0; j < g.vertex_count(); ++j) {
+    for(unsigned i = 0; i < g.size(); ++i) {
+        for(unsigned j = 0; j < g.size(); ++j) {
             unsigned weight = g.edge_weight(i,j);
-            cout << "weight[" << i << "," << j << "]=" << weight << "\n";
+            //cout << "weight[" << i << "," << j << "]=" << weight << "\n";
 
             if ((i == 0 && j == 1) || (i == 1 && j == 0)) assert_equal(weight, 5);
             else if ((i == 1 && j == 2) || (i == 2 && j == 1)) assert_equal(weight, 4);
             else if ((i == 1 && j == 3) || (i == 3 && j == 1)) assert_equal(weight, 10);
             else if ((i == 2 && j == 3) || (i == 3 && j == 2)) assert_equal(weight, 7);
+            else if ((i == 3 && j == 4) || (i == 4 && j == 3)) assert_equal(weight, 100);
             else assert_equal(weight, 0);
         }
     }
 
-    for(unsigned i = 0; i < g.vertex_count(); ++i) {
+    for(unsigned i = 0; i < g.size(); ++i) {
         auto d = g.out_degrees(i);
-        cout << "out degrees[" << i << "]=" << d << "\n";
+        vector<int> neigh;
+        g.neighbors(i, &neigh);
+        //cout << "out degrees[" << i << "]=" << d << "\n";
 
         switch(i) {
         case 0:
             assert_equal(d, 1);
+            assert_equal(neigh.size(), 1);
             break;
         case 1:
             assert_equal(d, 3);
+            assert_equal(neigh.size(), 3);
             break;
         case 2:
             assert_equal(d, 2);
+            assert_equal(neigh.size(), 2);
             break;
         case 3:
-            assert_equal(d, 2);
+            assert_equal(d, 3);
+            assert_equal(neigh.size(), 3);
             break;
         case 4:
+            assert_equal(d, 1);
+            assert_equal(neigh.size(), 1);
+            break;
+        case 5:
             assert_equal(d, 0);
+            assert_equal(neigh.size(), 0);
             break;
         default:
             abort();
         }
+    }
+
+    vector<int> distance;
+    vector<int> parent;
+    bfs(g, 0, &distance, &parent);
+    assert_equal(distance.size(), parent.size());
+    assert_equal(distance.size(), g.size());
+    assert_equal(distance[0], 0);
+    assert_equal(distance[1], 1);
+    assert_equal(distance[2], 2);
+    assert_equal(distance[3], 2);
+    assert_equal(distance[4], 3);
+    for(unsigned v = 0; v < distance.size(); ++v) {
+        cout << v << ": dist=" << distance[v] << " parent=" << parent[v] << '\n';
     }
 }
 
