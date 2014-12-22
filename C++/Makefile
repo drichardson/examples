@@ -3,14 +3,15 @@ TARGETS=ofstream_test templates atomics system_error array \
 		crash playground typeid casting placement_new \
 		initialization ctor auto_decltype operators \
 		literals template_meta_programming sort_main \
-		heap_main bigsort ifstream vector graph destructors 
+		heap_main bigsort ifstream vector graph destructors \
+		stack_protector
 
 
 //CXX=clang++
 OPTIMIZATION=-O0
 DEBUG=-g
 CXX=g++
-CXXFLAGS=-Wall ${DEBUG} ${OPTIMIZATION} -march=native -pthread
+CXXFLAGS=-Wall ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all
 
 ifeq ($(CXX), clang++)
 	CXXFLAGS+=-std=c++14
