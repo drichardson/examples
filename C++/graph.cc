@@ -2,6 +2,7 @@
 #include <iostream>
 #include <queue>
 #include <vector>
+#include <limits>
 
 using namespace std;
 
@@ -60,13 +61,12 @@ public:
         return result;
     }
 
-    void neighbors(unsigned v, vector<int>* out) const {
+    void neighbors(unsigned v, vector<unsigned> & out) const {
         assert(v < _vertex_count);
-        assert(out);
         unsigned row_base = v * _vertex_count;
         for(unsigned i = 0; i < _vertex_count; ++i) {
             if (_m[row_base+i] > 0) {
-                (*out).push_back(i);
+                out.push_back(i);
             }
         }
     }
@@ -144,32 +144,35 @@ public:
         return result;
     }
 
-    void neighbors(unsigned v, vector<int>* out) const {
+    void neighbors(unsigned v, vector<unsigned> & out) const {
         assert(v < _vertex_count);
-        assert(out);
         for(VertexList* p = _verticies[v]; p; p = p->next) {
-            (*out).push_back(p->vertex_index);
+            out.push_back(p->vertex_index);
         }
     }
 };
 
+struct bfs_result {
+    vector<bool> discovered;
+    vector<int> distance;
+    vector<int> parent;
+};
+
 template <typename Graph>
-void bfs(Graph const & graph, unsigned start_v, vector<int>* distance_out, vector<int>* parent_out) {
+void bfs(Graph const & graph, unsigned start_v, bfs_result & result) {
     assert(start_v < graph.size());
-    assert(distance_out);
-    assert(parent_out);
 
     // Inspired by Intro to Algorithms psuedo code
 
-    // initialize output parameters
-    vector<int> & parent = *parent_out;
-    vector<int> & distance = *distance_out;
+    vector<int> & parent = result.parent;
+    vector<int> & distance = result.distance;
+    vector<bool> & discovered = result.discovered;
 
+    // initialize output parameters
     parent.assign(graph.size(), -1);
     distance.assign(graph.size(), -1);
+    discovered.assign(graph.size(), false);
 
-    // bookkeeping        
-    vector<bool> discovered(graph.size(), false);
 
     discovered[start_v] = true;
     distance[start_v] = 0;
@@ -177,14 +180,14 @@ void bfs(Graph const & graph, unsigned start_v, vector<int>* distance_out, vecto
 
     queue<int> q;
     q.push(start_v);
-    vector<int> neigh;
+    vector<unsigned> neigh;
 
     while(q.size() != 0) {
         unsigned u = q.front();
         q.pop();
 
         neigh.clear();
-        graph.neighbors(u, &neigh);
+        graph.neighbors(u, neigh);
         //cout << "n: " << neigh.size() << endl;
         for(unsigned i = 0; i < neigh.size(); ++i) {
             unsigned v = neigh[i];
@@ -198,22 +201,66 @@ void bfs(Graph const & graph, unsigned start_v, vector<int>* distance_out, vecto
     }
 }
 
+unsigned const dfs_no_parent = std::numeric_limits<unsigned>::max();
+
+struct dfs_result {
+    vector<unsigned> discovered_time;
+    vector<unsigned> finished_time;
+    vector<unsigned> parent; // dfs_no_parent if node has no parent.
+};
+
+template <typename Graph>
+void dfs_visit(Graph const & graph, unsigned v, unsigned & time_counter, dfs_result & r) {
+    cout << "visiting " << v << " with time " << time_counter << endl;
+    ++time_counter;
+    r.discovered_time[v] = time_counter;
+
+    vector<unsigned> neighbors;
+    graph.neighbors(v, neighbors);
+    for(unsigned neigh : neighbors) {
+        if (r.discovered_time[neigh] == 0) {
+            r.parent[neigh] = v;
+            dfs_visit(graph, neigh, time_counter, r);
+        }
+    }
+
+    ++time_counter;
+    r.finished_time[v] = time_counter;
+}
+
+template <typename Graph>
+void dfs(Graph const & graph, dfs_result & r) {
+    // Inspired by Introduction to Algorithms psuedo code
+    r.discovered_time.assign(graph.size(), 0);
+    r.finished_time.assign(graph.size(), 0);
+    r.parent.assign(graph.size(), dfs_no_parent);
+
+    // time 0 represents WHITE label from Intro to Algorithms. dfs_visit will increment
+    // to 1 before assigning to first discovered vertex.
+    unsigned time_counter = 0;
+
+    for(unsigned v = 0; v < graph.size(); ++v) {
+        if (r.discovered_time[v] == 0) {
+            dfs_visit(graph, v, time_counter, r);
+        }
+    }
+}
+
 template <typename Graph>
 void max_node(Graph const & graph, unsigned from_v, unsigned *v_out, int *distance_out) {
     assert(v_out);
     assert(distance_out);
     assert(graph.size() > 0);
 
-    vector<int> distance;
-    vector<int> parent;
-    bfs(graph, from_v, &distance, &parent);
+    bfs_result bres;
+    bfs(graph, from_v, bres);
 
     int max_distance = 0;
     unsigned max_distance_v = from_v;
     for(unsigned i = 0; i < graph.size(); ++i) {
         //cout << "  " << i << ": dist=" << distance[i] << "\n";
-        if (distance[i] > max_distance) {
-            max_distance = distance[i];
+        if (bres.distance[i] > max_distance) {
+            max_distance = bres.distance[i];
             max_distance_v = i;
         }
     }
@@ -274,8 +321,8 @@ void basic_graph_test() {
 
     for(unsigned i = 0; i < g.size(); ++i) {
         auto d = g.out_degrees(i);
-        vector<int> neigh;
-        g.neighbors(i, &neigh);
+        vector<unsigned> neigh;
+        g.neighbors(i, neigh);
         //cout << "out degrees[" << i << "]=" << d << "\n";
 
         switch(i) {
@@ -308,16 +355,19 @@ void basic_graph_test() {
         }
     }
 
-    vector<int> distance;
-    vector<int> parent;
-    bfs(g, 0, &distance, &parent);
-    assert_equal(distance.size(), parent.size());
-    assert_equal(distance.size(), g.size());
-    assert_equal(distance[0], 0);
-    assert_equal(distance[1], 1);
-    assert_equal(distance[2], 2);
-    assert_equal(distance[3], 2);
-    assert_equal(distance[4], 3);
+    {
+        bfs_result r;
+        vector<int> & d = r.distance;
+        bfs(g, 0, r);
+        assert_equal(d.size(), r.parent.size());
+        assert_equal(d.size(), g.size());
+        assert_equal(d[0], 0);
+        assert_equal(d[1], 1);
+        assert_equal(d[2], 2);
+        assert_equal(d[3], 2);
+        assert_equal(d[4], 3);
+    }
+
 #if 0
     for(unsigned v = 0; v < distance.size(); ++v) {
         cout << v << ": dist=" << distance[v] << " parent=" << parent[v] << '\n';
@@ -339,6 +389,24 @@ void basic_graph_test() {
     int dist = -1;
     max_node(tree3, 0, &v, &dist);
     assert_equal(diameter(tree3), 2);
+
+    {
+        dfs_result r;
+        dfs(g, r);
+        cout << "DFS:\n";
+        for(unsigned v = 0; v < g.size(); ++v) {
+            cout << "\t" << v
+                << " discovered=" << r.discovered_time[v]
+                << " finished=" << r.finished_time[v];
+
+            if (r.parent[v] == dfs_no_parent) {
+                cout << " root";
+            } else {
+                cout << " parent=" << r.parent[v];
+            }
+            cout << '\n';
+        }
+    }
 }
 
 void basic_incidence_matrix() {
