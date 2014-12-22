@@ -12,17 +12,9 @@ void assert_equal(int v1, int v2) {
     }
 }
 
-/*
-   Graph interface
-    unsigned size() const = 0;
-    unsigned edge(unsigned v1, unsigned v2) = 0;
-    void set_edge(unsigned v1, unsigned v2, int weight) = 0;
-    void set_undirected_edge(unsigned v1, unsigned v2, int weight) = 0;
-    */
-
 class AdjacencyMatrix {
 private:
-    int* _m;
+    vector<int> _m;
     unsigned _vertex_count;
 
     inline int & edge_weight_internal(unsigned v1, unsigned v2) {
@@ -38,24 +30,20 @@ private:
     AdjacencyMatrix(AdjacencyMatrix const & rhs);
 
 public:
-    AdjacencyMatrix(unsigned vertex_count) {
-        _vertex_count = vertex_count;
-        _m = new int[vertex_count*vertex_count];
-        if (_m == nullptr) {
-            cout << "Failed to allocate memory for adjacency matrix.\n";
-            abort();
-        }
-    }
-    ~AdjacencyMatrix() {
-        delete[] _m;
-    }
+    AdjacencyMatrix(unsigned vertex_count)
+        : _m(vertex_count*vertex_count, 0),
+        _vertex_count(vertex_count) {}
+
     unsigned size() const { return _vertex_count; }
+
     unsigned edge_weight(unsigned v1, unsigned v2) {
         return edge_weight_internal(v1,v2);
     }
+
     void set_edge_weight(unsigned v1, unsigned v2, int weight) {
         edge_weight_internal(v1,v2) = weight;
     }
+
     void set_undirected_edge_weight(unsigned v1, unsigned v2, int weight) {
         edge_weight_internal(v1, v2) = weight;
         edge_weight_internal(v2, v1) = weight;
@@ -106,7 +94,7 @@ class AdjacencyList {
 public:
     AdjacencyList(unsigned vertex_count) {
         _vertex_count = vertex_count;
-        _verticies = reinterpret_cast<VertexList**>(calloc(1, sizeof(_verticies[0])*vertex_count));
+        _verticies = static_cast<VertexList**>(::calloc(vertex_count, sizeof(VertexList*)));
         if (_verticies == nullptr) {
             cout << "Failed to allocate _verticies" << endl;
             abort();
@@ -120,7 +108,7 @@ public:
                 delete tmp;
             }
         }
-        free(_verticies);
+        ::free(_verticies);
     }
     unsigned size() const { return _vertex_count; }
 
@@ -155,7 +143,6 @@ public:
         }
         return result;
     }
-
 
     void neighbors(unsigned v, vector<int>* out) const {
         assert(v < _vertex_count);
@@ -209,6 +196,56 @@ void bfs(Graph const & graph, unsigned start_v, vector<int>* distance_out, vecto
             }
         }
     }
+}
+
+template <typename Graph>
+void max_node(Graph const & graph, unsigned from_v, unsigned *v_out, int *distance_out) {
+    assert(v_out);
+    assert(distance_out);
+    assert(graph.size() > 0);
+
+    vector<int> distance;
+    vector<int> parent;
+    bfs(graph, from_v, &distance, &parent);
+
+    int max_distance = 0;
+    unsigned max_distance_v = from_v;
+    for(unsigned i = 0; i < graph.size(); ++i) {
+        //cout << "  " << i << ": dist=" << distance[i] << "\n";
+        if (distance[i] > max_distance) {
+            max_distance = distance[i];
+            max_distance_v = i;
+        }
+    }
+
+    *v_out = max_distance_v;
+    *distance_out = max_distance;
+}
+
+template <typename Graph>
+unsigned diameter(Graph const & graph) {
+
+    // From comment in http://tech-queries.blogspot.com/2010/09/diameter-of-tree-in-on.html
+
+    if (graph.size() == 0) return 0;
+
+    // 1. pick random node n
+    unsigned n = 0;
+
+    // 2. search for node with max distance to n, call it m
+    unsigned m;
+    int n_to_m_distance;
+    max_node(graph, n, &m, &n_to_m_distance);
+    //cout << "n_to_m: " << n_to_m_distance << "\n";
+    //cout << "m is: " << m <<  "\n";
+
+    // 3. search for node with max distance to m, call it o.
+    unsigned o;
+    int m_to_o_distance;
+    max_node(graph, m, &o, &m_to_o_distance);
+    //cout << "m_to_o: " << m_to_o_distance << "\n";
+
+    return m_to_o_distance;
 }
 
 template <typename Graph>
@@ -281,9 +318,27 @@ void basic_graph_test() {
     assert_equal(distance[2], 2);
     assert_equal(distance[3], 2);
     assert_equal(distance[4], 3);
+#if 0
     for(unsigned v = 0; v < distance.size(); ++v) {
         cout << v << ": dist=" << distance[v] << " parent=" << parent[v] << '\n';
     }
+#endif
+
+    Graph tree1(1);
+    assert_equal(diameter(tree1), 0);
+
+    Graph tree2(2);
+    tree2.set_undirected_edge_weight(0,1,1);
+    assert_equal(diameter(tree2), 1);
+
+    Graph tree3(3);
+    tree3.set_undirected_edge_weight(0,1,1);
+    tree3.set_undirected_edge_weight(1,2,1);
+
+    unsigned v = 10000;
+    int dist = -1;
+    max_node(tree3, 0, &v, &dist);
+    assert_equal(diameter(tree3), 2);
 }
 
 void basic_incidence_matrix() {
@@ -302,7 +357,7 @@ void basic_adjacency_list() {
 }
 
 int main() {
-    basic_incidence_matrix();
+    //basic_incidence_matrix();
     basic_adjacency_matrix();
     basic_adjacency_list();
     // TODO: TopCoder style graphs consisting of set A, B, and L, where (A[i], B[i]) is the
