@@ -1,8 +1,9 @@
 #include <cassert>
 #include <iostream>
-#include <queue>
-#include <vector>
 #include <limits>
+#include <queue>
+#include <stack>
+#include <vector>
 
 using namespace std;
 
@@ -74,6 +75,7 @@ public:
 
 class AdjacencyList {
     // array of VertexLists.
+    // TODO: Try using vector<forward_list<Entry>> instead.
     struct VertexList {
         struct VertexList* next;
         unsigned vertex_index;
@@ -211,9 +213,9 @@ struct dfs_result {
 
 template <typename Graph>
 void dfs_visit(Graph const & graph, unsigned v, unsigned & time_counter, dfs_result & r) {
-    cout << "visiting " << v << " with time " << time_counter << endl;
     ++time_counter;
     r.discovered_time[v] = time_counter;
+    cout << "visiting " << v << " with time " << time_counter << endl;
 
     vector<unsigned> neighbors;
     graph.neighbors(v, neighbors);
@@ -226,6 +228,7 @@ void dfs_visit(Graph const & graph, unsigned v, unsigned & time_counter, dfs_res
 
     ++time_counter;
     r.finished_time[v] = time_counter;
+    cout << "finishing " << v << " with time " << time_counter << endl;
 }
 
 template <typename Graph>
@@ -242,6 +245,77 @@ void dfs(Graph const & graph, dfs_result & r) {
     for(unsigned v = 0; v < graph.size(); ++v) {
         if (r.discovered_time[v] == 0) {
             dfs_visit(graph, v, time_counter, r);
+        }
+    }
+}
+
+template <typename Graph>
+void dfs_visit_no_recursion(Graph const & graph, unsigned root_v, unsigned & time_counter, dfs_result & r)
+{
+    struct stack_entry {
+        unsigned vertex;
+        vector<unsigned> neighbors;
+    };
+
+    // root_v is white, or else we wouldn't get here.
+    stack<stack_entry> stack;
+    stack.push({root_v});
+    graph.neighbors(root_v, stack.top().neighbors);
+    ++time_counter;
+    cout << "visiting " << stack.top().vertex << " with time " << time_counter << endl;
+    r.discovered_time[root_v] = time_counter;
+    r.parent[root_v] = dfs_no_parent;
+
+    // Loop invariant: item on stack if it has been discovered but
+    // not finished. The neighbors, however, may be discovered or not.
+    while(stack.size() > 0) {
+        stack_entry & top = stack.top();
+        if (top.neighbors.size() > 0) {
+#if 1
+            // this way is more efficient but doesn't mimick
+            // dfs (recursive) exactly.
+            unsigned v = top.neighbors.back();
+            top.neighbors.pop_back();
+#else
+            // this way sucks efficiency wise (erase of first item is linear
+            // w.r.t. size of vector) but exactly duplicates dfs (recursive)
+            // behavior. This is here to help debug differences between
+            // dfs (non-recursive) and dfs_recursive.
+            unsigned v = top.neighbors.front();
+            top.neighbors.erase(top.neighbors.begin());
+#endif
+
+            if (r.discovered_time[v] == 0) {
+                ++time_counter;
+                cout << "visiting " << v << " with time " << time_counter << endl;
+                r.discovered_time[v] = time_counter;
+                r.parent[v] = top.vertex;
+                stack.push({v});
+                graph.neighbors(v, stack.top().neighbors);
+            }
+        } else {
+            ++time_counter;
+            r.finished_time[top.vertex] = time_counter;
+            stack.pop();
+            cout << "finishing " << top.vertex << " with time " << time_counter << endl;
+        }
+    }
+}
+
+template <typename Graph>
+void dfs_no_recursion(Graph const & graph, dfs_result & r) {
+    // Inspired by Introduction to Algorithms psuedo code
+    r.discovered_time.assign(graph.size(), 0);
+    r.finished_time.assign(graph.size(), 0);
+    r.parent.assign(graph.size(), dfs_no_parent);
+
+    // time 0 represents WHITE label from Intro to Algorithms. dfs_visit will increment
+    // to 1 before assigning to first discovered vertex.
+    unsigned time_counter = 0;
+
+    for(unsigned v = 0; v < graph.size(); ++v) {
+        if (r.discovered_time[v] == 0) {
+            dfs_visit_no_recursion(graph, v, time_counter, r);
         }
     }
 }
@@ -407,6 +481,25 @@ void basic_graph_test() {
             cout << '\n';
         }
     }
+
+    {
+        dfs_result r;
+        dfs_no_recursion(g, r);
+        cout << "DFS (no_recursion):\n";
+        for(unsigned v = 0; v < g.size(); ++v) {
+            cout << "\t" << v
+                << " discovered=" << r.discovered_time[v]
+                << " finished=" << r.finished_time[v];
+
+            if (r.parent[v] == dfs_no_parent) {
+                cout << " root";
+            } else {
+                cout << " parent=" << r.parent[v];
+            }
+            cout << '\n';
+        }
+    }
+
 }
 
 void basic_incidence_matrix() {
