@@ -1,6 +1,7 @@
 #include <cassert>
 #include <iostream>
 #include <limits>
+#include <list>
 #include <queue>
 #include <stack>
 #include <vector>
@@ -74,45 +75,25 @@ public:
 };
 
 class AdjacencyList {
-    // array of VertexLists.
-    // TODO: Try using vector<forward_list<Entry>> instead.
-    struct VertexList {
-        struct VertexList* next;
+    struct Entry {
         unsigned vertex_index;
         int weight;
     };
-    unsigned _vertex_count;
-    VertexList** _verticies;
+    vector<list<Entry>> _verticies;
 
-    VertexList* list_for_edge(unsigned v1, unsigned v2) {
-        for(auto p = _verticies[v1]; p; p = p->next) {
-            if (p->vertex_index == v2) {
-                return p;
+    Entry* list_for_edge(unsigned v1, unsigned v2) {
+        for(Entry & entry : _verticies[v1]) {
+            if (entry.vertex_index == v2) {
+                return &entry;
             }
         }
         return nullptr;
     }
 
 public:
-    AdjacencyList(unsigned vertex_count) {
-        _vertex_count = vertex_count;
-        _verticies = static_cast<VertexList**>(::calloc(vertex_count, sizeof(VertexList*)));
-        if (_verticies == nullptr) {
-            cout << "Failed to allocate _verticies" << endl;
-            abort();
-        }
-    }
-    ~AdjacencyList() {
-        for(unsigned i = 0; i < _vertex_count; ++i) {
-            for(auto p = _verticies[i]; p;) {
-                auto tmp = p;
-                p = p->next;
-                delete tmp;
-            }
-        }
-        ::free(_verticies);
-    }
-    unsigned size() const { return _vertex_count; }
+    AdjacencyList(unsigned vertex_count) : _verticies(vertex_count) {}
+
+    unsigned size() const { return _verticies.size(); }
 
     unsigned edge_weight(unsigned v1, unsigned v2) {
         auto p = list_for_edge(v1, v2);
@@ -124,11 +105,10 @@ public:
         if (p) {
             p->weight = weight;
         } else {
-            VertexList* vl = new VertexList;
-            vl->weight = weight;
-            vl->vertex_index = v2;
-            vl->next = _verticies[v1];
-            _verticies[v1] = vl;
+            _verticies[v1].push_front(Entry());
+            Entry & e = _verticies[v1].front();
+            e.vertex_index = v2;
+            e.weight = weight;
         }
     }
 
@@ -138,18 +118,14 @@ public:
     }
 
     unsigned out_degrees(unsigned v) const {
-        assert(v < _vertex_count);
-        unsigned result = 0;
-        for(auto p = _verticies[v]; p; p = p->next) {
-            ++result;
-        }
-        return result;
+        assert(v < _verticies.size());
+        return _verticies[v].size();
     }
 
     void neighbors(unsigned v, vector<unsigned> & out) const {
-        assert(v < _vertex_count);
-        for(VertexList* p = _verticies[v]; p; p = p->next) {
-            out.push_back(p->vertex_index);
+        assert(v < _verticies.size());
+        for(Entry const & e : _verticies[v]) {
+            out.push_back(e.vertex_index);
         }
     }
 };
