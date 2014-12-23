@@ -192,6 +192,7 @@ struct dfs_result {
     vector<unsigned> discovered_time;
     vector<unsigned> finished_time;
     vector<unsigned> parent; // dfs_no_parent if node has no parent.
+    bool dag = true;
 };
 
 struct dfs_options {
@@ -217,6 +218,15 @@ void dfs_visit(Graph const & graph, unsigned v, unsigned & time_counter,
         if (r.discovered_time[neigh] == 0) {
             r.parent[neigh] = v;
             dfs_visit(graph, neigh, time_counter, r, options);
+        } else {
+            // item has been discovered. If it has not been finished
+            // that means it's being processed and if we're looking
+            // at it now that means we have an edge to an in
+            // process vertex, which means we have a cycle, which means
+            // this is not a dag.
+            if (r.finished_time[neigh] == 0) {
+                r.dag = false;
+            }
         }
     }
 
@@ -239,6 +249,7 @@ void dfs(Graph const & graph, dfs_result & r, dfs_options const & options = dfs_
 
     for(unsigned v = 0; v < graph.size(); ++v) {
         if (r.discovered_time[v] == 0) {
+            assert(r.discovered_time[v] == 0);
             dfs_visit(graph, v, time_counter, r, options);
         }
     }
@@ -270,25 +281,29 @@ void dfs_visit_no_recursion(Graph const & graph, unsigned root_v, unsigned &
 #if 1
             // this way is more efficient but doesn't mimick
             // dfs (recursive) exactly.
-            unsigned v = top.neighbors.back();
+            unsigned neigh = top.neighbors.back();
             top.neighbors.pop_back();
 #else
             // this way sucks efficiency wise (erase of first item is linear
             // w.r.t. size of vector) but exactly duplicates dfs (recursive)
             // behavior. This is here to help debug differences between
             // dfs (non-recursive) and dfs_recursive.
-            unsigned v = top.neighbors.front();
+            unsigned neigh = top.neighbors.front();
             top.neighbors.erase(top.neighbors.begin());
 #endif
 
-            if (r.discovered_time[v] == 0) {
+            if (r.discovered_time[neigh] == 0) {
                 ++time_counter;
                 //cout << "visiting " << v << " with time " << time_counter << endl;
-                r.discovered_time[v] = time_counter;
-                r.parent[v] = top.vertex;
-                if (options.on_discovered) options.on_discovered(v, options.context);
-                stack.push({v});
-                graph.neighbors(v, stack.top().neighbors);
+                r.discovered_time[neigh] = time_counter;
+                r.parent[neigh] = top.vertex;
+                if (options.on_discovered) options.on_discovered(neigh, options.context);
+                stack.push({neigh});
+                graph.neighbors(neigh, stack.top().neighbors);
+            } else {
+                if (r.finished_time[neigh] == 0) {
+                    r.dag = false;
+                }
             }
         } else {
             ++time_counter;
@@ -315,6 +330,7 @@ void dfs_no_recursion(Graph const & graph, dfs_result & r,
 
     for(unsigned v = 0; v < graph.size(); ++v) {
         if (r.discovered_time[v] == 0) {
+            assert(r.finished_time[v] == 0);
             dfs_visit_no_recursion(graph, v, time_counter, r, options);
         }
     }
@@ -336,6 +352,7 @@ void topological_sort(Graph const & graph, SequenceContainer & result) {
     dfs_result res;
     //dfs_no_recursion(graph, res, o);
     dfs(graph, res, o);
+    assert_true(res.dag); // topological sort impossible if not a dag
 }
 
 template <typename Graph>
@@ -519,6 +536,27 @@ void basic_graph_test() {
     }
 
     {
+        cout << "notdag\n";
+        Graph notdag(2);
+        notdag.set_edge_weight(0,1,1);
+        notdag.set_edge_weight(1,0,1);
+        dfs_result r;
+        dfs(notdag, r);
+        assert_true(!r.dag);
+    }
+
+    {
+        cout << "dag\n";
+        Graph dag(3);
+        dag.set_edge_weight(0,1,1);
+        dag.set_edge_weight(0,2,1);
+        dag.set_edge_weight(1,2,1);
+        dfs_result r;
+        dfs(dag, r);
+        assert_true(r.dag);
+    }
+
+    {
         cout << "Topological sort:\n";
         list<unsigned> sorted_list;
         Graph dag(4);
@@ -526,6 +564,7 @@ void basic_graph_test() {
         dag.set_edge_weight(0, 2, 1);
         dag.set_edge_weight(2, 1, 1);
         dag.set_edge_weight(3, 1, 1);
+        dag.set_edge_weight(1, 3, 1);
         topological_sort(dag, sorted_list);
         for(auto v : sorted_list) {
             cout << '\t' << v << '\n';
