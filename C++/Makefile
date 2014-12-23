@@ -23,6 +23,9 @@ LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
 all: $(TARGETS)
 
+analyze: clean
+	scan-build make
+
 glog: glog.cc
 	$(CXX) -g -O0 -o glog glog.cc -lglog
 

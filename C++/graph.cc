@@ -15,6 +15,13 @@ void assert_equal(int v1, int v2) {
     }
 }
 
+void assert_true(bool condition) {
+    if (!condition) {
+        cout << "assert_true failed" << endl;
+        abort();
+    }
+}
+
 class AdjacencyMatrix {
 private:
     vector<int> _m;
@@ -187,28 +194,40 @@ struct dfs_result {
     vector<unsigned> parent; // dfs_no_parent if node has no parent.
 };
 
+struct dfs_options {
+    void* context = 0;
+    void (*on_discovered)(unsigned vertex, void* context) = 0;
+    void (*on_finished)(unsigned vertex, void* context) = 0;
+};
+
+dfs_options dfs_default_options;
+
 template <typename Graph>
-void dfs_visit(Graph const & graph, unsigned v, unsigned & time_counter, dfs_result & r) {
+void dfs_visit(Graph const & graph, unsigned v, unsigned & time_counter,
+        dfs_result & r, dfs_options const & options)
+{
     ++time_counter;
     r.discovered_time[v] = time_counter;
-    cout << "visiting " << v << " with time " << time_counter << endl;
+    if (options.on_discovered) options.on_discovered(v, options.context);
+    //cout << "visiting " << v << " with time " << time_counter << endl;
 
     vector<unsigned> neighbors;
     graph.neighbors(v, neighbors);
     for(unsigned neigh : neighbors) {
         if (r.discovered_time[neigh] == 0) {
             r.parent[neigh] = v;
-            dfs_visit(graph, neigh, time_counter, r);
+            dfs_visit(graph, neigh, time_counter, r, options);
         }
     }
 
     ++time_counter;
     r.finished_time[v] = time_counter;
-    cout << "finishing " << v << " with time " << time_counter << endl;
+    if (options.on_finished) options.on_finished(v, options.context);
+    //cout << "finishing " << v << " with time " << time_counter << endl;
 }
 
 template <typename Graph>
-void dfs(Graph const & graph, dfs_result & r) {
+void dfs(Graph const & graph, dfs_result & r, dfs_options const & options = dfs_default_options) {
     // Inspired by Introduction to Algorithms psuedo code
     r.discovered_time.assign(graph.size(), 0);
     r.finished_time.assign(graph.size(), 0);
@@ -220,14 +239,14 @@ void dfs(Graph const & graph, dfs_result & r) {
 
     for(unsigned v = 0; v < graph.size(); ++v) {
         if (r.discovered_time[v] == 0) {
-            dfs_visit(graph, v, time_counter, r);
+            dfs_visit(graph, v, time_counter, r, options);
         }
     }
 }
 
 template <typename Graph>
-void dfs_visit_no_recursion(Graph const & graph, unsigned root_v, unsigned & time_counter, dfs_result & r)
-{
+void dfs_visit_no_recursion(Graph const & graph, unsigned root_v, unsigned &
+        time_counter, dfs_result & r, dfs_options const & options) {
     struct stack_entry {
         unsigned vertex;
         vector<unsigned> neighbors;
@@ -238,8 +257,9 @@ void dfs_visit_no_recursion(Graph const & graph, unsigned root_v, unsigned & tim
     stack.push({root_v});
     graph.neighbors(root_v, stack.top().neighbors);
     ++time_counter;
-    cout << "visiting " << stack.top().vertex << " with time " << time_counter << endl;
+    //cout << "visiting " << stack.top().vertex << " with time " << time_counter << endl;
     r.discovered_time[root_v] = time_counter;
+    if (options.on_discovered) options.on_discovered(root_v, options.context);
     r.parent[root_v] = dfs_no_parent;
 
     // Loop invariant: item on stack if it has been discovered but
@@ -263,23 +283,27 @@ void dfs_visit_no_recursion(Graph const & graph, unsigned root_v, unsigned & tim
 
             if (r.discovered_time[v] == 0) {
                 ++time_counter;
-                cout << "visiting " << v << " with time " << time_counter << endl;
+                //cout << "visiting " << v << " with time " << time_counter << endl;
                 r.discovered_time[v] = time_counter;
                 r.parent[v] = top.vertex;
+                if (options.on_discovered) options.on_discovered(v, options.context);
                 stack.push({v});
                 graph.neighbors(v, stack.top().neighbors);
             }
         } else {
             ++time_counter;
             r.finished_time[top.vertex] = time_counter;
+            if (options.on_finished) options.on_finished(top.vertex, options.context);
             stack.pop();
-            cout << "finishing " << top.vertex << " with time " << time_counter << endl;
+            //cout << "finishing " << top.vertex << " with time " << time_counter << endl;
         }
     }
 }
 
 template <typename Graph>
-void dfs_no_recursion(Graph const & graph, dfs_result & r) {
+void dfs_no_recursion(Graph const & graph, dfs_result & r,
+        dfs_options const & options = dfs_default_options)
+{
     // Inspired by Introduction to Algorithms psuedo code
     r.discovered_time.assign(graph.size(), 0);
     r.finished_time.assign(graph.size(), 0);
@@ -291,9 +315,27 @@ void dfs_no_recursion(Graph const & graph, dfs_result & r) {
 
     for(unsigned v = 0; v < graph.size(); ++v) {
         if (r.discovered_time[v] == 0) {
-            dfs_visit_no_recursion(graph, v, time_counter, r);
+            dfs_visit_no_recursion(graph, v, time_counter, r, options);
         }
     }
+}
+
+template <typename SequenceContainer>
+void insert_front_unsigned(unsigned u, void* container)
+{ 
+    SequenceContainer* c = static_cast<SequenceContainer*>(container);
+    c->insert(c->begin(), u);
+}
+
+template <typename Graph, typename SequenceContainer>
+void topological_sort(Graph const & graph, SequenceContainer & result) {
+    dfs_options o;
+    o.context = &result;
+    o.on_finished = insert_front_unsigned<SequenceContainer>;
+
+    dfs_result res;
+    //dfs_no_recursion(graph, res, o);
+    dfs(graph, res, o);
 }
 
 template <typename Graph>
@@ -474,6 +516,21 @@ void basic_graph_test() {
             }
             cout << '\n';
         }
+    }
+
+    {
+        cout << "Topological sort:\n";
+        list<unsigned> sorted_list;
+        Graph dag(4);
+        dag.set_edge_weight(0, 1, 1);
+        dag.set_edge_weight(0, 2, 1);
+        dag.set_edge_weight(2, 1, 1);
+        dag.set_edge_weight(3, 1, 1);
+        topological_sort(dag, sorted_list);
+        for(auto v : sorted_list) {
+            cout << '\t' << v << '\n';
+        }
+        assert_equal(sorted_list.size(), dag.size());
     }
 
 }

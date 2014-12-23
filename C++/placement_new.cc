@@ -22,7 +22,6 @@ int main() {
     A* p = new(blob+next) A{2, 'b'};
     next += sizeof(A);
     A* p2 = new(blob+next) A{3, 'c'};
-    next += sizeof(A);
     p->~A();
     p2->~A();
 }

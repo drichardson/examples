@@ -32,6 +32,7 @@ int main() {
     // Also see how decltype handles expressions like x (as you'd expect) vs
     // expressions like (x) (which are references to x).
     auto x{1}; print_type(x); print_type( (x) );
+    (void)x; // silence scan-build unused value warning
     auto y(1); print_type(y); print_type( (y) );
     auto z = 1; print_type(z); print_type( (z) );
     const auto & zr = z; print_type(zr);

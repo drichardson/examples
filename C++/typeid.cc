@@ -46,6 +46,7 @@ int main() {
     SomeClass swc_array[3];
     auto const & swc_array_ref = swc_array;
     auto const* swc_array_ptr = swc_array;
+    (void)swc_array_ptr; // silience scan-build unused value warning.
 
     cout << "IDs: ";
     print_type(i1);
