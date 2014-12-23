@@ -564,7 +564,6 @@ void basic_graph_test() {
         dag.set_edge_weight(0, 2, 1);
         dag.set_edge_weight(2, 1, 1);
         dag.set_edge_weight(3, 1, 1);
-        dag.set_edge_weight(1, 3, 1);
         topological_sort(dag, sorted_list);
         for(auto v : sorted_list) {
             cout << '\t' << v << '\n';
