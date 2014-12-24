@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <limits>
@@ -5,6 +6,7 @@
 #include <queue>
 #include <stack>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -79,6 +81,17 @@ public:
             }
         }
     }
+
+    void transpose(AdjacencyMatrix & out) const {
+        out._m.resize(_m.size());
+        for(unsigned i = 0; i < _vertex_count; ++i) {
+            //unsigned row_base = i*_vertex_count;
+            for(unsigned j = 0; j < _vertex_count; ++j) {
+                // Gt(i,j) = G(j,i);
+                out._m[i * _vertex_count + j] = _m[j * _vertex_count + i];
+            }
+        }
+    }
 };
 
 class AdjacencyList {
@@ -135,6 +148,16 @@ public:
             out.push_back(e.vertex_index);
         }
     }
+
+    void transpose(AdjacencyList & out) const {
+        out._verticies.clear();
+        out._verticies.resize(_verticies.size());
+        for(unsigned u = 0; u < _verticies.size(); ++u) {
+            for(Entry const & entry : _verticies[u]) {
+                out.set_edge_weight(entry.vertex_index, u, entry.weight);
+            }
+        }
+    }
 };
 
 struct bfs_result {
@@ -186,12 +209,12 @@ void bfs(Graph const & graph, unsigned start_v, bfs_result & result) {
     }
 }
 
-unsigned const dfs_no_parent = std::numeric_limits<unsigned>::max();
+unsigned const dfs_root = std::numeric_limits<unsigned>::max();
 
 struct dfs_result {
     vector<unsigned> discovered_time;
     vector<unsigned> finished_time;
-    vector<unsigned> parent; // dfs_no_parent if node has no parent.
+    vector<unsigned> parent; // dfs_root if node has no parent.
     bool dag = true;
 };
 
@@ -241,7 +264,7 @@ void dfs(Graph const & graph, dfs_result & r, dfs_options const & options = dfs_
     // Inspired by Introduction to Algorithms psuedo code
     r.discovered_time.assign(graph.size(), 0);
     r.finished_time.assign(graph.size(), 0);
-    r.parent.assign(graph.size(), dfs_no_parent);
+    r.parent.assign(graph.size(), dfs_root);
 
     // time 0 represents WHITE label from Intro to Algorithms. dfs_visit will increment
     // to 1 before assigning to first discovered vertex.
@@ -249,7 +272,7 @@ void dfs(Graph const & graph, dfs_result & r, dfs_options const & options = dfs_
 
     for(unsigned v = 0; v < graph.size(); ++v) {
         if (r.discovered_time[v] == 0) {
-            assert(r.discovered_time[v] == 0);
+            assert(r.finished_time[v] == 0);
             dfs_visit(graph, v, time_counter, r, options);
         }
     }
@@ -271,7 +294,7 @@ void dfs_visit_no_recursion(Graph const & graph, unsigned root_v, unsigned &
     //cout << "visiting " << stack.top().vertex << " with time " << time_counter << endl;
     r.discovered_time[root_v] = time_counter;
     if (options.on_discovered) options.on_discovered(root_v, options.context);
-    r.parent[root_v] = dfs_no_parent;
+    r.parent[root_v] = dfs_root;
 
     // Loop invariant: item on stack if it has been discovered but
     // not finished. The neighbors, however, may be discovered or not.
@@ -322,7 +345,7 @@ void dfs_no_recursion(Graph const & graph, dfs_result & r,
     // Inspired by Introduction to Algorithms psuedo code
     r.discovered_time.assign(graph.size(), 0);
     r.finished_time.assign(graph.size(), 0);
-    r.parent.assign(graph.size(), dfs_no_parent);
+    r.parent.assign(graph.size(), dfs_root);
 
     // time 0 represents WHITE label from Intro to Algorithms. dfs_visit will increment
     // to 1 before assigning to first discovered vertex.
@@ -353,6 +376,37 @@ void topological_sort(Graph const & graph, SequenceContainer & result) {
     //dfs_no_recursion(graph, res, o);
     dfs(graph, res, o);
     assert_true(res.dag); // topological sort impossible if not a dag
+}
+
+template <typename Graph>
+void strongly_connected_components(Graph const & graph, dfs_result & r) {
+    dfs_result res;
+    dfs(graph, res);
+
+    // compute transpose of graph
+    Graph graphTranspose(graph.size());
+    graph.transpose(graphTranspose);
+
+    // get list of verticies ordered by finished time. Do so by mapping
+    // time to vertex.
+    map<unsigned, unsigned> finished_time_to_vertex;
+    for(unsigned v = 0; v < graph.size(); ++v) {
+        finished_time_to_vertex[res.finished_time[v]] = v;
+    }
+
+    // modified dfs() that takes into account the finish order of the first dfs() call.
+    r.discovered_time.assign(graph.size(), 0);
+    r.finished_time.assign(graph.size(), 0);
+    r.parent.assign(graph.size(), dfs_root);
+    unsigned time_counter = 0;
+    for(auto itr = finished_time_to_vertex.crbegin(); itr != finished_time_to_vertex.crend(); ++itr) {
+        cout << "f time: " << itr->first << ", v=" << itr->second << endl;
+        unsigned v = itr->second;
+        if (r.discovered_time[v] == 0) {
+            assert(r.finished_time[v] == 0);
+            dfs_visit(graphTranspose, v, time_counter, r, dfs_default_options);
+        }
+    }
 }
 
 template <typename Graph>
@@ -402,6 +456,37 @@ unsigned diameter(Graph const & graph) {
     //cout << "m_to_o: " << m_to_o_distance << "\n";
 
     return m_to_o_distance;
+}
+
+template <typename Graph>
+void print_neighbors(Graph const & graph) {
+    cout << "Graph Neighbors. Graph size " << graph.size() << '\n';
+    vector<unsigned> neighbors;
+    for(unsigned v = 0; v < graph.size(); ++v) {
+        neighbors.clear();
+        graph.neighbors(v, neighbors);
+        cout << '\t' << v << ": ";
+        for(unsigned neigh : neighbors) {
+            cout << neigh << ' ';
+        }
+        cout << '\n';
+    }
+}
+
+void print_dfs_tree(dfs_result const & r) {
+    unsigned vertex_count = r.parent.size();
+    for(unsigned v = 0; v < vertex_count; ++v) {
+        cout << "\t" << v
+            << " discovered=" << r.discovered_time[v]
+            << " finished=" << r.finished_time[v];
+
+        if (r.parent[v] == dfs_root) {
+            cout << " root";
+        } else {
+            cout << " parent=" << r.parent[v];
+        }
+        cout << '\n';
+    }
 }
 
 template <typename Graph>
@@ -500,39 +585,30 @@ void basic_graph_test() {
     assert_equal(diameter(tree3), 2);
 
     {
+        cout << "Transpose:\n";
+        Graph g3(3);
+        g3.set_edge_weight(0,1,1);
+        g3.set_edge_weight(0,2,1);
+        cout << "pre-transpose:\n";
+        print_neighbors(g3);
+        Graph g3T(g3.size());
+        g3.transpose(g3T);
+        cout << "transpose:\n";
+        print_neighbors(g3T);
+    }
+
+    {
         dfs_result r;
         dfs(g, r);
         cout << "DFS:\n";
-        for(unsigned v = 0; v < g.size(); ++v) {
-            cout << "\t" << v
-                << " discovered=" << r.discovered_time[v]
-                << " finished=" << r.finished_time[v];
-
-            if (r.parent[v] == dfs_no_parent) {
-                cout << " root";
-            } else {
-                cout << " parent=" << r.parent[v];
-            }
-            cout << '\n';
-        }
+        print_dfs_tree(r);
     }
 
     {
         dfs_result r;
         dfs_no_recursion(g, r);
         cout << "DFS (no_recursion):\n";
-        for(unsigned v = 0; v < g.size(); ++v) {
-            cout << "\t" << v
-                << " discovered=" << r.discovered_time[v]
-                << " finished=" << r.finished_time[v];
-
-            if (r.parent[v] == dfs_no_parent) {
-                cout << " root";
-            } else {
-                cout << " parent=" << r.parent[v];
-            }
-            cout << '\n';
-        }
+        print_dfs_tree(r);
     }
 
     {
@@ -542,6 +618,7 @@ void basic_graph_test() {
         notdag.set_edge_weight(1,0,1);
         dfs_result r;
         dfs(notdag, r);
+        print_dfs_tree(r);
         assert_true(!r.dag);
     }
 
@@ -553,6 +630,7 @@ void basic_graph_test() {
         dag.set_edge_weight(1,2,1);
         dfs_result r;
         dfs(dag, r);
+        print_dfs_tree(r);
         assert_true(r.dag);
     }
 
@@ -571,9 +649,53 @@ void basic_graph_test() {
         assert_equal(sorted_list.size(), dag.size());
     }
 
-}
+    {
+        cout << "Strongly connected components (should have 3 components):\n";
+        Graph g(6);
+        // component 1
+        g.set_edge_weight(0,1,1);
+        g.set_edge_weight(1,0,1);
 
-void basic_incidence_matrix() {
+        // component 2
+        g.set_edge_weight(2,3,1);
+        g.set_edge_weight(3,2,1);
+
+        // component 3
+        g.set_edge_weight(4,5,1);
+        g.set_edge_weight(5,4,1);
+
+        dfs_result res;
+        strongly_connected_components(g, res);
+
+        print_dfs_tree(res);
+
+        auto num_components = count(res.parent.begin(), res.parent.end(), dfs_root);
+        assert_equal(num_components, 3);
+    }
+
+    {
+        cout << "Strongly connected components (should have 3 components):\n";
+        Graph g(6);
+        // component 1
+        g.set_edge_weight(0,1,1);
+        g.set_edge_weight(1,0,1);
+
+        // component 2
+        g.set_edge_weight(2,3,1);
+        g.set_edge_weight(3,2,1);
+
+        // component 3
+        g.set_edge_weight(4,5,1);
+        g.set_edge_weight(5,4,1);
+        g.set_edge_weight(5,0,1);
+
+        dfs_result res;
+        strongly_connected_components(g, res);
+
+        print_dfs_tree(res);
+        auto num_components = count(res.parent.begin(), res.parent.end(), dfs_root);
+        assert_equal(num_components, 3);
+    }
 }
 
 void basic_adjacency_matrix() {
@@ -589,10 +711,7 @@ void basic_adjacency_list() {
 }
 
 int main() {
-    //basic_incidence_matrix();
     basic_adjacency_matrix();
     basic_adjacency_list();
-    // TODO: TopCoder style graphs consisting of set A, B, and L, where (A[i], B[i]) is the
-    // edge between verticies A[i] and B[i] and the weight of that edge is L[i].
 }
 
