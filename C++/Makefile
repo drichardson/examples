@@ -5,7 +5,7 @@ TARGETS=ofstream_test templates atomics system_error array \
 		literals template_meta_programming sort_main \
 		heap_main bigsort ifstream vector graph destructors \
 		stack_protector autoptr hash primes max_subarray \
-		prime_factorization
+		prime_factorization rod_cutting
 
 
 //CXX=clang++
