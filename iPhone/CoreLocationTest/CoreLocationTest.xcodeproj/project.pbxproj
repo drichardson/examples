@@ -14,6 +14,7 @@
 		914250851A96798D003C0B88 /* CoreLocationTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914250841A96798D003C0B88 /* CoreLocationTestTests.swift */; };
 		914250901A9679A6003C0B88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9142508E1A9679A6003C0B88 /* AppDelegate.swift */; };
 		914250911A9679A6003C0B88 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9142508F1A9679A6003C0B88 /* Location.swift */; };
+		91548E741A9693CC0037A82C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91548E731A9693CC0037A82C /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,8 @@
 		914250841A96798D003C0B88 /* CoreLocationTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationTestTests.swift; sourceTree = "<group>"; };
 		9142508E1A9679A6003C0B88 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9142508F1A9679A6003C0B88 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		91548E731A9693CC0037A82C /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		91548E791A9695510037A82C /* Location2x2.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Location2x2.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +64,7 @@
 		914250601A96798D003C0B88 = {
 			isa = PBXGroup;
 			children = (
+				91548E791A9695510037A82C /* Location2x2.gpx */,
 				9142506B1A96798D003C0B88 /* CoreLocationTest */,
 				914250811A96798D003C0B88 /* CoreLocationTestTests */,
 				9142506A1A96798D003C0B88 /* Products */,
@@ -86,6 +90,7 @@
 				914250751A96798D003C0B88 /* Images.xcassets */,
 				914250771A96798D003C0B88 /* LaunchScreen.xib */,
 				9142506C1A96798D003C0B88 /* Supporting Files */,
+				91548E731A9693CC0037A82C /* Localizable.strings */,
 			);
 			path = CoreLocationTest;
 			sourceTree = "<group>";
@@ -196,6 +201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				914250741A96798D003C0B88 /* Main.storyboard in Resources */,
+				91548E741A9693CC0037A82C /* Localizable.strings in Resources */,
 				914250791A96798D003C0B88 /* LaunchScreen.xib in Resources */,
 				914250761A96798D003C0B88 /* Images.xcassets in Resources */,
 			);
@@ -411,6 +417,7 @@
 				9142508A1A96798D003C0B88 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9142508B1A96798D003C0B88 /* Build configuration list for PBXNativeTarget "CoreLocationTestTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +426,7 @@
 				9142508D1A96798D003C0B88 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

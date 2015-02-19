@@ -27,6 +27,17 @@ func authStatusToString(status : CLAuthorizationStatus) -> String {
 }
 */
 
+func ShowLocalNotificationForRegionEvent() {
+    // Show a notification.
+    // ALTERNATIVELY, you could create UILocationNotification's set to monitor
+    // regions on their own.
+    let n = UILocalNotification()
+    n.userInfo = ["MyKey" : "My Value"]
+    n.alertBody = "LOCATION_EVENT_ALERT_BODY"
+    n.alertAction = "LOCATION_EVENT_ALERT_ACTION"
+    UIApplication.sharedApplication().presentLocalNotificationNow(n)
+}
+
 extension CLAuthorizationStatus {
     func toString() -> String {
         switch self {
@@ -80,8 +91,8 @@ extension CLAuthorizationStatus {
             
             println("Start monitoring for region")
             if CLLocationManager.isMonitoringAvailableForClass(CLCircularRegion) {
-                //let r = CLCircularRegion(center: CLLocationCoordinate2D(latitude: 2.0, longitude: 2.0), radius: 10.0, identifier: "2x2 circle")
-                //manager.startMonitoringForRegion(r)
+                let r = CLCircularRegion(center: CLLocationCoordinate2D(latitude: 2.0, longitude: 2.0), radius: 10.0, identifier: "2x2 circle")
+                manager.startMonitoringForRegion(r)
             } else {
                 println("Region monitoring not available for CLCircularRegion")
             }
@@ -106,6 +117,7 @@ extension CLAuthorizationStatus {
     
     func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!) {
         println("Entered region \(region)")
+        ShowLocalNotificationForRegionEvent()
     }
     
     func locationManager(manager: CLLocationManager!, didExitRegion region: CLRegion!) {
