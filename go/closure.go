@@ -9,7 +9,7 @@ func main() {
 	fmt.Printf("%d\n", f(300))
 }
 
-func adder() (func (int) int) {
+func adder() func(int) int {
 	var x int
 	return func(delta int) int {
 		x += delta
