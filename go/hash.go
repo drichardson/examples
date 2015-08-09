@@ -2,7 +2,9 @@ package main
 
 import (
 	"crypto/md5"
+	"crypto/sha1"
 	"crypto/sha256"
+	"crypto/sha512"
 	"encoding/hex"
 	"flag"
 	"fmt"
@@ -23,8 +25,12 @@ func main() {
 	var h hash.Hash
 
 	switch *algorithm {
+	case "sha1":
+		h = sha1.New()
 	case "sha256":
 		h = sha256.New()
+	case "sha512":
+		h = sha512.New()
 	case "md5":
 		h = md5.New()
 	case "fnv1":
@@ -51,5 +57,5 @@ func main() {
 		h.Sum(make([]byte, 0))
 	}
 	duration := time.Since(start).Seconds()
-	fmt.Println("Done in", duration, "seconds")
+	fmt.Println("Done in", duration, "seconds or about", 1000000000*duration/float64(*iterations), "nanoseconds per iteration")
 }
