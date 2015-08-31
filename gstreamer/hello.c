@@ -53,25 +53,30 @@ main(int argc, char** argv) {
     gst_init(&argc, &argv);
 
     GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+
+    gchar* defaultLocation = "http://www.vorbis.com/music/Epoq-Lepidoptera.ogg";
+    gchar* location = defaultLocation;
     
-    if (argc != 2) {
-        g_printerr("Usage: %s <Ogg/Vorbis filename>\n", argv[0]);
-        exit(1);
+    if (argc == 2) {
+        location = argv[1];
+    } else {
+        g_print("No location specified, using default: %s\n", defaultLocation);
     }
 
     GstElement *pipeline = gst_pipeline_new("audio-player");
-    GstElement *source = gst_element_factory_make("filesrc", "file-source");
-    GstElement *demuxer = gst_element_factory_make("oggdemux", "demuxer");
-    GstElement *decoder = gst_element_factory_make("vorbisdec", "decoder");
-    GstElement *converter = gst_element_factory_make("audioconvert", "converter");
-    GstElement *sink = gst_element_factory_make("autoaudiosink", "audio-output");
+    //GstElement *source = gst_element_factory_make("filesrc", "file-source");
+    GstElement *source = gst_element_factory_make("souphttpsrc", NULL);
+    GstElement *demuxer = gst_element_factory_make("oggdemux", NULL);
+    GstElement *decoder = gst_element_factory_make("vorbisdec", NULL);
+    GstElement *converter = gst_element_factory_make("audioconvert", NULL);
+    GstElement *sink = gst_element_factory_make("autoaudiosink", NULL);
 
     if (!pipeline || !source || !demuxer || !decoder || !converter || !sink) {
         g_printerr("An element could not be created %p, %p, %p, %p, %p, %p.", pipeline, source, demuxer, decoder, converter, sink);
         exit(1);
     }
 
-    g_object_set(source, "location", argv[1], NULL);
+    g_object_set(G_OBJECT(source), "location", location, NULL);
 
 
     GstBus * bus = gst_pipeline_get_bus(GST_PIPELINE(pipeline));
