@@ -1,0 +1,5 @@
+*.o
+test[1-9]
+hello
+.clang_complete
+tags
