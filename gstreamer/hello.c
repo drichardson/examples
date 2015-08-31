@@ -64,8 +64,17 @@ main(int argc, char** argv) {
     }
 
     GstElement *pipeline = gst_pipeline_new("audio-player");
+    
     //GstElement *source = gst_element_factory_make("filesrc", "file-source");
-    GstElement *source = gst_element_factory_make("souphttpsrc", NULL);
+    //GstElement *source = gst_element_factory_make("souphttpsrc", NULL);
+    GError *error;
+    GstElement *source = gst_element_make_from_uri(GST_URI_SRC, location, NULL, &error);
+    if (!source) {
+        g_printerr("Couldn't create source from location %s. Error: %s", location, error->message);
+        g_error_free(error);
+        exit(1);
+    }
+
     GstElement *demuxer = gst_element_factory_make("oggdemux", NULL);
     GstElement *decoder = gst_element_factory_make("vorbisdec", NULL);
     GstElement *converter = gst_element_factory_make("audioconvert", NULL);
