@@ -27,7 +27,7 @@ int main (int argc, const char * argv[])
 	
 	CGLSetCurrentContext( context );
 	
-	printf("vendor is: %s\n", glGetString( GL_VENDOR ));
+	printf("vendor is: %s, version: %s\nExtensions: %s\n", glGetString( GL_VENDOR ), glGetString(GL_VERSION), glGetString(GL_EXTENSIONS));
 	
 	CGLDestroyContext( context );
 	
