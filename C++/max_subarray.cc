@@ -1,5 +1,6 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <vector>
 
 struct max_subarray_result {
     unsigned start = 0;

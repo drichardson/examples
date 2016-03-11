@@ -12,7 +12,7 @@ TARGETS=ofstream_test templates atomics system_error array \
 OPTIMIZATION=-O0
 DEBUG=-g
 CXX=g++
-CXXFLAGS=-Wall ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all
+CXXFLAGS=-Wall ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all -I/usr/local/include
 
 ifeq ($(CXX), clang++)
 	CXXFLAGS+=-std=c++14
