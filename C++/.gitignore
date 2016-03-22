@@ -39,3 +39,6 @@ vector
 
 prime_factorization
 rod_cutting
+*.dSYM
+references
+template_specialization
