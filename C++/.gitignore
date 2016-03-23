@@ -42,3 +42,4 @@ rod_cutting
 *.dSYM
 references
 template_specialization
+scoped_enums
