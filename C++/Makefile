@@ -6,7 +6,8 @@ TARGETS=ofstream_test templates atomics system_error array \
 		heap_main bigsort ifstream vector graph destructors \
 		stack_protector autoptr hash primes max_subarray \
 		prime_factorization rod_cutting references \
-		template_specialization scoped_enums template_convertible
+		template_specialization scoped_enums template_convertible \
+		pointers
 
 
 //CXX=clang++
