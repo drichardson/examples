@@ -20,9 +20,10 @@ void stdlib_hashes() {
 // FNV-1 hash function
 uint32_t fnv1_32(void const* datav, size_t data_len ) {
     uint8_t const *data = static_cast<uint8_t const*>(datav);
-    uint32_t hash = 0;
+    constexpr uint32_t offset_basis = 2166136261;
+    uint32_t hash = offset_basis;
+    uint32_t constexpr magic_fnv1_prime32 = 16777619;
     uint8_t const * const end = data+data_len;
-    uint32_t constexpr magic_fnv1_prime32 = 0x01000193;
     for(; data < end; ++data) {
         hash *= magic_fnv1_prime32;
         hash ^= *data;

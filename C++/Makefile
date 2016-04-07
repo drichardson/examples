@@ -11,7 +11,7 @@ TARGETS=ofstream_test templates atomics system_error array \
 
 
 //CXX=clang++
-OPTIMIZATION=-O0
+OPTIMIZATION=-O3
 DEBUG=-g
 CXX=g++
 CXXFLAGS=-std=c++14 -Wall ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all -I/usr/local/include
