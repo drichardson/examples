@@ -6,15 +6,17 @@
 # All sources need to be listed here for header dependencies to
 # be generated.
 SRCS=list_driver.cc vector_driver.cc vector_resize_stress.cc \
-	 queue_driver.cc stack_driver.cc hash_table_driver.cc
+	 queue_driver.cc stack_driver.cc hash_table_driver.cc \
+	 circular_buffer_driver.cc
 
 TARGETS=list_driver vector_driver vector_resize_stress \
-		queue_driver stack_driver hash_table_driver
+		queue_driver stack_driver hash_table_driver \
+		circular_buffer_driver
 
 # Default all target comes first.
 all: $(TARGETS)
 
-CXXFLAGS=-std=c++03 -Wall -O0 -g -march=native -pthread -fstack-protector-all
+CXXFLAGS=-std=c++14 -Wall -O0 -g -march=native -fstack-protector-all
 
 # Use C++ compiler to link
 LINK.o=$(LINK.cc)
@@ -35,6 +37,7 @@ vector_resize_stress: vector_resize_stress.o
 queue_driver: queue_driver.o
 stack_driver: stack_driver.o
 hash_table_driver: hash_table_driver.o
+circular_buffer_driver: circular_buffer_driver.o
 
 clean:
 	$(RM) $(SRCS:.cc=.o) $(SRCS:.cc=.P) $(TARGETS)
