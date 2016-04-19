@@ -10,7 +10,8 @@ public:
     int x;
     static int ctor_calls;
     static int dtor_calls;
-    // A() { x = -1; ++ctor_calls; }
+
+    A(A&& rhs) { this->x = rhs.x; ++ctor_calls; }
     A(int x) { this->x = x; ++ctor_calls; }
     A(A const & rhs) { x = rhs.x; ++ctor_calls; }
     ~A() { ++dtor_calls; }

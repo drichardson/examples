@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cstddef>
 #include <limits>
+#include <utility>
 
 /*
    Circular Buffer supports two operations: get and put.
@@ -77,7 +78,7 @@ public:
     inline size_t capacity() const { return capacity_; }
     inline size_t size() const { return size_; }
 
-    inline void append(Element const & e)
+    inline void append(Element&& e)
     {
         if(isfull())
         {
@@ -105,8 +106,7 @@ public:
         assert(write < capacity_);
 
         // Copy construct a new element.
-        // TODO: move?
-        new(buffer_ + write)Element(e);
+        new(buffer_ + write)Element(std::forward<Element>(e));
 
         ++size_;
         assert(size_ <= capacity_);
@@ -195,7 +195,7 @@ public:
         return left_size + right_size;
     }
 
-    void append(Element const & e)
+    void append(Element&& e)
     {
         if (isfull()) {
             // Array is filled and so the front item will be overwritten.
@@ -203,9 +203,8 @@ public:
             remove_front();
         }
 
-        // Copy construct a new element.
-        // TODO: Move?
-        new(buffer_ + tail_)Element(e);
+        // Construct a new element.
+        new(buffer_ + tail_)Element(std::forward<Element>(e));
 
         // Increment the back pointer.
         tail_ = next(tail_);

@@ -21,23 +21,28 @@ void foo(int& x) {
     std::cout << "int& " << x << std::endl;
 }
 
-template <typename T>
-void foo(T&& x) {
-    std::cout << "universal " << x << std::endl;
+void foo(int&& x) {
+    std::cout << "int&& " << x << std::endl;
 }
 
 int main() {
     int y = 123;
 
+    // int&&
     foo(y);
-    foo(123);
-    foo(std::move(y));
-
-    const int& ycref = y;
-    foo(ycref);
 
     int& yref = y;
     foo(yref);
+
+    // int&&
+    foo(123);
+    foo(std::move(y));
+    foo(static_cast<int&&>(y));
+
+    // const int&
+    foo(const_cast<const int&>(y));
+    const int& ycref = y;
+    foo(ycref);
 
     return 0;
 }
