@@ -5,10 +5,6 @@
 #include <cstddef>
 #include <limits>
 
-
-// TODO REMOVE
-#include <iostream>
-
 /*
    Circular Buffer supports two operations: get and put.
 
@@ -18,7 +14,7 @@
    
    Implementation 1: buffer, capacity, head, and tail
    - head points to the next item to read
-   - tail points to the next item to write
+   - tail points to the first invalid item, aka the next item to write
    - head = tail means empty
    - head + 1 = tail means full. This definition wastes one slot in the buffer.
 
@@ -70,6 +66,14 @@ public:
     CircularBufferSizeImplementation(const CircularBufferSizeImplementation&) = delete;
     CircularBufferSizeImplementation& operator=(const CircularBufferSizeImplementation&) = delete;
 
+    ~CircularBufferSizeImplementation()
+    {
+        while(size() > 0) {
+            remove_front();
+        }
+        delete[] reinterpret_cast<unsigned char*>(buffer_);
+    }
+
     inline size_t capacity() const { return capacity_; }
     inline size_t size() const { return size_; }
 
@@ -99,12 +103,16 @@ public:
             write -= capacity_;
         }
         assert(write < capacity_);
-        new(buffer_+write)Element(e);
+
+        // Copy construct a new element.
+        // TODO: move?
+        new(buffer_ + write)Element(e);
+
         ++size_;
         assert(size_ <= capacity_);
     }
 
-    inline Element & front()
+    inline Element & front() const
     {
         assert(size() > 0);
         return buffer_[head_];
@@ -123,84 +131,96 @@ public:
 };
 
 template <typename Element>
-class circularBuffer
+class CircularBufferHeadTailImplementation
 {
     Element* buffer_;
-    size_t const capacity_;
-    size_t front_ = 0;
-    size_t back_ = 0;
+    size_t const buffer_size_;
+    size_t head_ = 0;
+    size_t tail_ = 0;
+
+    inline size_t next(size_t head_or_tail) const
+    {
+        // In my tests on x86-64 -O3, increment,compare,reset
+        // is faster than increment and mod.
+        // For more information, see:
+        // https://dougrichardson.org/2016/04/18/wrapping_counters.html
+        size_t r = head_or_tail + 1;
+        if (r == buffer_size_) {
+            r = 0;
+        }
+        return r;
+    }
+
+    inline bool isfull() const
+    {
+        return next(tail_) == head_;
+    }
 
 public:
-    circularBuffer(size_t capacity)
-        : capacity_(capacity)
+    CircularBufferHeadTailImplementation(size_t capacity)
+        : buffer_size_(capacity+1)
     {
-        assert(capacity_ > 0);
-        buffer_ = reinterpret_cast<Element*>(new unsigned char[capacity_* sizeof(Element)]);
+        assert(capacity > 0);
+        buffer_ = reinterpret_cast<Element*>(new unsigned char[buffer_size_* sizeof(Element)]);
         assert(buffer_ != nullptr);
     }
 
-    ~circularBuffer()
+    CircularBufferHeadTailImplementation(const CircularBufferHeadTailImplementation&) = delete;
+    CircularBufferHeadTailImplementation& operator=(const CircularBufferHeadTailImplementation&) = delete;
+
+    ~CircularBufferHeadTailImplementation()
     {
         while(size() > 0) {
-            std::cout << "~circularBuffer::remove_front\n";
             remove_front();
         }
         delete[] reinterpret_cast<unsigned char*>(buffer_);
     }
 
-    inline size_t capacity() const { return capacity_; }
+    inline size_t capacity() const
+    {
+        return buffer_size_ - 1;
+    }
 
-    size_t size() const {
-        if (front_ == back_)
+    size_t size() const
+    {
+        if(tail_ >= head_)
         {
-            return 0;
+            return tail_ - head_;
         }
 
-        if(back_ > front_)
-        {
-            return back_ - front_;
-        }
-
-        assert(0);
         // front_ > end_, which means the buffer is non-contiguous, so calculate both sections,
-        // 0 to end_ and front_ to capacity_.
-        size_t left_size = back_;
-        size_t right_size = capacity_ - front_;
+        // 0 to tail_ and head_ to capacity_.
+        size_t left_size = tail_;
+        size_t right_size = buffer_size_ - head_;
         return left_size + right_size;
     }
 
     void append(Element const & e)
     {
-        Element* p = buffer_ + back_;
-
-        if (size() == capacity()) {
+        if (isfull()) {
             // Array is filled and so the front item will be overwritten.
             // Destroy the current front item and increment the front pointer.
             remove_front();
-            front_ = (front_ + 1) % capacity_; 
-            std::cout << "append. destroyed front because at capacity. front_ = " << front_ << "\n";
         }
 
-        // Copy construct (todo: move?) a new element.
-        new(p)Element(e);
+        // Copy construct a new element.
+        // TODO: Move?
+        new(buffer_ + tail_)Element(e);
 
         // Increment the back pointer.
-        const size_t next_back = (back_ + 1) % capacity_;
-        back_ = next_back;
-        std::cout << "append. increment back_ to " << back_ << "\n";
+        tail_ = next(tail_);
     }
 
-    inline Element & front()
+    inline Element & front() const
     {
         assert(size() > 0);
-        return buffer_[front_];
+        return buffer_[head_];
     }
 
     void remove_front()
     {
         front().~Element();
-        front_ = (front_ + 1) % capacity_;
-        std::cout << "remove_front: incremented front_ to " << front_ << "\n";
+        head_ = next(head_);
     }
 };
 
