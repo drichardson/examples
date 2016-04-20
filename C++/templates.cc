@@ -40,6 +40,13 @@ void print_result(T a, T b)
     std::cout << "print_result: a=" << a << ", b=" << b << ", result=" << f(a,b) << "\n";
 }
 
+template <class T, T f(T,T) = mymin>
+void something()
+{
+    print_result<T,f>(1, 2);
+    print_result<T,f>(2, 3);
+}
+
 int main()
 {
     Derived<int> d{12};
@@ -53,5 +60,9 @@ int main()
     std::cout << "explicit mymax\n";
     print_result<int, mymax>(1,2);
     print_result<int, mymax>(3,2);
+    std::cout << "something mymax\n";
+    something<int, mymax>();
+    std::cout << "something mymin\n";
+    something<int>(); // use default value, mymin
 }
 
