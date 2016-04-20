@@ -78,7 +78,11 @@ public:
     inline size_t capacity() const { return capacity_; }
     inline size_t size() const { return size_; }
 
-    inline void append(Element&& e)
+    // T must be an Element, but is a template argument so that type deduction
+    // rules can kick in to make T&& a universal reference (and thus handle lvalue refs
+    // and cv qualified types).
+    template<class T>
+    void append(T&& e)
     {
         if(isfull())
         {
@@ -106,7 +110,7 @@ public:
         assert(write < capacity_);
 
         // Copy construct a new element.
-        new(buffer_ + write)Element(std::forward<Element>(e));
+        new(buffer_ + write)Element(std::forward<T>(e));
 
         ++size_;
         assert(size_ <= capacity_);
@@ -195,7 +199,8 @@ public:
         return left_size + right_size;
     }
 
-    void append(Element&& e)
+    template <class T>
+    void append(T&& e)
     {
         if (isfull()) {
             // Array is filled and so the front item will be overwritten.
@@ -204,7 +209,7 @@ public:
         }
 
         // Construct a new element.
-        new(buffer_ + tail_)Element(std::forward<Element>(e));
+        new(buffer_ + tail_)Element(std::forward<T>(e));
 
         // Increment the back pointer.
         tail_ = next(tail_);

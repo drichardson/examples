@@ -85,6 +85,13 @@ void circularBufferTest()
     cb.append(next);
     assert_eq(cb.size(), cb.capacity());
     assert_eq(cb.front().x, 3); // because 2 was overwritten.
+
+    //
+    // Append const reference.
+    //
+    A a(100);
+    const A& const_ref = a;
+    cb.append(const_ref);
 }
 
 int main()
