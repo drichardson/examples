@@ -23,28 +23,44 @@ public:
 };
 
 template <class T>
-T mymax(T a, T b)
+struct mymax
 {
-    return a > b ? a : b;
-}
+    T operator()(T a, T b)
+    {
+        return a > b ? a : b;
+    }
+};
 
 template <class T>
-T mymin(T a, T b)
+struct mymin
 {
-    return a < b ? a : b;
-}
+    T operator()(T a, T b)
+    {
+        return a < b ? a : b;
+    }
+};
 
-template <class T, T f(T,T) = mymin>
+template <class T, template <class> class OP=mymin>
 void print_result(T a, T b)
 {
-    std::cout << "print_result: a=" << a << ", b=" << b << ", result=" << f(a,b) << "\n";
+    std::cout << "print_result: a=" << a << ", b=" << b << ", result=" << OP<T>()(a,b) << "\n";
 }
 
-template <class T, T f(T,T) = mymin>
-void something()
+template <class T, template <class> class OP=mymin>
+void print_results_fixed_T()
 {
-    print_result<T,f>(1, 2);
-    print_result<T,f>(2, 3);
+    print_result<T,OP>(1, 2);
+    print_result<T,OP>(2, 3);
+}
+
+template <template<typename> class OP>
+void print_results_variable_T()
+{
+    print_result<int, OP>(1,2);
+    print_result<int, OP>(2,3);
+
+    print_result<float, OP>(1.1,2.2);
+    print_result<float, OP>(2.2,3.3);
 }
 
 int main()
@@ -57,12 +73,17 @@ int main()
     std::cout << "defaulting to mymin\n";
     print_result(1,2);
     print_result(3,2);
+
     std::cout << "explicit mymax\n";
     print_result<int, mymax>(1,2);
     print_result<int, mymax>(3,2);
-    std::cout << "something mymax\n";
-    something<int, mymax>();
-    std::cout << "something mymin\n";
-    something<int>(); // use default value, mymin
+
+    std::cout << "print_results_fixed_T mymax\n";
+    print_results_fixed_T<int, mymax>();
+    std::cout << "print_results_fixed_T mymin\n";
+    print_results_fixed_T<int>(); // use default value, mymin
+
+    std::cout << "print_results_variable_T mymax\n";
+    print_results_variable_T<mymax>();
 }
 
