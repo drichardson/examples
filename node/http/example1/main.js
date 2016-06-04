@@ -1,3 +1,4 @@
+// From https://nodejs.org/api/synopsis.html
 const http = require('http');
 const hostname = 'localhost';
 const port = 3000;
