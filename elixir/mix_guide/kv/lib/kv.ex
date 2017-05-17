@@ -3,7 +3,9 @@ defmodule KV do
   Documentation for KV.
   """
 
-  def hello do
-    :world
+  use Application
+
+  def start(_type, _args) do
+    KV.Supervisor.start_link
   end
 end
