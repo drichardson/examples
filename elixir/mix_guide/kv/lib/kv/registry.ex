@@ -7,6 +7,8 @@ defmodule KV.Registry do
   Starts the registry.
   """
   def start_link(name) do
+
+    IO.puts "start_link called"
     GenServer.start_link(__MODULE__, :ok, [name: name])
   end
 
@@ -21,7 +23,7 @@ defmodule KV.Registry do
 
   @doc "Ensures there is a bucket associated to the given `name` in `server`."
   def create(server, name) do
-    GenServer.cast(server, {:create, name})
+    GenServer.call(server, {:create, name})
   end
 
   @doc """
@@ -42,7 +44,8 @@ defmodule KV.Registry do
     {:reply, Map.fetch(names, name), state}
   end
 
-  def handle_cast({:create, name}, {names, refs}) do
+  def handle_call({:create, name}, _from, {names, refs}) do
+    IO.puts "handle_call create"
     if Map.has_key?(names, name) do
       {:noreply, {names, refs}}
     else
@@ -63,6 +66,4 @@ defmodule KV.Registry do
   def handle_info(_msg, state) do
     {:noreply, state}
   end
-
-
 end

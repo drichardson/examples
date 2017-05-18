@@ -6,6 +6,7 @@ defmodule KV.Supervisor do
   end
 
   def init(:ok) do
+    IO.puts "init called"
     children = [
       worker(KV.Registry, [KV.Registry])
     ]
