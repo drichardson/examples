@@ -14,7 +14,7 @@ TARGETS=ofstream_test templates atomics system_error array \
 OPTIMIZATION=-O3
 DEBUG=-g
 CXX=g++
-CXXFLAGS=-std=c++14 -Wall ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all -I/usr/local/include
+CXXFLAGS=-std=c++14 -Wall ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all -I/usr/local/include -I /home/doug/code/examples/C++/boost_1_65_0
 
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
@@ -29,11 +29,13 @@ glog: glog.cc
 function.S: function.cc
 	$(CXX) -S $(CXXFLAGS) -o $@ $^
 
-sort_main.o: sort.h
+typeid: boost_1_65_0
+	
+auto_decltype: boost_1_65_0
 
-heap_main.o: heap.h
-
-bigsort.o: sort.h
+boost_1_65_0:
+	wget http://dl.bintray.com/boostorg/release/1.65.0/source/boost_1_65_0.tar.bz2
+	tar xvf boost_1_65_0.tar.bz2
 
 clean:
 	$(RM) -r $(TARGETS) *.dSYM a.txt *.o *.S
