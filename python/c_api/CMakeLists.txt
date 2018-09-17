@@ -6,6 +6,6 @@ set(CMAKE_CXX_FLAGS "-std=c++17")
 find_package(PythonLibs)
 include_directories(${PYTHON_INCLUDE_DIRS})
 
-add_executable(embedded_python main.cc)
-target_link_libraries(embedded_python ${PYTHON_LIBRARIES})
+add_executable(run-py-main run-py-main.cc)
+target_link_libraries(run-py-main ${PYTHON_LIBRARIES})
 
