@@ -10,7 +10,7 @@ class Zoo:
 
 def printAnimals(zoo):
 	for x in zoo.animals:
-		print "Animal: %s" % x.talk()
+		print("Animal: %s" % x.talk())
 
 zoo = Zoo();
 printAnimals(zoo)

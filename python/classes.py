@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 class Animal:
 	
 	def __init__(self, name, sound):
@@ -5,7 +7,7 @@ class Animal:
 		self.sound = sound
 				
 	def talk(self):
-		print "%s: %s" % (self.name, self.sound)
+		print("%s: %s" % (self.name, self.sound))
 		
 class Tiger(Animal):
 	def __init__(self):
