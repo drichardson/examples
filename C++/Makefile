@@ -4,7 +4,7 @@ TARGETS=ofstream_test templates atomics system_error array \
 		initialization ctor auto_decltype operators \
 		literals template_meta_programming sort_main \
 		heap_main bigsort ifstream vector graph destructors \
-		stack_protector autoptr hash primes max_subarray \
+		stack_protector hash primes max_subarray \
 		prime_factorization rod_cutting references \
 		template_specialization scoped_enums template_convertible \
 		pointers power iterator
@@ -14,7 +14,7 @@ TARGETS=ofstream_test templates atomics system_error array \
 OPTIMIZATION=-O3
 DEBUG=-g
 CXX=g++
-CXXFLAGS=-std=c++14 -Wall ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all -I/usr/local/include
+CXXFLAGS=-std=c++14 -Wall -Werror ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all -I/usr/local/include
 
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 

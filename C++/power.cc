@@ -9,7 +9,7 @@ T power_simple(T a, T n)
 {
     T r = 1;
 
-    for(int i = 0; i < n; ++i)
+    for(T i = 0; i < n; ++i)
     {
         r *= a;
     }
