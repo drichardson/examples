@@ -1,7 +1,5 @@
 #include <iostream>
 #include <typeinfo>
-#include <boost/type_index.hpp>
-#include <boost/current_function.hpp>
 
 using namespace std;
 
@@ -12,11 +10,9 @@ void print_type_internal(char const* msg)
 {
     using std::cout;
     using std::endl;
-    using boost::typeindex::type_id_with_cvr;
 
     cout << msg
         << ": typeid.name()=" << typeid(T).name()
-        << ", boost pretty_name()=" << type_id_with_cvr<T>().pretty_name()
         << endl;
 }
 
@@ -30,10 +26,7 @@ public:
 // const, ref, volatileness out.
 template <typename T>
 void my_typename(char const* msg, T) {
-    cout << "my_typename_with_crv: " << BOOST_CURRENT_FUNCTION << endl;
-
-    // equivalently, on clang++/g++
-    //cout << "my_typename_with_crv: " << __PRETTY_FUNCTION__ << endl;
+    cout << "my_typename_with_crv: " << __PRETTY_FUNCTION__ << endl;
 }
 
 int main() {

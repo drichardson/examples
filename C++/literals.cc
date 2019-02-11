@@ -1,13 +1,12 @@
 #include <iostream>
-#include <boost/type_index.hpp>
+#include <typeinfo>
 
 #define print_expr(expr) print_expr_internal(#expr, expr)
 
 template <typename T>
 void print_expr_internal(const char* msg, T&& value) {
-    using boost::typeindex::type_id_with_cvr;
     std::cout << msg << " = " << value
-        << " of type " << type_id_with_cvr<T>().pretty_name()
+        << " of type " << typeid(T).name()
         << std::endl;
 }
 
