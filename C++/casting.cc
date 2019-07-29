@@ -11,8 +11,14 @@ public:
 
 class B : public A {
 public:
-    string foo() const { return "B"; }
+    string foo() const override { return "B"; }
     virtual void Bfoo() {}
+};
+
+class B2 : public A {
+public:
+    string foo() const override { return "B2"; }
+    virtual void B2foo() {}
 };
 
 class A2 {
@@ -22,7 +28,7 @@ public:
 
 class C : public A2 {
 public:
-    string foo() const { return "C"; }
+    string foo() const override { return "C"; }
 };
 
 class UnrelatedToA
@@ -33,8 +39,9 @@ public:
 
 class D : public A, public UnrelatedToA {
 public:
-    string foo() const { return "D"; }
+    string foo() const override { return "D"; }
     int bar() { return 5; }
+    string UnrelatedToAfoo() override { return "XD"; }
 };
 
 class E {
@@ -57,16 +64,20 @@ A* getD() {
 int main() {
     A a;
     B b;
+    B2 b2;
     C c;
     //E e;
     cout << "a: " << a.foo() << endl;
     cout << "b: " << b.foo() << endl;
+    cout << "b2: " << b2.foo() << endl;
     cout << "c: " << c.foo() << endl;
 
     A* pa = &a;
     cout << "pa(a): " << pa->foo() << endl;
     pa = static_cast<A*>(&b);
     cout << "pa(b): " << pa->foo() << endl;
+    pa = static_cast<A*>(&b2);
+    cout << "pa(b2): " << pa->foo() << endl;
     //pa = &c; // error: cannot convert C* to A* in assignment
     //pa = static_cast<A*>(&c); // error: invalid static_cast from type C* to type A*
     //pa = dynamic_cast<A*>(&c); // error: dynamic_cast can never succeed
@@ -93,4 +104,15 @@ int main() {
     A const* pa_const = &a;
     A* pa_not_const = const_cast<A*>(pa_const);
     cout << "pa_not_const: " << pa_not_const->foo() << endl;
+
+    // Downcast and upcast between unrelated types that share a common ancestor.
+    pa = static_cast<A*>(&b); // downcast
+    cout << "pa(a): " << pa->foo() << endl;
+    B* pb_static_downcast = static_cast<B*>(pa); // upcast back to B
+    cout << "pb(b): " << pb_static_downcast->foo() << endl;
+    B2* pb2_static_upcast = static_cast<B2*>(pa); // upcast back to B2, an unrelated type.
+    cout << "pb2(b (unrelated type)): " << pb2_static_upcast << endl; // ALTHOUGH NOT NULL, calling function through it causes core dump
+    // cout << "pb2(b (unrelated type)): " << pb2_static_upcast->foo() << endl; // CRASHES due to cast between unrelated types
+
+
 }
