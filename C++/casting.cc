@@ -105,14 +105,21 @@ int main() {
     A* pa_not_const = const_cast<A*>(pa_const);
     cout << "pa_not_const: " << pa_not_const->foo() << endl;
 
-    // Downcast and upcast between unrelated types that share a common ancestor.
-    pa = static_cast<A*>(&b); // downcast
-    cout << "pa(a): " << pa->foo() << endl;
-    B* pb_static_downcast = static_cast<B*>(pa); // upcast back to B
-    cout << "pb(b): " << pb_static_downcast->foo() << endl;
+    // static downcast and upcast between unrelated types that share a common ancestor.
+    pa = &b; // implicit downcast.
+    cout << "pa(b): " << pa->foo() << endl;
+    B* pb_static_upcast = static_cast<B*>(pa); // upcast back to B
+    cout << "pb_static_upcast(b): " << pb_static_upcast->foo() << endl; // works fine since we are pointing to a B.
     B2* pb2_static_upcast = static_cast<B2*>(pa); // upcast back to B2, an unrelated type.
-    cout << "pb2(b (unrelated type)): " << pb2_static_upcast << endl; // ALTHOUGH NOT NULL, calling function through it causes core dump
-    // cout << "pb2(b (unrelated type)): " << pb2_static_upcast->foo() << endl; // CRASHES due to cast between unrelated types
+    cout << "pb2_static_upcast(b) pointer: " << pb2_static_upcast << endl; // Invalid cast. Although result not null, calling function through it causes core dump
+    // cout << "pb2(b): " << pb2_static_upcast->foo() << endl; // Crashes due to cast between unrelated types.
 
-
+    // dynamic downcast and upcast between unrelated types that share a common ancestor
+    pa = &b; // implicit downcast
+    cout << "pa(b): " << pa->foo() << endl;
+    B* pb_dyn_upcast = dynamic_cast<B*>(pa); // upcast back to B
+    cout << "pb_dyn_upcast(b): " << pb_dyn_upcast->foo() << endl;
+    B2* pb2_dyn_upcast = dynamic_cast<B2*>(pa); // upcast back to B2, an unrelated type, which results in null.
+    cout << "pb2_dyn_upcast(b) pointer: " << pb2_dyn_upcast << endl; // null since B2 is unrelated to B.
 }
+
