@@ -46,7 +46,7 @@ TARGETS=\
 OPTIMIZATION=-O3
 DEBUG=-g
 CXX=g++
-CXXFLAGS=-std=c++17 -Wall -Werror ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all -I/usr/local/include
+CXXFLAGS=-std=c++17 -Wall -Werror ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all 
 
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
