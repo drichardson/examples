@@ -16,6 +16,7 @@ TARGETS=\
 		hash \
 		heap_main \
 		ifstream \
+		inheritance \
 		initialization \
 		iterator \
 		literals \

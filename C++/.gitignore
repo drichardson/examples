@@ -1,4 +1,5 @@
 *.dSYM
+access_specifiers
 array
 atomics
 auto_decltype
@@ -18,6 +19,7 @@ hash
 heap_main
 heap_main.o
 ifstream
+inheritance
 initialization
 iterator
 literals
