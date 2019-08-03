@@ -1,20 +1,51 @@
-TARGETS=ofstream_test templates atomics system_error array \
-		function function.S condition priority_q chrono \
-		crash playground typeid casting placement_new \
-		initialization ctor auto_decltype operators \
-		literals template_meta_programming sort_main \
-		heap_main bigsort ifstream vector graph destructors \
-		stack_protector hash primes max_subarray \
-		prime_factorization rod_cutting references \
-		template_specialization scoped_enums template_convertible \
-		pointers power iterator
+TARGETS=\
+		array \
+		atomics \
+		auto_decltype \
+		bigsort \
+		casting  \
+		chrono \
+		condition \
+		crash \
+		ctor \
+		destructors \
+		function \
+		function.S \
+		graph \
+		hash \
+		heap_main \
+		ifstream \
+		initialization \
+		iterator \
+		literals \
+		max_subarray \
+		ofstream_test \
+		operators \
+		placement_new \
+		playground \
+		pointers \
+		power \
+		prime_factorization \
+		primes \
+		priority_q \
+		rod_cutting references \
+		scoped_enums \
+		sort_main \
+		stack_protector \
+		system_error \
+		template_convertible \
+		template_meta_programming \
+		template_specialization \
+		templates \
+		typeid \
+		vector
 
 
 //CXX=clang++
 OPTIMIZATION=-O3
 DEBUG=-g
 CXX=g++
-CXXFLAGS=-std=c++14 -Wall -Werror ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all -I/usr/local/include
+CXXFLAGS=-std=c++17 -Wall -Werror ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all -I/usr/local/include
 
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
