@@ -1,4 +1,5 @@
 TARGETS=\
+		access_specifiers \
 		array \
 		atomics \
 		auto_decltype \
