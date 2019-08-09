@@ -27,7 +27,32 @@ public:
 
 
   void f1(S s) { cout << "B::S.x == " << s.x << '\n'; }
-  void f2(A::S s) override { cout << "A::S.i == " << s.i << '\n'; }
+  void f2(A::S s) override { cout << "B::f2 A::S.i == " << s.i << '\n'; }
+};
+
+class B2 : private A
+{
+public:
+  void f2(A::S s) override { cout << "B2::f2 A::S.i == " << s.i << '\n'; }
+};
+
+class B3: protected A
+{
+public:
+  void f2(A::S s) override { cout << "B3::f2 A::S.i == " << s.i << '\n'; }
+};
+
+class B4 : A
+{
+public:
+  void f2(A::S s) override { cout << "B4::f2 A::S.i == " << s.i << '\n'; }
+
+  void call_f2_through_this(A::S s)
+  {
+    A* ap = this;
+    cout << "call_f2_through_this: ";
+    ap->f2(s);
+  }
 };
 
 class C
@@ -117,11 +142,30 @@ int main()
   as.i = 1;
   a.f1(as);
 
+  A* ap = &a;
+  ap->f2(as);
+
   B b;
   B::S bs;
   bs.x = 2;
   b.f1(bs);
   b.f2(as);
+
+  B2 b2;
+  // b2.f2(as); // error: private within this context
+
+  B2* pb2 = &b2;
+  pb2->f2(as);
+  // ap = &b2; // error: A is an inaccessible base of B2
+
+  B3 b3;
+  b3.f2(as);
+  // ap = &b3; // error: A in inaccessible base of B3
+
+  B4 b4;
+  b4.f2(as);
+  b4.call_f2_through_this(as);
+  // ap = &b4; // error: A in inaccessible base of B4
 
   cout << "C\n";
   C c;
