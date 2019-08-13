@@ -50,6 +50,20 @@ struct SRefs
   }
 };
 
+struct SPointToSelf
+{
+  SPointToSelf* Self = nullptr;
+  int i = 0;
+
+  void NonConstFunc() {
+    i++;
+  }
+  void ConstFunc() const {
+    // i++; // error: can't increment member in read only object
+    Self->i++;
+  }
+};
+
 void TakesConst(const S1& s1)
 {
   // s1.NonConstFunc(); // error: discards const qualifier
@@ -96,6 +110,16 @@ int main()
   // srRef.NonConstFunc(); // error: discards const qualifier
   cout << "s.i=" << s.i << "\n";
   cout << "s1.s.i=" << s.i << "\n";
+
+  SPointToSelf pts;
+  pts.Self = &pts; // compiler doesn't notice this, so ptsConstRef.ConstFunc() will modify it's object without compiler error.
+
+  SPointToSelf const & ptsConstRef = pts;
+  cout << "pts.i=" << pts.i << "\n";
+  // ptsConstRef.NonConstFunc(); // error: discards qualifiers
+  cout << "pts.i=" << pts.i << "\n";
+  ptsConstRef.ConstFunc();
+  cout << "pts.i=" << pts.i << "\n";
 
   return 0;
 }
