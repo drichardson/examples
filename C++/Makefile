@@ -7,6 +7,7 @@ TARGETS=\
 		casting  \
 		chrono \
 		condition \
+		const \
 		crash \
 		ctor \
 		destructors \
