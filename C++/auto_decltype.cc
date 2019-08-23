@@ -1,14 +1,13 @@
 #include <array>
-#include <boost/type_index.hpp>
 #include <iostream>
+#include <typeinfo>
 
 #define print_type(x) print_type_internal<decltype(x)>(#x)
 
 template <typename T>
 void print_type_internal(char const* msg)
 {
-    using boost::typeindex::type_id_with_cvr;
-    std::cout << msg << "=" << type_id_with_cvr<T>().pretty_name() << std::endl;
+    std::cout << msg << "=" << typeid(T).name() << std::endl;
 }
 
 // demonstrate user of auto for return type. Auto here has nothing to do with

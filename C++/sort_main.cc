@@ -1,16 +1,16 @@
 #include "sort.h"
+
 #include <array>
-#include <boost/type_index.hpp>
+#include <climits>
+#include <deque>
 #include <functional>
 #include <iostream>
-#include <climits>
-#include <vector>
-#include <deque>
 #include <queue>
+#include <vector>
 
 template <typename T>
 std::string typestring() {
-    return boost::typeindex::type_id_with_cvr<T>().pretty_name();
+    return typeid(T).name();
 }
 
 template <typename T>
