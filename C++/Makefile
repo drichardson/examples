@@ -41,7 +41,8 @@ TARGETS=\
 		template_specialization \
 		templates \
 		typeid \
-		vector
+		vector \
+		virtual
 
 
 //CXX=clang++
