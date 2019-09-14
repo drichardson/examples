@@ -21,12 +21,12 @@ public:
     void foo() override { cout << "Multiple::foo\n"; }
     void bar() override { cout << "Multiple::bar\n"; }
 
-    ~Multiple() { cout << "~Multiple\n"; }
+    ~MultipleAmbiguous() { cout << "~MultipleAmbiguous\n"; }
 };
 
 int main()
 {
-    Multiple m;
+    MultipleAmbiguous m;
     m.foo();
     m.bar();
 
