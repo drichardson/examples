@@ -1,5 +1,6 @@
 *.dSYM
 access_specifiers
+copying
 array
 atomics
 auto_decltype

@@ -8,6 +8,7 @@ TARGETS=\
 		chrono \
 		condition \
 		const \
+		copying \
 		crash \
 		ctor \
 		destructors \
