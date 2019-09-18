@@ -13,6 +13,7 @@ condition
 const
 crash
 ctor
+ctor-init-list
 destructors
 function
 function.S

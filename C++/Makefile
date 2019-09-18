@@ -11,6 +11,7 @@ TARGETS=\
 		copying \
 		crash \
 		ctor \
+		ctor-init-list \
 		destructors \
 		function \
 		function.S \
@@ -50,7 +51,7 @@ TARGETS=\
 OPTIMIZATION=-O3
 DEBUG=-g
 CXX=g++
-CXXFLAGS=-std=c++17 -Wall -Werror ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all 
+CXXFLAGS=-std=c++17 -Wall ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all 
 
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
