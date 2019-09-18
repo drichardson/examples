@@ -76,6 +76,21 @@ A makeA(char const* t) {
     return random() % 2 == 0 ? a : b;
 }
 
+class B
+{
+    int a;
+    int b;
+public:
+    B(int a_, int b_)
+        : a(a_)
+
+          // NOTE: initializing with b, not b_, which is uninitialized
+          // with gcc's -Winit-self you will get a warning for this
+        , b(b) 
+    {
+    }
+};
+
 int main() {
 
     A a{"this is a test"};
