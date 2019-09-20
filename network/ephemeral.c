@@ -90,11 +90,6 @@ int main()
         exit(1);
     }
 
-    if (listen(server, 3) == -1) {
-        fprintf(stderr, "listen failed for server. %d: %s\n", errno, strerror(errno));
-        exit(1);
-    }
-
     printf("Server able to bind to client port. This is most unexpected.\n");
     // I have seen systems get here, like WSL on Windows (which is a compatibility layer
     // that doesn't mimic linux exactly).
