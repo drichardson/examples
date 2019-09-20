@@ -3,8 +3,8 @@
 // attempts to bind to an ephemeral port already allocated to a
 // client.
 //
-// In the real world, this might show up as some processing making
-// a TCP connect to a server, being assigned ephemeral port Y,
+// In the real world, this might show up as some process making
+// a TCP connect to a server, then being assigned ephemeral port Y,
 // and then while that port is still allocated a server attempts
 // to bind to the same port Y.
 //
