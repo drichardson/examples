@@ -96,10 +96,8 @@ int main()
     }
 
     printf("Server able to bind to client port. This is most unexpected.\n");
-
-    printf("Sleeping\n");
-    sleep(300);
-    printf("Done sleeping\n");
+    // I have seen systems get here, like WSL on Windows (which is a compatibility layer
+    // that doesn't mimic linux exactly).
 
     return 0;
 }
