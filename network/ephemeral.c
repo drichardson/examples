@@ -84,7 +84,7 @@ int main()
     memset(&server_addr, 0, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(client_port);
-    server_addr.sin_addr.s_addr = addr->sin_addr.s_addr; // listen only on the same address the client connect to example.com from
+    server_addr.sin_addr.s_addr = INADDR_ANY;
     if (bind(server, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1) {
         fprintf(stderr, "bind failed for server. %d: %s\n", errno, strerror(errno));
         exit(1);
