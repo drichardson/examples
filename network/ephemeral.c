@@ -8,7 +8,7 @@
 // and then while that port is still allocated a server attempts
 // to bind to the same port Y.
 //
-// A server might attempt to do this if it has hard coded it's
+// A server might attempt to do this if it has hard coded its
 // port to a number in the ephemeral port range.
 //
 // https://en.wikipedia.org/wiki/Ephemeral_port
