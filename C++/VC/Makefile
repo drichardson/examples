@@ -1,4 +1,4 @@
-all: hello.exe intrinsics.exe
+all: hello.exe intrinsics.exe instruction_set.exe
 
 clean:
 	del *.obj *.exe
@@ -11,4 +11,7 @@ hello.exe: hello.obj
 
 intrinsics.exe: intrinsics.obj
 	link -out:intrinsics.exe intrinsics.obj
+
+instruction_set.exe: instruction_set.obj
+	link -out:instruction_set.exe instruction_set.obj
 
