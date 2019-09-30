@@ -1,3 +1,5 @@
+console.log('sum.test.js');
+
 const sum = require('./sum');
 
 test('1+2=3', () => {
