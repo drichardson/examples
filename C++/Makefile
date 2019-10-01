@@ -37,6 +37,7 @@ TARGETS=\
 		scoped_enums \
 		sort_main \
 		stack_protector \
+		strings \
 		system_error \
 		template_convertible \
 		template_meta_programming \

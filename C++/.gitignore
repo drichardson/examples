@@ -1,6 +1,5 @@
 *.dSYM
 access_specifiers
-copying
 array
 atomics
 auto_decltype
@@ -11,6 +10,7 @@ casting
 chrono
 condition
 const
+copying
 crash
 ctor
 ctor-init-list
@@ -44,6 +44,7 @@ sort_main
 sort_main.o
 stack
 stack_protector
+strings
 system_error
 template_convertible
 template_meta_programming
