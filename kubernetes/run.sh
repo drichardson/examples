@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker run -p 80:80 hello
+docker run --rm --publish 80:80 hello
 
