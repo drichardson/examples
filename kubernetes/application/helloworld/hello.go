@@ -12,13 +12,13 @@ var counter int
 
 func main() {
 	flag.Parse()
-	log.Print("Starting server")
+	log.Print("Starting hello application")
 	http.HandleFunc("/", index)
 	log.Fatal(http.ListenAndServe(*address, nil))
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	log.Print("index method")
+	log.Printf("index handler, counter: %d", counter)
 	w.Write([]byte(fmt.Sprintf("Hello, World!\nCounter: %d\n", counter)))
 	counter++
 }
