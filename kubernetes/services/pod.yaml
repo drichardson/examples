@@ -3,10 +3,9 @@ kind: Pod
 metadata:
     name: hello-pod
     labels:
-        app: hello
+        app: hello-app
 spec:
     containers:
         - name: hello-container
-          image: nginx
-          command: ['sh', '-c', 'echo Hello Kubernetes! && sleep 3600']
+          image: dougrichardson/hello:1.0
 
