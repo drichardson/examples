@@ -17,7 +17,8 @@ var serverUUID uuid.UUID
 func main() {
 	flag.Parse()
 	log.Print("Starting hello application")
-	serverUUID, err := uuid.NewRandom()
+	var err error
+	serverUUID, err = uuid.NewRandom()
 	if err != nil {
 		panic(err)
 	}
