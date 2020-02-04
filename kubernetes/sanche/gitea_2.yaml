@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: gitea-deployment
+  name: gitea-deployment
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: gitea
-    template:
-        metadata:
-            labels:
-                app: gitea
-        spec:
-            containers:
-                - name: gitea-container
-                  image: gitea/gitea:1.4
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitea
+  template:
+    metadata:
+      labels:
+        app: gitea
+    spec:
+      containers:
+        - name: gitea-container
+          image: gitea/gitea:1.4
