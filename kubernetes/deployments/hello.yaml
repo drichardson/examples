@@ -8,15 +8,15 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hello
+      app: hello-app
   template:
     metadata:
       labels:
-        app: hello
+        app: hello-app
     spec:
       containers:
       - name: hello
-        image: hello:latest
+        image: dougrichardson/hello:1.1
         ports:
         - containerPort: 80
 

@@ -1,26 +1,21 @@
 # kubernetes example
 
-## Build and Run Docker Image
+Commands:
 
-bash:
+    kubectl apply -f hello.yaml
 
-    bash/build.sh
-    bash/run.sh
+    kubectl get deployments hello-deployment
+    kubectl describe deployments hello-deployment
 
-PowerShell:
+    kubectl get replicasets
+    kubectl describe replicasets
 
-    powershell\Build-Hello.ps1
-    powershell\Run-Hello.ps1
+    kubectl apply -f service.yaml
+    minikube service hello-service --url
+
+    kubectl expose deployment hello-deployment --type=NodePort --name=my-service
+    minikube service my-service --url
 
 
-## minikube
 
-If using minikube, you will want to use the version of kubectl that game with
-minikube. You can do so like:
-
-    minikube kubectl -- version
-    minikube kubectl -- apply -f hello.yaml
-
-Note the double dash, this tells minikube not to process the following
-arguments, allowing kubectl to process them.
 
