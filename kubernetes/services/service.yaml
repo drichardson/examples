@@ -1,4 +1,15 @@
 apiVersion: v1
+kind: Pod
+metadata:
+    name: hello-pod
+    labels:
+        app: hello-app
+spec:
+    containers:
+        - name: hello-container
+          image: dougrichardson/hello:1.0
+---
+apiVersion: v1
 kind: Service
 metadata:
     name: hello-service

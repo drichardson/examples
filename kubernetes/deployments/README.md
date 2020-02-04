@@ -10,11 +10,17 @@ Commands:
     kubectl get replicasets
     kubectl describe replicasets
 
-    kubectl apply -f service.yaml
     minikube service hello-service --url
 
-    kubectl expose deployment hello-deployment --type=NodePort --name=my-service
-    minikube service my-service --url
+    kubectl expose deployment hello-deployment --type=NodePort --name=hello-service
+    minikube service hello-service --url
+
+
+For Google Container Engine:
+
+    gcloud container clusters create my-cluster --zone us-west1-a
+    kubectl apply -f hello-gke.yaml
+    kubectl get service hello-service
 
 
 

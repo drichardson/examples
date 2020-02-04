@@ -16,11 +16,12 @@ Run the commands below to:
 
 Commands:
 
-    kubectl create -f pod.yaml
+    kubectl create -f service.yaml
+
     kubectl get pods
     kubectl logs hello-pod 
 
-    kubectl create -f service.yaml
+
     kubectl get services
     minikube service hello-service --url
 
