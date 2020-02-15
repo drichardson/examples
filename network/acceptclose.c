@@ -1,18 +1,6 @@
-// ****************************************************************
-// Demonstrates the address in use error that occurs when a server
-// attempts to bind to an ephemeral port already allocated to a
-// client.
-//
-// In the real world, this might show up as some process making
-// a TCP connect to a server, then being assigned ephemeral port Y,
-// and then while that port is still allocated a server attempts
-// to bind to the same port Y.
-//
-// A server might attempt to do this if it has hard coded its
-// port to a number in the ephemeral port range.
-//
-// https://en.wikipedia.org/wiki/Ephemeral_port
-// ****************************************************************
+// ******************************************************************
+// A server that accepts a connection and then immediately closes it.
+// ******************************************************************
 
 #include <arpa/inet.h>
 #include <errno.h>
@@ -67,6 +55,12 @@ int main(int argc, char** argv)
         int optval = 1;
         if (setsockopt(server, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)) == -1) {
             fprintf(stderr, "setsockopt(SO_REUSEADDR) failed. %d: %s\n", errno, strerror(errno));
+            exit(1);
+        }
+
+        optval = 1;
+        if (setsockopt(server, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval)) == -1) {
+            fprintf(stderr, "setsockopt(SO_REUSEPORT) failed. %d: %s\n", errno, strerror(errno));
             exit(1);
         }
     }
