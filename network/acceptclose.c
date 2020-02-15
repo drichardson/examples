@@ -24,16 +24,36 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-int main()
+int main(int argc, char** argv)
 {
-    //
-    // Connect client to example.com
-    //
+    if (argc != 3) {
+        fprintf(stderr,
+                "Expected 2 args but got %d.\n"
+                "Usage: acceptclose PORT REUSE\n"
+                "   REUSE can be 0 (do not reuse address) or 1 (reuse address)\n",
+                argc-1);
+        exit(1);
+    }
 
+
+    char* endptr = NULL;
+    long long int portLong = strtol(argv[1], &endptr, 10);
+    if (*endptr != 0) {
+        fprintf(stderr, "Cruft at end of port string: %s\n", endptr);
+        exit(1);
+    }
+    if (portLong > 65535 || portLong < 0) {
+        fprintf(stderr, "Port %lld out of range.\n", portLong);
+        exit(1);
+    }
+    
+    unsigned short port = (unsigned short)portLong;
+
+    const char* reuseOpt = argv[2];
 
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(8787);
+    addr.sin_port = htons(port);
     addr.sin_addr.s_addr = INADDR_ANY;
 
     int server = socket(AF_INET, SOCK_STREAM, 0);
@@ -42,6 +62,16 @@ int main()
         exit(1);
     }
 
+    if (reuseOpt[0] == '1') {
+        printf("Setting SO_REUSEADDR\n");
+        int optval = 1;
+        if (setsockopt(server, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)) == -1) {
+            fprintf(stderr, "setsockopt(SO_REUSEADDR) failed. %d: %s\n", errno, strerror(errno));
+            exit(1);
+        }
+    }
+
+    printf("Binding on port %d\n", port);
     if (bind(server, (struct sockaddr*)&addr, sizeof(addr)) == -1) {
         fprintf(stderr, "bind failed: %d: %s\n", errno, strerror(errno));
         exit(1);
@@ -52,7 +82,7 @@ int main()
         exit(1);
     }
 
-    printf("Listening on port %d...\n", ntohs(addr.sin_port));
+    printf("Listening on port %d...\n", port);
 
     while(1) {
         memset(&addr, 0, sizeof(addr));
