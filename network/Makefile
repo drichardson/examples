@@ -1,8 +1,10 @@
 CFLAGS=-g -O0 -Wall
 
-all: ephemeral \
-	keepopen \
-	acceptclose
+TARGETS=ephemeral \
+		keepopen \
+		acceptclose
+
+all: $(TARGETS)
 
 ephemeral: ephemeral.c
 
@@ -11,4 +13,4 @@ keepopen: keepopen.c
 acceptclose: acceptclose.c
 
 clean:
-	$(RM) ephemeral
+	$(RM) $(TARGETS)
