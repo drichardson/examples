@@ -7,12 +7,12 @@ import (
 	"testing"
 )
 
-func TestStructuredLogging(t *testing.T) {
+func TestLogEndpoint(t *testing.T) {
 
 	res := httptest.NewRecorder()
 	req := httptest.NewRequest(http.MethodGet, "/doesnotmatter", nil)
 
-	StructuredLoggingEndpoint(res, req)
+	LogEndpoint(res, req)
 
 	if res.Code != http.StatusOK {
 		t.Error("Expected status", res.Code, "but got", http.StatusOK)

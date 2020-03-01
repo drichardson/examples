@@ -1,8 +1,8 @@
 #!/bin/bash
 
-gcloud functions deploy structured-logging-test \
-           --entry-point StructuredLoggingEndpoint \
+gcloud functions deploy log-test \
+           --entry-point LogEndpoint \
            --trigger-http \
-           --runtime=go111 \
+           --runtime=go113 \
            --memory=128MB \
            --region=us-central1
