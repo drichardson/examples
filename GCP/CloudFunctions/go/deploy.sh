@@ -1,25 +1,25 @@
 #!/bin/bash
 
-GCP_PROJECT=$(gcloud config get-value project)
-if [[ $? != 0 ]]; then
-	echo "Failed to lookup current GCP project."
-	exit 1
-fi
-
-# To create service account, run setup-service-acount.sh.
-SERVICE_ACCOUNT=log-test@$GCP_PROJECT.iam.gserviceaccount.com
+source common.sh
 
 cat <<EOF
 - Current GCP project is $GCP_PROJECT
-- Using service account $SERVICE_ACCOUNT. If it does not exist, run
+- Using service account $LOG_TEST_SERVICE_ACCOUNT. If it does not exist, run
   setup-service-account.sh.
 EOF
 
 gcloud functions deploy log-test \
-           --entry-point LogEndpoint \
-           --trigger-http \
-           --runtime=go113 \
-           --memory=128MB \
-           --region=us-central1 \
-		   --set-env-vars=GCP_PROJECT=$GCP_PROJECT \
-		   --service-account=$SERVICE_ACCOUNT
+	--quiet \
+	--entry-point LogEndpoint \
+	--trigger-http \
+	--runtime=go113 \
+	--memory=128MB \
+	--region=$LOG_TEST_REGION \
+	--set-env-vars=GCP_PROJECT=$GCP_PROJECT \
+	--service-account=$LOG_TEST_SERVICE_ACCOUNT
+
+gcloud functions add-iam-policy-binding log-test \
+	--region=$LOG_TEST_REGION \
+	--member=allUsers \
+	--role=roles/cloudfunctions.invoker 
+

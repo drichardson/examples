@@ -22,7 +22,6 @@
 package cloudfunctions
 
 import (
-	"context"
 	"flag"
 	"fmt"
 	"html"
@@ -31,7 +30,6 @@ import (
 	"os"
 	"time"
 
-	"cloud.google.com/go/logging"
 	"github.com/golang/glog"
 	"github.com/inconshreveable/log15"
 	"github.com/rs/zerolog"
@@ -160,37 +158,6 @@ Line 2 of 2`
 	zlog.Info().Msg(oneLineMessage)
 	zlog.Info().Msg(twoLineMessage + " for zlog.Info")
 	zlog.Info().Int("myIntField", 532).Str("myStringField", "howdy").Str("myMultilineStringField", twoLineMessage+" for zlog.Info with fields").Msg("With Fields Example")
-
-	printSectionHeader("cloud.google.com/go/logging")
-	projectId := os.Getenv("GCP_PROJECT")
-	if client, err := logging.NewClient(context.Background(), "projects/"+projectId); err == nil {
-		lg := client.Logger("my-log")
-		lg.Log(logging.Entry{Payload: oneLineMessage})
-		lg.Log(logging.Entry{Payload: twoLineMessage + " for cloud.google.com/go/logging"})
-		lg.Log(logging.Entry{Severity: logging.Debug, Payload: "Debug"})
-		lg.Log(logging.Entry{Severity: logging.Info, Payload: "Info"})
-		lg.Log(logging.Entry{Severity: logging.Notice, Payload: "Notice"})
-		lg.Log(logging.Entry{Severity: logging.Warning, Payload: "Warning"})
-		lg.Log(logging.Entry{Severity: logging.Error, Payload: "Error"})
-		lg.Log(logging.Entry{Severity: logging.Critical, Payload: "Critial"})
-		lg.Log(logging.Entry{Severity: logging.Alert, Payload: "Alert"})
-		lg.Log(logging.Entry{Severity: logging.Emergency, Payload: "Emergency"})
-		lg.Log(logging.Entry{
-			Severity: logging.Debug,
-			Payload: map[string]interface{}{
-				"intVal":        123,
-				"oneLineString": oneLineMessage,
-				"twoLineString": twoLineMessage + " for cloud.google.com/go/logging with fields.",
-			},
-		})
-
-		err = client.Close()
-		if err != nil {
-			panic(err)
-		}
-	} else {
-		log.Println("WARNING: Skipping cloud.google.com/go/logging examples because logging.NewClient failed.", err)
-	}
 
 	fmt.Fprint(w, html.EscapeString("OK"))
 }
