@@ -13,20 +13,30 @@
 //    4. Are logs ordered correctly in Stackdriver? If not, check timestamp
 //       resolution and name.
 //
+// Information about how google-fluentd processes logs is here:
+// https://cloud.google.com/logging/docs/agent/configuration
+//
+// Viewing Custom Fields in Stackdriver Web Console
+// https://cloud.google.com/logging/docs/view/overview#custom-fields
 
 package cloudfunctions
 
 import (
+	"context"
+	"flag"
 	"fmt"
-	"github.com/inconshreveable/log15"
-	"github.com/rs/zerolog"
-	zlog "github.com/rs/zerolog/log"
-	"github.com/sirupsen/logrus"
 	"html"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"cloud.google.com/go/logging"
+	"github.com/golang/glog"
+	"github.com/inconshreveable/log15"
+	"github.com/rs/zerolog"
+	zlog "github.com/rs/zerolog/log"
+	"github.com/sirupsen/logrus"
 )
 
 func printSectionHeader(section string) {
@@ -34,7 +44,6 @@ func printSectionHeader(section string) {
 }
 
 func LogEndpoint(w http.ResponseWriter, r *http.Request) {
-
 	oneLineMessage := "One line message"
 	twoLineMessage := `Line 1 of 2
 Line 2 of 2`
@@ -62,8 +71,33 @@ Line 2 of 2`
 	log.Printf("Printf:%s", oneLineMessage)
 	log.Printf("Printf:%s", twoLineMessage+" for log.Printf")
 
-	printSectionHeader("sirupsen/logrus")
-	logrus.SetFormatter(&logrus.JSONFormatter{})
+	printSectionHeader("github.com/golang/glog")
+	// glog relies on flag command line variables to set logging params
+	// logging parameters.
+	flag.Set("stderrthreshold", "INFO")
+	flag.Set("v", "1")
+	flag.Parse()
+	glog.Info("Info Basic")
+	glog.Warning("Warning Basic")
+	glog.Error("Error Basic")
+	glog.V(0).Info("Info V=0")
+	glog.V(1).Info("Info V=1")
+	glog.V(2).Info("Info V=2")
+
+	// Flush to make sure glog doesn't interfere with logs that come later.
+	// This needs to be the last glog function called.
+	glog.Flush()
+
+	printSectionHeader("github.com/sirupsen/logrus")
+	logrus.SetFormatter(&logrus.JSONFormatter{
+		TimestampFormat: time.RFC3339Nano,
+		// set field keys to be compatible with stackdriver
+		FieldMap: logrus.FieldMap{
+			logrus.FieldKeyTime:  "timestamp",
+			logrus.FieldKeyLevel: "severity",
+			logrus.FieldKeyMsg:   "message",
+		},
+	})
 	logrus.SetOutput(os.Stdout)
 	logrus.SetLevel(logrus.DebugLevel)
 
@@ -79,7 +113,7 @@ Line 2 of 2`
 		"myMultilineStringField": twoLineMessage + " for logrus.WithFields.Info",
 	}).Info("With Fields Example")
 
-	printSectionHeader("inconshreveable/log15 Package")
+	printSectionHeader("github.com/inconshreveable/log15 Package")
 	l15 := log15.New()
 	l15.SetHandler(log15.StreamHandler(os.Stdout, log15.JsonFormat()))
 	l15.Debug("Debug Basic")
@@ -91,19 +125,51 @@ Line 2 of 2`
 	l15.Info(twoLineMessage + " for l15.Info")
 	l15.Info("With Fields Example", "myIntField", 532, "myStringField", "howdy", "myMultilineStringField", twoLineMessage+" for l15.Info with fields")
 
-	printSectionHeader("rs/zerolog Package")
-	//zerolog.TimestampFieldName = "t"
-	//zerolog.LevelFieldName = "l"
-	//zerolog.MessageFieldName = "m"
+	printSectionHeader("github.com/rs/zerolog Package")
 	zerolog.TimeFieldFormat = time.RFC3339Nano
+	// set field names to be compatible with stackdriver
+	zerolog.LevelFieldName = "severity"      // for stackdriver
+	zerolog.TimestampFieldName = "timestamp" // for stackdriver
 	zlog.Trace().Msg("Trace Basic")
 	zlog.Debug().Msg("Debug Basic")
-	zlog.Info().Msg("Debug Basic")
-	zlog.Warn().Msg("Debug Basic")
-	zlog.Error().Msg("Debug Basic")
+	zlog.Info().Msg("Info Basic")
+	zlog.Warn().Msg("Warn Basic")
+	zlog.Error().Msg("Error Basic")
 	zlog.Info().Msg(oneLineMessage)
 	zlog.Info().Msg(twoLineMessage + " for zlog.Info")
 	zlog.Info().Int("myIntField", 532).Str("myStringField", "howdy").Str("myMultilineStringField", twoLineMessage+" for zlog.Info with fields").Msg("With Fields Example")
+
+	printSectionHeader("cloud.google.com/go/logging")
+	projectId := os.Getenv("GCP_PROJECT")
+	log.Println("project id is", projectId)
+	if client, err := logging.NewClient(context.Background(), "projects/"+projectId); err == nil {
+		lg := client.Logger("my-log")
+		lg.Log(logging.Entry{Payload: oneLineMessage})
+		lg.Log(logging.Entry{Payload: twoLineMessage + " for cloud.google.com/go/logging"})
+		lg.Log(logging.Entry{Severity: logging.Debug, Payload: "Debug"})
+		lg.Log(logging.Entry{Severity: logging.Info, Payload: "Info"})
+		lg.Log(logging.Entry{Severity: logging.Notice, Payload: "Notice"})
+		lg.Log(logging.Entry{Severity: logging.Warning, Payload: "Warning"})
+		lg.Log(logging.Entry{Severity: logging.Error, Payload: "Error"})
+		lg.Log(logging.Entry{Severity: logging.Critical, Payload: "Critial"})
+		lg.Log(logging.Entry{Severity: logging.Alert, Payload: "Alert"})
+		lg.Log(logging.Entry{Severity: logging.Emergency, Payload: "Emergency"})
+		lg.Log(logging.Entry{
+			Severity: logging.Debug,
+			Payload: map[string]interface{}{
+				"intVal":        123,
+				"oneLineString": oneLineMessage,
+				"twoLineString": twoLineMessage + " for cloud.google.com/go/logging with fields.",
+			},
+		})
+
+		err = client.Close()
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		log.Println("WARNING: Skipping cloud.google.com/go/logging examples because logging.NewClient failed.", err)
+	}
 
 	fmt.Fprint(w, html.EscapeString("OK"))
 }
