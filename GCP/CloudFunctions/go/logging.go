@@ -61,7 +61,7 @@ Line 2 of 2`
 	os.Stdout.WriteString("WriteString:" + twoLineMessage + " for WriteString\n")
 
 	printSectionHeader("log")
-	log.SetFlags(log.Flags() | log.Lmicroseconds)
+	log.SetFlags(0)
 	log.Println("Println:", oneLineMessage)
 	log.Println("Println:", twoLineMessage+" for log.Println")
 
@@ -88,7 +88,7 @@ Line 2 of 2`
 	// This needs to be the last glog function called.
 	glog.Flush()
 
-	printSectionHeader("github.com/sirupsen/logrus")
+	printSectionHeader("github.com/sirupsen/logrus JSONFormatter")
 	logrus.SetFormatter(&logrus.JSONFormatter{
 		TimestampFormat: time.RFC3339Nano,
 		// set field keys to be compatible with stackdriver
@@ -101,6 +101,28 @@ Line 2 of 2`
 	logrus.SetOutput(os.Stdout)
 	logrus.SetLevel(logrus.DebugLevel)
 
+	logrus.Debug("Debug Basic")
+	logrus.Info("Info Basic")
+	logrus.Warn("Warn Basic")
+	logrus.Error("Error Basic")
+	logrus.Info(oneLineMessage)
+	logrus.Info(twoLineMessage + " for logrus.Info")
+	logrus.WithFields(logrus.Fields{
+		"myIntField":             123,
+		"myStringField":          "howdy",
+		"myMultilineStringField": twoLineMessage + " for logrus.WithFields.Info",
+	}).Info("With Fields Example")
+
+	printSectionHeader("github.com/sirupsen/logrus TextFormatter")
+	logrus.SetFormatter(&logrus.TextFormatter{
+		DisableColors:   true,
+		TimestampFormat: time.RFC3339Nano,
+		FieldMap: logrus.FieldMap{
+			logrus.FieldKeyTime:  "timestamp",
+			logrus.FieldKeyLevel: "severity",
+			logrus.FieldKeyMsg:   "message",
+		},
+	})
 	logrus.Debug("Debug Basic")
 	logrus.Info("Info Basic")
 	logrus.Warn("Warn Basic")
@@ -141,7 +163,6 @@ Line 2 of 2`
 
 	printSectionHeader("cloud.google.com/go/logging")
 	projectId := os.Getenv("GCP_PROJECT")
-	log.Println("project id is", projectId)
 	if client, err := logging.NewClient(context.Background(), "projects/"+projectId); err == nil {
 		lg := client.Logger("my-log")
 		lg.Log(logging.Entry{Payload: oneLineMessage})
