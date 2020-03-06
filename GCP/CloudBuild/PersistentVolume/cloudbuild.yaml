@@ -1,0 +1,24 @@
+#
+# Google Cloud Build example demonstrating how to use the shared workspace
+# volume.
+#
+# Documentation
+# https://cloud.google.com/cloud-build/docs/build-config
+# https://cloud.google.com/cloud-build/docs/api/reference/rest/Shared.Types/Build
+#
+
+steps:
+  - name: debian
+    volumes:
+      - name: vol1
+        path: /persistent_volume
+    entrypoint: bash
+    args: [-c, 'echo "Hello, World" > /persistent_volume/file']
+
+  - name: debian
+    volumes:
+      - name: vol1
+        path: /persistent_volume_different_dir
+    args: [cat, /persistent_volume_different_dir/file]
+
+

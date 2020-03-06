@@ -1,0 +1,29 @@
+#
+# Google Cloud Build example demonstrating how to use substitutions.
+#
+# Documentation
+# https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
+#
+
+steps:
+  - name: debian
+    entrypoint: bash
+    args:
+      - -c
+        # PROJECT_ID is a built in variable.
+        #
+        # _MYVAR1, _MYVAR2, and _VARWITHDEFAULT are user defined variables.
+        # They must begin with an underscore.
+        #
+        # _MYVAR1 and _MYVAR2 have no default value so must be specified on the
+        # command line to gcloud build submit in the --substitutions flag.
+        #
+        # _MYVAR2 has a default value, so can be optionally specified in
+        # --substitutions.
+        #
+        # You can perform the substitution with either $VAR or ${VAR}.
+      - echo PROJECT_ID $PROJECT_ID _MYVAR1 $_MYVAR1 _MYVAR2 ${_MYVAR2} _VARWITHDEFAULT ${_VARWITHDEFAULT}
+substitutions:
+  _VARWITHDEFAULT: MyDefaultValue
+
+
