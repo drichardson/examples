@@ -5,7 +5,7 @@ source common.sh
 cat <<EOF
 - Current GCP project is $GCP_PROJECT
 - Using service account $LOG_TEST_SERVICE_ACCOUNT. If it does not exist, run
-  setup-service-account.sh.
+  setup.sh.
 EOF
 
 gcloud functions deploy log-test \
