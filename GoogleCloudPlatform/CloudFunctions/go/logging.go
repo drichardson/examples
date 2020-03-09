@@ -146,10 +146,11 @@ Line 2 of 2`
 	l15.Info("With Fields Example", "myIntField", 532, "myStringField", "howdy", "myMultilineStringField", twoLineMessage+" for l15.Info with fields")
 
 	printSectionHeader("github.com/rs/zerolog Package")
-	zerolog.TimeFieldFormat = time.RFC3339Nano
 	// set field names to be compatible with stackdriver
-	zerolog.LevelFieldName = "severity"      // for stackdriver
-	zerolog.TimestampFieldName = "timestamp" // for stackdriver
+	zerolog.MessageFieldName = "message"
+	zerolog.LevelFieldName = "severity"
+	zerolog.TimestampFieldName = "time"
+	zerolog.TimeFieldFormat = time.RFC3339Nano
 	zlog.Trace().Msg("Trace Basic")
 	zlog.Debug().Msg("Debug Basic")
 	zlog.Info().Msg("Info Basic")
