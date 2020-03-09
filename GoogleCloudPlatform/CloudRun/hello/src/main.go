@@ -29,6 +29,9 @@ func main() {
 
 	http.HandleFunc("/", handler)
 
+	// Per Google Cloud Run Container runtime contract, you must listen for
+	// requests on the PORT environment variable. For more information, see
+	// https://cloud.google.com/run/docs/reference/container-contract
 	port := *portFlag
 	if portEnv := os.Getenv("PORT"); portEnv != "" {
 		var err error
