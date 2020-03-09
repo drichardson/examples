@@ -1,0 +1,15 @@
+#
+# Google Cloud Build configuration file to build game server container image.
+# https://cloud.google.com/cloud-build/docs/configuring-builds/create-basic-configuration
+#
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: 
+      - build
+      - -t
+      - gcr.io/${PROJECT_ID}/hello:latest
+      - .
+
+images:
+  - gcr.io/${PROJECT_ID}/hello:latest
+
