@@ -50,7 +50,7 @@ func main() {
 func handler(w http.ResponseWriter, r *http.Request) {
 	log, _ := newLogger(r.Context())
 
-	log.Debug().Msg("handler called")
+	log.Debug().Str("method", r.Method).Str("userAgent", r.UserAgent()).Str("remoteAddr", r.RemoteAddr).Msg("handler called")
 
 	w.Header().Add("Content-Type", "text/plain; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
