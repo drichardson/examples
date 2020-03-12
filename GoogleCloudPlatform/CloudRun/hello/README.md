@@ -9,6 +9,10 @@ To build and deploy to Google Compute Platform:
     ./deploy.sh
     curl URL_RETURNED_BY_DEPLOY
 
+To cleanup, run:
+
+    ./cleanup.sh
+
 To build and run locally:
 
     ./local-build-and-run.sh
