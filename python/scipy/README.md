@@ -7,19 +7,24 @@
 2. *Optional* Create and activate a virtual environment with
    [venv](https://docs.python.org/3/library/venv.html) with:
 
-On Windows:
+   On Windows (PowerShell):
 
-    python -m venv myenv
-    myenv/Scripts/activate
+   ```PowerShell
+   python -m venv myenv
+   myenv\Scripts\Activate.ps1
+   ```
 
-On Debian 10 (Buster):
+   On Debian 10 (Buster):
 
-    sudo apt-get install python3-pip python3-venv
-    python3 -m venv myenv
-    source myenv/bin/activate
+   ```bash
+   sudo apt-get install python3-pip python3-venv
+   python3 -m venv myenv
+   source myenv/bin/activate
+   ```
 
 3. Install prerequisites:
 
-    pip install -r requirements.txt
-
+   ```bash
+   pip install -r requirements.txt
+   ```
 
