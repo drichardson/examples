@@ -1,0 +1,27 @@
+\documentclass[letter,12pt]{letter}
+\usepackage{lipsum}
+\usepackage{fontspec}
+
+% Some of the article customisations are relevant for this class
+
+\name{Doug Richardson} % To be used for the return address on the envelope
+% \signature{Doug} % Goes after the closing (ie at the end of the letter, with space for a signature)
+\address{1234 Example Street \\ Anytown, California}
+% Alternatively, these may be set on an individual basis within each letter environment.
+
+\makelabels % this command prints envelope labels on the final page of the document
+
+\begin{document}
+\begin{letter}{Jane Doe \\ 123 Market Street \\ Somewhere, South Dakota}
+
+\opening{Hello,} % eg Hello.
+
+\lipsum[1]
+
+\closing{Regards,} % eg Regards,
+\cc{John Doe, Amy Watson, 习近平} % people this letter is cc-ed to
+\encl{Handheld Fusion Reactor, Raspberry Pi} % list of anything enclosed
+\ps{PS: How's the family?} % any post scriptums. ``PS'' labels must be put in manually
+
+\end{letter}
+\end{document}
