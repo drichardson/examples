@@ -7,14 +7,14 @@
 2. *Optional* Create and activate a virtual environment with
    [venv](https://docs.python.org/3/library/venv.html) with:
 
-   On Windows (PowerShell):
+   Windows (PowerShell):
 
    ```PowerShell
    python -m venv myenv
    myenv\Scripts\Activate.ps1
    ```
 
-   On Debian 10 (Buster):
+   Debian 10 (Buster):
 
    ```bash
    sudo apt-get install python3-pip python3-venv
