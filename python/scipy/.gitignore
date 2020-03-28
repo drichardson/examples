@@ -1,2 +1,5 @@
+*.pdf
 *.png
+*.ps
+*.svg
 myenv
