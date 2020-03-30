@@ -4,24 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.integrate
 
-#
-# Functions to be analyzed
-#
-
-def constant(x):
-    return 1
-
-def linear(x):
-    return x
-
-def quadratic(x):
-    return x**2
-
-def exponential(x):
-    return 2**x
 
 #
-# Compute the Derivative
+# Differentiation
 #
 
 # Differentiate f at x.
@@ -40,7 +25,7 @@ def nth_derivative(f, dx, n):
     return f
 
 #
-# Compute the integral
+# Integration
 #
 
 # Numerically integrate f over the interval [a,b] in increments of dx.
@@ -105,6 +90,23 @@ def plot(f, order):
     #plt.title('again')
     #plt.legend()
 
+
+#
+# Functions to be analyzed
+#
+
+def constant(x):
+    return 1
+
+def linear(x):
+    return x
+
+def quadratic(x):
+    return x**2
+
+def exponential(x):
+    return 2**x
+
 plot(constant, 1)
 plot(linear, 1)
 plot(quadratic, 2)
@@ -113,3 +115,4 @@ plot(math.sin, 2)
 plot(math.cos, 2)
 
 plt.show()
+
