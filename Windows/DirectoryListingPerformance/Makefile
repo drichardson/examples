@@ -5,10 +5,10 @@ all: FindFile.exe
 .c.obj:
 	cl $*.c
 
-FindFile.exe: FindFile.obj
-	link /OUT:FindFile.exe FindFile.obj
+FindFile.exe: FindFile.c
+	cl /TC /WX /O2 /favor:AMD64 /Og /arch:AVX512 FindFile.c
 
 clean:
-	echo yes
+	del FindFile.obj FindFile.exe
 
 
