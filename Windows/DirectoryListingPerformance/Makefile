@@ -16,13 +16,10 @@ opts=\
 
 cc=cl $(defines) $(opts)
 
-all: FindFile.exe NtQueryDirectoryFile.exe
+all: FindFile.exe
 
 FindFile.exe: FindFile.c
 	$(cc) FindFile.c
-
-NtQueryDirectoryFile.exe: NtQueryDirectoryFile.c
-	$(cc) NtQueryDirectoryFile.c
 
 clean:
 	del *.obj *.exe
