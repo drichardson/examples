@@ -38,7 +38,7 @@ int ls(const wchar_t* filename)
         return -1;
     }
 
-    wprintf(L"Looking in %ls\n", scratch);
+    wprintf(L"%ls\n", scratch);
     WIN32_FIND_DATA FindFileData;
     HANDLE hFind = FindFirstFileExW(scratch,
             FindExInfoBasic, &FindFileData,
@@ -48,8 +48,8 @@ int ls(const wchar_t* filename)
 
     if (hFind == INVALID_HANDLE_VALUE) 
     {
-        wprintf(L"FindFirstFileEx failed (%d)\n", (int)GetLastError());
-        return -1;
+        wprintf(L"Warning: (%d): Path=%ls\n", (int)GetLastError(), scratch);
+        return 0;
     } 
 
     int total = 1;
@@ -61,21 +61,22 @@ int ls(const wchar_t* filename)
                 continue;
             }
 
-            wprintf(L"D: %ls\n", FindFileData.cFileName);
-            HRESULT ok = StringCbPrintfW(scratch, sizeof(scratch), L"%ls\\%ls", filename, FindFileData.cFileName);
+            total++;
 
-            int subtotal = ls(scratch);
-            if (subtotal == -1) {
-                wprintf(L"ERROR IN SUBDIR: %s\n", FindFileData.cFileName);
-                return -1;
+            wprintf(L"D: %ls\n", FindFileData.cFileName);
+
+            HRESULT ok = StringCbPrintfW(scratch, sizeof(scratch), L"%ls\\%ls", filename, FindFileData.cFileName);
+            if (ok != S_OK) {
+                wprintf(L"ERROR: StringCbPrintfW failed on %ls", filename);
+                continue;
             }
 
-            total += subtotal;
+            total += ls(scratch);
         }
         else
         {
-            wprintf(L"F: %ls\n", FindFileData.cFileName);
             total++;
+            wprintf(L"F: %ls\n", FindFileData.cFileName);
         }
     }
     while(FindNextFileW(hFind, &FindFileData));
