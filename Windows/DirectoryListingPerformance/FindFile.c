@@ -1,14 +1,6 @@
-#define UNICODE
-#define _UNICODE
-#define WIN32_LEAN_AND_MEAN
-#define WINVER _WIN32_WINNT_WIN10
-
+#include <Windows.h>
 #include <stdio.h>
 #include <strsafe.h>
-#include <windows.h>
-
-// https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#maximum-path-length-limitation
-#define LONG_MAX_PATH 32800
 
 int ls(const wchar_t* path);
 
