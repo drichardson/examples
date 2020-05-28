@@ -17,7 +17,7 @@ public:
 	}
 
     void foo() {
-        cout << "Base::foo: " << val << '\n';
+        cout << "Base::foo\n";
     }
 };
 
@@ -25,7 +25,7 @@ class DerivedA : Base<DerivedA>
 {
 public:
     void foo() {
-        cout << "DerivedA::foo: " << val << '\n';
+        cout << "DerivedA::foo\n";
     }
 };
 
@@ -34,20 +34,22 @@ class DerivedB : Base<DerivedB>
 {
 public:
     void foo() {
-        cout << "DerivedB::foo: " << val << '\n';
+        cout << "DerivedB::foo\n";
     }
 };
 
 int main()
 {
 
-	Base B;
-	Base.foo();
+	Base<void> B;
+	B.foo();
 
 	DerivedA DA;
 	DA.foo();
 
 	DerivedB DB;
 	DB.foo();
+
+	return 0;
 }
 
