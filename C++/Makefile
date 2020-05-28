@@ -42,6 +42,7 @@ TARGETS=\
 		template_convertible \
 		template_meta_programming \
 		template_specialization \
+		template_curiously_recurring_template_pattern \
 		templates \
 		typeid \
 		vector \
