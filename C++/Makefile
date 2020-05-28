@@ -26,6 +26,7 @@ TARGETS=\
 		max_subarray \
 		ofstream_test \
 		operators \
+		override \
 		placement_new \
 		playground \
 		pointers \
@@ -40,9 +41,9 @@ TARGETS=\
 		strings \
 		system_error \
 		template_convertible \
+		template_curiously_recurring_template_pattern \
 		template_meta_programming \
 		template_specialization \
-		template_curiously_recurring_template_pattern \
 		templates \
 		typeid \
 		vector \

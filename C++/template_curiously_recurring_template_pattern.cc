@@ -11,17 +11,14 @@ class Base
 public:
 	void foo3Times()
 	{
-		foo();
-		foo();
-		foo();
+		T* t = static_cast<T*>(this);
+		t->foo();
+		t->foo();
+		t->foo();
 	}
-
-    void foo() {
-        cout << "Base::foo\n";
-    }
 };
 
-class DerivedA : Base<DerivedA>
+class DerivedA : public Base<DerivedA>
 {
 public:
     void foo() {
@@ -29,8 +26,7 @@ public:
     }
 };
 
-
-class DerivedB : Base<DerivedB>
+class DerivedB : public Base<DerivedB>
 {
 public:
     void foo() {
@@ -40,15 +36,13 @@ public:
 
 int main()
 {
-
-	Base<void> B;
-	B.foo();
-
 	DerivedA DA;
 	DA.foo();
+	DA.foo3Times();
 
 	DerivedB DB;
 	DB.foo();
+	DB.foo3Times();
 
 	return 0;
 }
