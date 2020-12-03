@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'SecurityFrameworkTest' target in the 'SecurityFrameworkTest' project.
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

@@ -1,0 +1,272 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		91D2C098154DEEF40006B750 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91D2C097154DEEF40006B750 /* UIKit.framework */; };
+		91D2C09A154DEEF40006B750 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91D2C099154DEEF40006B750 /* Foundation.framework */; };
+		91D2C09C154DEEF40006B750 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91D2C09B154DEEF40006B750 /* CoreGraphics.framework */; };
+		91D2C0A2154DEEF40006B750 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91D2C0A0154DEEF40006B750 /* InfoPlist.strings */; };
+		91D2C0A4154DEEF40006B750 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D2C0A3154DEEF40006B750 /* main.m */; };
+		91D2C0A8154DEEF40006B750 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D2C0A7154DEEF40006B750 /* AppDelegate.m */; };
+		91D2C0B0154DF0050006B750 /* DRStripView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D2C0AF154DF0050006B750 /* DRStripView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		91D2C093154DEEF40006B750 /* StripView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StripView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		91D2C097154DEEF40006B750 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		91D2C099154DEEF40006B750 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		91D2C09B154DEEF40006B750 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		91D2C09F154DEEF40006B750 /* StripView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StripView-Info.plist"; sourceTree = "<group>"; };
+		91D2C0A1154DEEF40006B750 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		91D2C0A3154DEEF40006B750 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		91D2C0A5154DEEF40006B750 /* StripView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StripView-Prefix.pch"; sourceTree = "<group>"; };
+		91D2C0A6154DEEF40006B750 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		91D2C0A7154DEEF40006B750 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		91D2C0AE154DF0050006B750 /* DRStripView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRStripView.h; sourceTree = "<group>"; };
+		91D2C0AF154DF0050006B750 /* DRStripView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRStripView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		91D2C090154DEEF40006B750 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91D2C098154DEEF40006B750 /* UIKit.framework in Frameworks */,
+				91D2C09A154DEEF40006B750 /* Foundation.framework in Frameworks */,
+				91D2C09C154DEEF40006B750 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		91D2C088154DEEF40006B750 = {
+			isa = PBXGroup;
+			children = (
+				91D2C09D154DEEF40006B750 /* StripView */,
+				91D2C096154DEEF40006B750 /* Frameworks */,
+				91D2C094154DEEF40006B750 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		91D2C094154DEEF40006B750 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				91D2C093154DEEF40006B750 /* StripView.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		91D2C096154DEEF40006B750 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91D2C097154DEEF40006B750 /* UIKit.framework */,
+				91D2C099154DEEF40006B750 /* Foundation.framework */,
+				91D2C09B154DEEF40006B750 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		91D2C09D154DEEF40006B750 /* StripView */ = {
+			isa = PBXGroup;
+			children = (
+				91D2C0A6154DEEF40006B750 /* AppDelegate.h */,
+				91D2C0A7154DEEF40006B750 /* AppDelegate.m */,
+				91D2C09E154DEEF40006B750 /* Supporting Files */,
+				91D2C0AE154DF0050006B750 /* DRStripView.h */,
+				91D2C0AF154DF0050006B750 /* DRStripView.m */,
+			);
+			path = StripView;
+			sourceTree = "<group>";
+		};
+		91D2C09E154DEEF40006B750 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				91D2C09F154DEEF40006B750 /* StripView-Info.plist */,
+				91D2C0A0154DEEF40006B750 /* InfoPlist.strings */,
+				91D2C0A3154DEEF40006B750 /* main.m */,
+				91D2C0A5154DEEF40006B750 /* StripView-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		91D2C092154DEEF40006B750 /* StripView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 91D2C0AB154DEEF40006B750 /* Build configuration list for PBXNativeTarget "StripView" */;
+			buildPhases = (
+				91D2C08F154DEEF40006B750 /* Sources */,
+				91D2C090154DEEF40006B750 /* Frameworks */,
+				91D2C091154DEEF40006B750 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StripView;
+			productName = StripView;
+			productReference = 91D2C093154DEEF40006B750 /* StripView.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		91D2C08A154DEEF40006B750 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Doug Richardson";
+			};
+			buildConfigurationList = 91D2C08D154DEEF40006B750 /* Build configuration list for PBXProject "StripView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 91D2C088154DEEF40006B750;
+			productRefGroup = 91D2C094154DEEF40006B750 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				91D2C092154DEEF40006B750 /* StripView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		91D2C091154DEEF40006B750 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91D2C0A2154DEEF40006B750 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		91D2C08F154DEEF40006B750 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91D2C0A4154DEEF40006B750 /* main.m in Sources */,
+				91D2C0A8154DEEF40006B750 /* AppDelegate.m in Sources */,
+				91D2C0B0154DF0050006B750 /* DRStripView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		91D2C0A0154DEEF40006B750 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91D2C0A1154DEEF40006B750 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		91D2C0A9154DEEF40006B750 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		91D2C0AA154DEEF40006B750 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		91D2C0AC154DEEF40006B750 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StripView/StripView-Prefix.pch";
+				INFOPLIST_FILE = "StripView/StripView-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		91D2C0AD154DEEF40006B750 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StripView/StripView-Prefix.pch";
+				INFOPLIST_FILE = "StripView/StripView-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		91D2C08D154DEEF40006B750 /* Build configuration list for PBXProject "StripView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91D2C0A9154DEEF40006B750 /* Debug */,
+				91D2C0AA154DEEF40006B750 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		91D2C0AB154DEEF40006B750 /* Build configuration list for PBXNativeTarget "StripView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91D2C0AC154DEEF40006B750 /* Debug */,
+				91D2C0AD154DEEF40006B750 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 91D2C08A154DEEF40006B750 /* Project object */;
+}

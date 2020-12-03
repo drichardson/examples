@@ -1,0 +1,51 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {doCancel = id; }; 
+            CLASS = ConnectingWindow; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                connectingStatus = NSTextField; 
+                connectingTo = NSTextField; 
+                progress = NSProgressIndicator; 
+            }; 
+            SUPERCLASS = NSWindow; 
+        }, 
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {doCancel = id; doConnect = id; }; 
+            CLASS = NewConnectionWindow; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                connectingWindow = ConnectingWindow; 
+                mAddress = NSTextField; 
+                mPort = NSTextField; 
+            }; 
+            SUPERCLASS = NSWindow; 
+        }, 
+        {CLASS = VNCView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            CLASS = VNCViewWindow; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {vncView = VNCView; }; 
+            SUPERCLASS = NSWindow; 
+        }, 
+        {
+            ACTIONS = {
+                closeVNCViewWindow = id; 
+                showNewConnectionWindow = id; 
+                showVNCViewWindow = id; 
+            }; 
+            CLASS = VNCWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {newConnectionWindow = NewConnectionWindow; vncViewWindow = VNCViewWindow; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

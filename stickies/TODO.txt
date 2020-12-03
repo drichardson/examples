@@ -1,0 +1,5 @@
+TODO
+
+- Write build script that produces another root web site directory that can be uploaded to google:
+	* minimizes javascripts, html, and css
+	* strips out unneeded files (.svn directories, TODO.txt, .pyc files)

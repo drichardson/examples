@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'MethodSwizzling' target in the 'MethodSwizzling' project.
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

@@ -1,0 +1,69 @@
+/*
+ Color pallet from http://www.colourlovers.com/palette/92095/Giant_Goldfish
+ aoi - #69D2E7
+ Clean Pondwater - #A7DBD8
+ beach storm - #E0E4CC
+ Giant Goldfish - #F38630
+ unreal food pills - #FA6900
+*/
+
+body {
+    background-color: #E0E4CC;
+}
+
+#header {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 30px;
+    background-color: #A7DBD8;
+}
+
+#note_board {
+    position: absolute;
+    left: 0;
+    top: 30px;
+    width: 100%;
+}
+
+.note {
+    position: absolute;
+    top: 30px;
+    left: 200px;
+    width: 200px;
+}
+
+.xnoteselected {
+    border: 4px solid #69D2E7;
+}
+
+.noteheader {
+    height: 12px;
+    padding: 0;
+    margin: 0;
+    background-color: #FA6900;
+}
+
+.xnotedelete {
+    float: right;
+    background: black;
+    top: 5px;
+    height: 12px;
+    width: 12px;
+}
+
+.notebody {
+    position: relative;
+    background-color: #F38630;
+    font-family: "arial", "helvetica", sans-serif;
+    font-size: 12pt;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 200px;
+    border: none;
+    resize: none;
+    outline-style: none;
+    overflow: hidden;
+}

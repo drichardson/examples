@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ ! -d "c-fastcgi.xcodeproj" ]; then
+    echo "You're in the wrong directory numbnuts"
+    exit 1
+fi
+
+ServerRoot=/tmp/apache-fastcgi-test
+
+if [ ! -d "$ServerRoot" ]; then
+    mkdir -p "$ServerRoot"
+fi
+
+apachectl -f `pwd`/httpd.conf -k start

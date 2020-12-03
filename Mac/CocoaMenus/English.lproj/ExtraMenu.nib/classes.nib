@@ -1,0 +1,17 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                menuItem1 = id; 
+                menuItem2 = id; 
+                myAction = id; 
+                subMenuItem1 = id; 
+                subMenuItem2 = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

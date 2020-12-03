@@ -1,0 +1,157 @@
+// !$*UTF8*$!
+{
+	08FB7793FE84155DC02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 91999156101EA87600B4A13F /* Example1 */;
+		activeTarget = 8DD76FA90486AB0100D96B5E /* Example1 */;
+		addToTargets = (
+			8DD76FA90486AB0100D96B5E /* Example1 */,
+		);
+		codeSenseManager = 9199915A101EA87900B4A13F /* Code sense */;
+		executables = (
+			91999156101EA87600B4A13F /* Example1 */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					341,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					552,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 270444662;
+			PBXWorkspaceStateSaveDate = 270444662;
+		};
+		perUserProjectItems = {
+			9199915B101EA87A00B4A13F /* PBXBookmark */ = 9199915B101EA87A00B4A13F /* PBXBookmark */;
+			91999193101EAAA200B4A13F /* PBXTextBookmark */ = 91999193101EAAA200B4A13F /* PBXTextBookmark */;
+			919991EB10200CB600B4A13F /* PBXTextBookmark */ = 919991EB10200CB600B4A13F /* PBXTextBookmark */;
+			919991EC10200CB600B4A13F /* PBXTextBookmark */ = 919991EC10200CB600B4A13F /* PBXTextBookmark */;
+		};
+		sourceControlManager = 91999159101EA87900B4A13F /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	08FB7796FE84155DC02AAC07 /* main.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {436, 679}}";
+			sepNavSelRange = "{40, 0}";
+			sepNavVisRange = "{0, 677}";
+			sepNavWindowFrame = "{{987, -59}, {483, 807}}";
+		};
+	};
+	8DD76FA90486AB0100D96B5E /* Example1 */ = {
+		activeExec = 0;
+		executables = (
+			91999156101EA87600B4A13F /* Example1 */,
+		);
+	};
+	91999156101EA87600B4A13F /* Example1 */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = Example1;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+	};
+	91999159101EA87900B4A13F /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	9199915A101EA87900B4A13F /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	9199915B101EA87A00B4A13F /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.c */;
+	};
+	91999193101EAAA200B4A13F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.c */;
+		name = "main.c: 10";
+		rLen = 16;
+		rLoc = 264;
+		rType = 0;
+		vrLen = 299;
+		vrLoc = 0;
+	};
+	919991EB10200CB600B4A13F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.c */;
+		name = "main.c: 5";
+		rLen = 13;
+		rLoc = 91;
+		rType = 0;
+		vrLen = 658;
+		vrLoc = 19;
+	};
+	919991EC10200CB600B4A13F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.c */;
+		name = "main.c: 2";
+		rLen = 0;
+		rLoc = 40;
+		rType = 0;
+		vrLen = 677;
+		vrLoc = 0;
+	};
+}

@@ -1,0 +1,4 @@
+<% content_for('body') do %>
+	<%= view :myTableView, :tag => :table, :view => 'CustomView.MyTableView',
+		:bind => { :content => 'CustomView.productsController.arrangedObjects' } %>
+<% end %>

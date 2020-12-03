@@ -1,0 +1,117 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 9118490B0C6ACEF600DE8B6F /* DialogSheet */;
+		activeTarget = 8D1107260486CEB800E47090 /* DialogSheet */;
+		codeSenseManager = 9118491F0C6ACEFD00DE8B6F /* Code sense */;
+		executables = (
+			9118490B0C6ACEF600DE8B6F /* DialogSheet */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					199,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 208335975;
+			PBXWorkspaceStateSaveDate = 208335975;
+		};
+		sourceControlManager = 9118491E0C6ACEFD00DE8B6F /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	8D1107260486CEB800E47090 /* DialogSheet */ = {
+		activeExec = 0;
+		executables = (
+			9118490B0C6ACEF600DE8B6F /* DialogSheet */,
+		);
+	};
+	9118490B0C6ACEF600DE8B6F /* DialogSheet */ = {
+		isa = PBXExecutable;
+		activeArgIndex = 2147483647;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = DialogSheet;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+	};
+	9118491E0C6ACEFD00DE8B6F /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+		scmType = "";
+	};
+	9118491F0C6ACEFD00DE8B6F /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	9118493C0C6AE7AD00DE8B6F /* MySheeter.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1043, 521}}";
+			sepNavSelRange = "{235, 59}";
+			sepNavVisRect = "{{0, 0}, {1043, 521}}";
+			sepNavWindowFrame = "{{262, 86}, {1082, 650}}";
+		};
+	};
+	9118493D0C6AE7AD00DE8B6F /* MySheeter.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {607, 235}}";
+			sepNavSelRange = "{114, 37}";
+			sepNavVisRect = "{{0, 0}, {607, 235}}";
+			sepNavWindowFrame = "{{113, 617}, {646, 364}}";
+		};
+	};
+	9118494A0C6AE88C00DE8B6F /* MyWindowController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1141, 435}}";
+			sepNavSelRange = "{359, 134}";
+			sepNavVisRect = "{{0, 0}, {1141, 242}}";
+			sepNavWindowFrame = "{{546, 62}, {1180, 371}}";
+		};
+	};
+	9118494B0C6AE88C00DE8B6F /* MyWindowController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1141, 242}}";
+			sepNavSelRange = "{138, 0}";
+			sepNavVisRect = "{{0, 0}, {1141, 242}}";
+			sepNavWindowFrame = "{{222, 657}, {1180, 371}}";
+		};
+	};
+}

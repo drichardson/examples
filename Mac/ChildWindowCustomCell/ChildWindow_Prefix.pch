@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'ChildWindow' target in the 'ChildWindow' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

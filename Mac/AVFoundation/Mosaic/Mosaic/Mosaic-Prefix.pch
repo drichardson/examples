@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Mosaic' target in the 'Mosaic' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

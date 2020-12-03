@@ -1,0 +1,17 @@
+﻿<Window x:Class="WhichMonitorWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WhichMonitorWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        SizeChanged="Window_SizeChanged"
+        >
+    <WrapPanel Margin="0,100">
+        <Button Click="Button_Click_Resize_Win32" Padding="5" Margin="10" >Resize Me Win32</Button>
+        <Button Click="Button_Click_Resize_Forms" Padding="5" Margin="10">Resize Me Forms</Button>
+        <Button Click="Button_Click_SetMaxHeightTo50Percent_Win32" Padding="5" Margin="10">Set Max Height to 50% Win32</Button>
+        <Button Click="Button_Click_SetMaxHeightTo50Percent_Forms" Padding="5" Margin="10">Set Max Height to 50% Forms</Button>
+    </WrapPanel>
+</Window>

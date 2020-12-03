@@ -1,0 +1,25 @@
+{
+    IBClasses = (
+        {CLASS = ApplicationDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                goToURL = id; 
+                invertTransform = id; 
+                printTransform = id; 
+                rotateTransformByDegrees = id; 
+                rotateTransformByRadians = id; 
+                scaleTransform = id; 
+                scaleXByYByinvertTransform = id; 
+                translateXByYByTransform = id; 
+            }; 
+            CLASS = DrawController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {openGLView = NSOpenGLView; textView = NSTextView; webView = WebView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = MyCustomView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = NSLevelIndicator; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
+    ); 
+    IBVersion = 1; 
+}

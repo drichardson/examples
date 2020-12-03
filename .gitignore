@@ -1,0 +1,11 @@
+*.swp
+*~
+.#*
+.DS_Store
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+\#*#
+cmake_install.cmake
+project.xcworkspace
+xcuserdata

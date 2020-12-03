@@ -1,0 +1,311 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9141101F1508757900635443 /* seascape.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9141101E1508757900635443 /* seascape.jpg */; };
+		91BB30E215085A1300E8CB3D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91BB30E115085A1300E8CB3D /* Cocoa.framework */; };
+		91BB30EC15085A1300E8CB3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91BB30EA15085A1300E8CB3D /* InfoPlist.strings */; };
+		91BB30EE15085A1300E8CB3D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BB30ED15085A1300E8CB3D /* main.m */; };
+		91BB30F215085A1300E8CB3D /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 91BB30F015085A1300E8CB3D /* Credits.rtf */; };
+		91BB30F515085A1300E8CB3D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BB30F415085A1300E8CB3D /* AppDelegate.m */; };
+		91BB30F815085A1300E8CB3D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BB30F615085A1300E8CB3D /* MainMenu.xib */; };
+		91BB310015085A5900E8CB3D /* Beziers.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BB30FF15085A5900E8CB3D /* Beziers.m */; };
+		91D71689150871290021F85A /* RandomShit.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D71688150871290021F85A /* RandomShit.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9141101E1508757900635443 /* seascape.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = seascape.jpg; sourceTree = "<group>"; };
+		91BB30DD15085A1300E8CB3D /* DrawingFunhouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawingFunhouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		91BB30E115085A1300E8CB3D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		91BB30E415085A1300E8CB3D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		91BB30E515085A1300E8CB3D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		91BB30E615085A1300E8CB3D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		91BB30E915085A1300E8CB3D /* DrawingFunhouse-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DrawingFunhouse-Info.plist"; sourceTree = "<group>"; };
+		91BB30EB15085A1300E8CB3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		91BB30ED15085A1300E8CB3D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		91BB30EF15085A1300E8CB3D /* DrawingFunhouse-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DrawingFunhouse-Prefix.pch"; sourceTree = "<group>"; };
+		91BB30F115085A1300E8CB3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		91BB30F315085A1300E8CB3D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		91BB30F415085A1300E8CB3D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		91BB30F715085A1300E8CB3D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		91BB30FE15085A5900E8CB3D /* Beziers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beziers.h; sourceTree = "<group>"; };
+		91BB30FF15085A5900E8CB3D /* Beziers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beziers.m; sourceTree = "<group>"; };
+		91D71687150871290021F85A /* RandomShit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomShit.h; sourceTree = "<group>"; };
+		91D71688150871290021F85A /* RandomShit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomShit.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		91BB30DA15085A1300E8CB3D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91BB30E215085A1300E8CB3D /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		91BB30D215085A1300E8CB3D = {
+			isa = PBXGroup;
+			children = (
+				91BB30E715085A1300E8CB3D /* DrawingFunhouse */,
+				91BB30E015085A1300E8CB3D /* Frameworks */,
+				91BB30DE15085A1300E8CB3D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		91BB30DE15085A1300E8CB3D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				91BB30DD15085A1300E8CB3D /* DrawingFunhouse.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		91BB30E015085A1300E8CB3D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91BB30E115085A1300E8CB3D /* Cocoa.framework */,
+				91BB30E315085A1300E8CB3D /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		91BB30E315085A1300E8CB3D /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91BB30E415085A1300E8CB3D /* AppKit.framework */,
+				91BB30E515085A1300E8CB3D /* CoreData.framework */,
+				91BB30E615085A1300E8CB3D /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		91BB30E715085A1300E8CB3D /* DrawingFunhouse */ = {
+			isa = PBXGroup;
+			children = (
+				91BB30F315085A1300E8CB3D /* AppDelegate.h */,
+				91BB30F415085A1300E8CB3D /* AppDelegate.m */,
+				91BB30F615085A1300E8CB3D /* MainMenu.xib */,
+				91BB30E815085A1300E8CB3D /* Supporting Files */,
+				91BB30FE15085A5900E8CB3D /* Beziers.h */,
+				91BB30FF15085A5900E8CB3D /* Beziers.m */,
+				91D71687150871290021F85A /* RandomShit.h */,
+				91D71688150871290021F85A /* RandomShit.m */,
+			);
+			path = DrawingFunhouse;
+			sourceTree = "<group>";
+		};
+		91BB30E815085A1300E8CB3D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9141101E1508757900635443 /* seascape.jpg */,
+				91BB30E915085A1300E8CB3D /* DrawingFunhouse-Info.plist */,
+				91BB30EA15085A1300E8CB3D /* InfoPlist.strings */,
+				91BB30ED15085A1300E8CB3D /* main.m */,
+				91BB30EF15085A1300E8CB3D /* DrawingFunhouse-Prefix.pch */,
+				91BB30F015085A1300E8CB3D /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		91BB30DC15085A1300E8CB3D /* DrawingFunhouse */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 91BB30FB15085A1300E8CB3D /* Build configuration list for PBXNativeTarget "DrawingFunhouse" */;
+			buildPhases = (
+				91BB30D915085A1300E8CB3D /* Sources */,
+				91BB30DA15085A1300E8CB3D /* Frameworks */,
+				91BB30DB15085A1300E8CB3D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DrawingFunhouse;
+			productName = DrawingFunhouse;
+			productReference = 91BB30DD15085A1300E8CB3D /* DrawingFunhouse.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		91BB30D415085A1300E8CB3D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Doug Richardson";
+			};
+			buildConfigurationList = 91BB30D715085A1300E8CB3D /* Build configuration list for PBXProject "DrawingFunhouse" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 91BB30D215085A1300E8CB3D;
+			productRefGroup = 91BB30DE15085A1300E8CB3D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				91BB30DC15085A1300E8CB3D /* DrawingFunhouse */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		91BB30DB15085A1300E8CB3D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91BB30EC15085A1300E8CB3D /* InfoPlist.strings in Resources */,
+				91BB30F215085A1300E8CB3D /* Credits.rtf in Resources */,
+				91BB30F815085A1300E8CB3D /* MainMenu.xib in Resources */,
+				9141101F1508757900635443 /* seascape.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		91BB30D915085A1300E8CB3D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91BB30EE15085A1300E8CB3D /* main.m in Sources */,
+				91BB30F515085A1300E8CB3D /* AppDelegate.m in Sources */,
+				91BB310015085A5900E8CB3D /* Beziers.m in Sources */,
+				91D71689150871290021F85A /* RandomShit.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		91BB30EA15085A1300E8CB3D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91BB30EB15085A1300E8CB3D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		91BB30F015085A1300E8CB3D /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91BB30F115085A1300E8CB3D /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		91BB30F615085A1300E8CB3D /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91BB30F715085A1300E8CB3D /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		91BB30F915085A1300E8CB3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		91BB30FA15085A1300E8CB3D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		91BB30FC15085A1300E8CB3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DrawingFunhouse/DrawingFunhouse-Prefix.pch";
+				INFOPLIST_FILE = "DrawingFunhouse/DrawingFunhouse-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		91BB30FD15085A1300E8CB3D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DrawingFunhouse/DrawingFunhouse-Prefix.pch";
+				INFOPLIST_FILE = "DrawingFunhouse/DrawingFunhouse-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		91BB30D715085A1300E8CB3D /* Build configuration list for PBXProject "DrawingFunhouse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91BB30F915085A1300E8CB3D /* Debug */,
+				91BB30FA15085A1300E8CB3D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		91BB30FB15085A1300E8CB3D /* Build configuration list for PBXNativeTarget "DrawingFunhouse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91BB30FC15085A1300E8CB3D /* Debug */,
+				91BB30FD15085A1300E8CB3D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 91BB30D415085A1300E8CB3D /* Project object */;
+}

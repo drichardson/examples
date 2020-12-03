@@ -1,0 +1,343 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		91C88E0614EA3AE10085B611 /* NSString+SPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C88E0514EA3AE10085B611 /* NSString+SPAdditions.m */; };
+		91C88E0914EB6A8C0085B611 /* SPClientRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C88E0814EB6A8C0085B611 /* SPClientRecord.m */; };
+		91E3178114E793A5000A6D0B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E3178014E793A5000A6D0B /* Cocoa.framework */; };
+		91E3178B14E793A5000A6D0B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91E3178914E793A5000A6D0B /* InfoPlist.strings */; };
+		91E3178D14E793A5000A6D0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E3178C14E793A5000A6D0B /* main.m */; };
+		91E3179114E793A6000A6D0B /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 91E3178F14E793A6000A6D0B /* Credits.rtf */; };
+		91E3179414E793A6000A6D0B /* SPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E3179314E793A6000A6D0B /* SPAppDelegate.m */; };
+		91E3179714E793A6000A6D0B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91E3179514E793A6000A6D0B /* MainMenu.xib */; };
+		91E317A014E793EF000A6D0B /* SPProxyServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E3179F14E793EF000A6D0B /* SPProxyServer.m */; };
+		91E317A414E8E13F000A6D0B /* SPLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E317A314E8E13F000A6D0B /* SPLog.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		91C88E0414EA3AE10085B611 /* NSString+SPAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SPAdditions.h"; sourceTree = "<group>"; };
+		91C88E0514EA3AE10085B611 /* NSString+SPAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SPAdditions.m"; sourceTree = "<group>"; };
+		91C88E0714EB6A8C0085B611 /* SPClientRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPClientRecord.h; sourceTree = "<group>"; };
+		91C88E0814EB6A8C0085B611 /* SPClientRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPClientRecord.m; sourceTree = "<group>"; };
+		91E3177C14E793A5000A6D0B /* SimpleProxy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleProxy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		91E3178014E793A5000A6D0B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		91E3178314E793A5000A6D0B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		91E3178414E793A5000A6D0B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		91E3178514E793A5000A6D0B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		91E3178814E793A5000A6D0B /* SimpleProxy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimpleProxy-Info.plist"; sourceTree = "<group>"; };
+		91E3178A14E793A5000A6D0B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		91E3178C14E793A5000A6D0B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		91E3178E14E793A5000A6D0B /* SimpleProxy-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleProxy-Prefix.pch"; sourceTree = "<group>"; };
+		91E3179014E793A6000A6D0B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		91E3179214E793A6000A6D0B /* SPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAppDelegate.h; sourceTree = "<group>"; };
+		91E3179314E793A6000A6D0B /* SPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPAppDelegate.m; sourceTree = "<group>"; };
+		91E3179614E793A6000A6D0B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		91E3179E14E793EF000A6D0B /* SPProxyServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPProxyServer.h; sourceTree = "<group>"; };
+		91E3179F14E793EF000A6D0B /* SPProxyServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPProxyServer.m; sourceTree = "<group>"; };
+		91E317A214E8E13F000A6D0B /* SPLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPLog.h; sourceTree = "<group>"; };
+		91E317A314E8E13F000A6D0B /* SPLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPLog.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		91E3177914E793A5000A6D0B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91E3178114E793A5000A6D0B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		91C88E0314EA3ACC0085B611 /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				91C88E0414EA3AE10085B611 /* NSString+SPAdditions.h */,
+				91C88E0514EA3AE10085B611 /* NSString+SPAdditions.m */,
+			);
+			name = Additions;
+			sourceTree = "<group>";
+		};
+		91E3177114E793A5000A6D0B = {
+			isa = PBXGroup;
+			children = (
+				91E3178614E793A5000A6D0B /* SimpleProxy */,
+				91E3177F14E793A5000A6D0B /* Frameworks */,
+				91E3177D14E793A5000A6D0B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		91E3177D14E793A5000A6D0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				91E3177C14E793A5000A6D0B /* SimpleProxy.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		91E3177F14E793A5000A6D0B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91E3178014E793A5000A6D0B /* Cocoa.framework */,
+				91E3178214E793A5000A6D0B /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		91E3178214E793A5000A6D0B /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91E3178314E793A5000A6D0B /* AppKit.framework */,
+				91E3178414E793A5000A6D0B /* CoreData.framework */,
+				91E3178514E793A5000A6D0B /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		91E3178614E793A5000A6D0B /* SimpleProxy */ = {
+			isa = PBXGroup;
+			children = (
+				91C88E0314EA3ACC0085B611 /* Additions */,
+				91E317A114E8E127000A6D0B /* Logging */,
+				91E3179D14E793D5000A6D0B /* ProxyServer */,
+				91E3179214E793A6000A6D0B /* SPAppDelegate.h */,
+				91E3179314E793A6000A6D0B /* SPAppDelegate.m */,
+				91E3179514E793A6000A6D0B /* MainMenu.xib */,
+				91E3178714E793A5000A6D0B /* Supporting Files */,
+			);
+			path = SimpleProxy;
+			sourceTree = "<group>";
+		};
+		91E3178714E793A5000A6D0B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				91E3178814E793A5000A6D0B /* SimpleProxy-Info.plist */,
+				91E3178914E793A5000A6D0B /* InfoPlist.strings */,
+				91E3178C14E793A5000A6D0B /* main.m */,
+				91E3178E14E793A5000A6D0B /* SimpleProxy-Prefix.pch */,
+				91E3178F14E793A6000A6D0B /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		91E3179D14E793D5000A6D0B /* ProxyServer */ = {
+			isa = PBXGroup;
+			children = (
+				91E3179E14E793EF000A6D0B /* SPProxyServer.h */,
+				91E3179F14E793EF000A6D0B /* SPProxyServer.m */,
+				91C88E0714EB6A8C0085B611 /* SPClientRecord.h */,
+				91C88E0814EB6A8C0085B611 /* SPClientRecord.m */,
+			);
+			name = ProxyServer;
+			sourceTree = "<group>";
+		};
+		91E317A114E8E127000A6D0B /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				91E317A214E8E13F000A6D0B /* SPLog.h */,
+				91E317A314E8E13F000A6D0B /* SPLog.m */,
+			);
+			name = Logging;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		91E3177B14E793A5000A6D0B /* SimpleProxy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 91E3179A14E793A6000A6D0B /* Build configuration list for PBXNativeTarget "SimpleProxy" */;
+			buildPhases = (
+				91E3177814E793A5000A6D0B /* Sources */,
+				91E3177914E793A5000A6D0B /* Frameworks */,
+				91E3177A14E793A5000A6D0B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpleProxy;
+			productName = SimpleProxy;
+			productReference = 91E3177C14E793A5000A6D0B /* SimpleProxy.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		91E3177314E793A5000A6D0B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Doug Richardson";
+			};
+			buildConfigurationList = 91E3177614E793A5000A6D0B /* Build configuration list for PBXProject "SimpleProxy" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 91E3177114E793A5000A6D0B;
+			productRefGroup = 91E3177D14E793A5000A6D0B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				91E3177B14E793A5000A6D0B /* SimpleProxy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		91E3177A14E793A5000A6D0B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91E3178B14E793A5000A6D0B /* InfoPlist.strings in Resources */,
+				91E3179114E793A6000A6D0B /* Credits.rtf in Resources */,
+				91E3179714E793A6000A6D0B /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		91E3177814E793A5000A6D0B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91E3178D14E793A5000A6D0B /* main.m in Sources */,
+				91E3179414E793A6000A6D0B /* SPAppDelegate.m in Sources */,
+				91E317A014E793EF000A6D0B /* SPProxyServer.m in Sources */,
+				91E317A414E8E13F000A6D0B /* SPLog.m in Sources */,
+				91C88E0614EA3AE10085B611 /* NSString+SPAdditions.m in Sources */,
+				91C88E0914EB6A8C0085B611 /* SPClientRecord.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		91E3178914E793A5000A6D0B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91E3178A14E793A5000A6D0B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		91E3178F14E793A6000A6D0B /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91E3179014E793A6000A6D0B /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		91E3179514E793A6000A6D0B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91E3179614E793A6000A6D0B /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		91E3179814E793A6000A6D0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		91E3179914E793A6000A6D0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		91E3179B14E793A6000A6D0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SimpleProxy/SimpleProxy-Prefix.pch";
+				INFOPLIST_FILE = "SimpleProxy/SimpleProxy-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		91E3179C14E793A6000A6D0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SimpleProxy/SimpleProxy-Prefix.pch";
+				INFOPLIST_FILE = "SimpleProxy/SimpleProxy-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		91E3177614E793A5000A6D0B /* Build configuration list for PBXProject "SimpleProxy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91E3179814E793A6000A6D0B /* Debug */,
+				91E3179914E793A6000A6D0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		91E3179A14E793A6000A6D0B /* Build configuration list for PBXNativeTarget "SimpleProxy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91E3179B14E793A6000A6D0B /* Debug */,
+				91E3179C14E793A6000A6D0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 91E3177314E793A5000A6D0B /* Project object */;
+}

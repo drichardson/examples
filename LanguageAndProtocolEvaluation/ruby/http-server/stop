@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo Stopping mongrel instances...
+mongrel_rails stop --pid /tmp/my_mongrel_3000.pid
+mongrel_rails stop --pid /tmp/my_mongrel_3001.pid
+mongrel_rails stop --pid /tmp/my_mongrel_3002.pid
+mongrel_rails stop --pid /tmp/my_mongrel_3003.pid
+mongrel_rails stop --pid /tmp/my_mongrel_3004.pid
+echo all mongrel instances stopped.

@@ -1,0 +1,32 @@
+The Notes webapp consists of a Django backend that implements a JSON web API used by the Javascript in the client. The client is built on Prototype and Scriptaculous.
+
+The pieces are tied together using Apache's mod_proxy. lighttpd serves the static content. However, mod_python is not used for the Django backend, instead, mod_proxy is used to connect up to port 8000 where Django is listening when the development server is running. This is not recommended but I did it just for experimentation purposes.
+
+#
+# Django Backend
+#
+Initialize the database using:
+python mysite/manage.py syncdb
+
+Start the server using:
+python mysite/manage.py runserver
+
+Admin site at: http://localhost:8000/admin/
+Notes site at: http://localhost:8000/notes/json_notes
+
+#
+# APACHE CONFIGURATION
+#
+
+#BEGIN CONFIGURATION
+# Mod Proxy Configuration
+ProxyRequests Off
+
+<Proxy *>
+Order deny,allow
+Allow from all
+</Proxy>
+
+ProxyPass /backend http://localhost:8000
+ProxyPassReverse /backend http://localhost:8000
+#END CONFIGURATION
