@@ -3,7 +3,9 @@ binary-tree
 const
 const-structs
 fixed-size-arrays
+flexible-array-member
 initialization
 libcurl-test
+setjmp
 tags
 thread-local
