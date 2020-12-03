@@ -1,8 +1,9 @@
 // Figure out the number of ways objects can be arranged relative to each other
 // on a 1 dimentional line, assuming they cannot occupy the same location.
 
-#include <set>
+#include <algorithm>
 #include <iostream>
+#include <set>
 
 using namespace std;
 
