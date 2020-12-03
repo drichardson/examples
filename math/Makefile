@@ -1,4 +1,4 @@
-CXXFLAGS=-g -Wall -std=c++11
+CXXFLAGS=-g -Wall -std=c++17
 CFLAGS=-g -Wall -std=c11
 
 TARGETS=permutations sine
