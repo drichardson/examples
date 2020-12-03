@@ -3,6 +3,7 @@ TARGETS=\
 		const \
 		const-structs \
 		fixed-size-arrays \
+		flexible-array-member \
 		initialization \
 		libcurl-test \
 		setjmp \
@@ -16,6 +17,9 @@ CFLAGS=-Wall -Werror -O3 -std=c17
 all: $(TARGETS)
 
 fixed-size-arrays: fixed-size-arrays.o fixed-size-arrays-other-module.o
+	$(CC) -o $@ $^
+
+flexible-array-member: flexible-array-member.o
 	$(CC) -o $@ $^
 
 const: const.o
