@@ -5,6 +5,7 @@ TARGETS=\
 		fixed-size-arrays \
 		initialization \
 		libcurl-test \
+		setjmp \
 		thread-local
 
 #CC=clang
@@ -30,6 +31,9 @@ initialization: initialization.o
 	$(CC) -o $@ $^
 
 libcurl-test: libcurl-test.o
+	$(CC) -lcurl -o $@ $^
+
+setjmp: setjmp.o
 	$(CC) -lcurl -o $@ $^
 
 thread-local: thread-local.o
