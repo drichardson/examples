@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-static void asmTest1()
+static void asmTest1(void)
 {
 	// The code below could also have been put into a single
 	// asm(...) block which each string separated by a newline.
@@ -17,17 +17,15 @@ static void asmTest1()
 	asm("pop %eax");
 }
 
-extern void myASMCallableFunction()
+extern void myASMCallableFunction(void)
 {
 	printf("This is a ASM callable function.\n");
 }
 
 static void asmTest2(char* myVar)
 {
-	asm(
-		"# Beginning of asmTest2 asssembly code\n"
-		"call _myASMCallableFunction\n"
-		);
+	asm("# Beginning of asmTest2 asssembly code\n"
+	    "call myASMCallableFunction\n");
 }
 
 static void asmTest_inputOutputVariables(void)
@@ -51,6 +49,9 @@ int main (int argc, const char * argv[]) {
 	printf("This is a test string\n");
 	
 	asmTest_inputOutputVariables();
-	
-    return 0;
+
+	extern int asmFunction(void);
+	printf("asmFunction returned %d\n", asmFunction());
+
+	return 0;
 }
