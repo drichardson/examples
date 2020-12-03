@@ -3,7 +3,7 @@
 #
 # A simple calculator using the Mac OS X assembler targeting the IA-32 architecture.
 #
-# Relavent documentation:
+# Relevant documentation:
 # Mac OS X Assembler Reference
 # Mac OS X ABI Function Call Guide
 #
