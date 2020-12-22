@@ -31,3 +31,12 @@ t = Template('template string one substitution: $who likes $what')
 print(t.substitute(dict(who='tim', what=my_var)))
 print(t.substitute(dict(who='joe', what='hamburgers')))
 
+print('''My
+multiline
+string
+''')
+
+print(f'''My
+multiline {my_var}
+f-string''')
+
