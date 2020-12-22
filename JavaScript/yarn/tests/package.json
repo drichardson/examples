@@ -6,7 +6,7 @@
   "author": "doug",
   "license": "MIT",
   "devDependencies": {
-    "jest": "^24.9.0"
+    "jest": "^26"
   },
   "scripts": {
     "test": "jest"
