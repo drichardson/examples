@@ -2,14 +2,9 @@
 #include <utility>
 
 #if 0
+// error: if defined, get call of overloaded is ambiguous
 void foo(int x) {
     std::cout << "int" << std::endl;
-}
-#endif
-
-#if 0
-void foo(int&& x) {
-    std::cout << "int&&" << std::endl;
 }
 #endif
 
