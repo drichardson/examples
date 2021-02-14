@@ -43,6 +43,7 @@ TARGETS=\
 	system_error \
 	template_convertible \
 	template_curiously_recurring_template_pattern \
+	template_forward_decl \
 	template_meta_programming \
 	template_specialization \
 	templates \
