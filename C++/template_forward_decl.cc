@@ -1,30 +1,29 @@
 #include <iostream>
 
-template <class C>
-class Template
+template <class Class>
+class A
 {
 public:
-	Template() { p = new C(); }
-
-	C *p;
+	A() { p = new Class(); }
+	Class *p;
 };
 
-class TemplateUser {
+class B {
 public:
 	// forward declaration okay because only used as pointer in Template
-	Template<class Class> value;
+	A<class C> a_c_forward;
 };
 
-class Class
+class C
 {
 public:
-	Class() : i(123) {}
+	C() : i(123) {}
 	int i;
 };
 
 int main()
 {
-	TemplateUser tu;
-	std::cout << "i is " << tu.value.p->i << std::endl;
+	B b;
+	std::cout << "i is " << b.a_c_forward.p->i << std::endl;
 	return 0;
 }
