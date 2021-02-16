@@ -1,5 +1,5 @@
 #!/bin/sh
 
-DST="/my-volume/the-file.txt"
+DST="/output/the-file.txt"
 echo "Updating $DST"
 date > "$DST"
