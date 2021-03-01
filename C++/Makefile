@@ -2,6 +2,7 @@ TARGETS=\
 	access_specifiers \
 	array \
 	atomics \
+	attributes \
 	auto_decltype \
 	bigsort \
 	casting  \
