@@ -41,6 +41,7 @@ TARGETS=\
 	sort_main \
 	stack_protector \
 	strings \
+	switch \
 	system_error \
 	template_convertible \
 	template_curiously_recurring_template_pattern \
@@ -57,7 +58,7 @@ TARGETS=\
 OPTIMIZATION=-O3
 DEBUG=-g
 CXX=g++
-CXXFLAGS=-std=c++17 -Wall ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all 
+CXXFLAGS=-std=c++17 -Wall -Wextra ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all 
 
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
