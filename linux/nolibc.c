@@ -3,8 +3,7 @@
 // glibc 2.20.
 // This program only works on x86_64 Linux.
 
-
-#include "/usr/include/asm/unistd_64.h"
+#include "/usr/include/x86_64-linux-gnu/asm/unistd_64.h"
 
 extern long syscall(long syscall_number, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6);
 
