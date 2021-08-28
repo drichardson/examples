@@ -35,13 +35,13 @@ initialization: initialization.o
 	$(CC) -o $@ $^
 
 libcurl-test: libcurl-test.o
-	$(CC) -lcurl -o $@ $^
+	$(CC) -o $@ $^ -lcurl
 
 setjmp: setjmp.o
-	$(CC) -lcurl -o $@ $^
+	$(CC) -o $@ $^
 
 thread-local: thread-local.o
-	$(CC) -lpthread -o $@ $^
+	$(CC) -o $@ -pthread $^
 
 tags: *.c
 	ctags -R . /usr/include
