@@ -22,6 +22,7 @@ TARGETS=\
 	ifstream \
 	inheritance \
 	initialization \
+	io \
 	iterator \
 	literals \
 	max_subarray \
@@ -58,7 +59,7 @@ TARGETS=\
 OPTIMIZATION=-O3
 DEBUG=-g
 CXX=g++
-CXXFLAGS=-std=c++17 -Wall -Wextra ${DEBUG} ${OPTIMIZATION} -march=native -pthread -fstack-protector-all 
+CXXFLAGS=-std=c++17 -Wall -Wextra ${DEBUG} ${OPTIMIZATION} -pthread -fstack-protector-all 
 
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
@@ -70,8 +71,11 @@ analyze: clean
 glog: glog.cc
 	$(CXX) -g -O0 -o glog glog.cc -lglog
 
+function: function.cc
+	$(CXX) $(CXXFLAGS) -arch x86_64 -o $@ $^
+
 function.S: function.cc
-	$(CXX) -S $(CXXFLAGS) -o $@ $^
+	$(CXX) -S $(CXXFLAGS) -arch x86_64 -o $@ $^
 
 clean:
 	$(RM) -r $(TARGETS) *.dSYM a.txt *.o *.S

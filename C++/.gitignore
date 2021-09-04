@@ -25,6 +25,7 @@ heap_main.o
 ifstream
 inheritance
 initialization
+io
 iterator
 literals
 max_subarray
