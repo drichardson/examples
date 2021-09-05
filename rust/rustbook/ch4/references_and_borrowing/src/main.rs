@@ -42,6 +42,32 @@ fn main() {
     // Dangling References
     // let reference_to_nothing = dangle();
     let _reference_to_something = no_dangle();
+
+    //
+    // Question: is there anyway to get a 2 references (mutable or non mutable) to a mutable?
+    //
+
+    // try to use a mutable after taking a reference
+    let mut i1 = 0;
+    i1 += 2;
+    let r1 = &i1;
+    // i1 += 1; // error: cannot assign to i1 because it is borrowed
+    // r1 += 1; // binary assignment += cannot be applied to type &{interger}.
+    // *r1 += 1; // cannot assign to *1 which is behind a & reference.
+    println!("r1={}", r1);
+
+    // try to use a mutable after taking a mutable ference
+    let mut i1 = 0;
+    i1 += 2;
+    let r1 = &mut i1;
+    // i1 += 2; // cannot use i1 because it was mutable borrowed
+    *r1 += 2;
+    println!("r1={}", r1);
+
+    // Try to use immutable after borrowing mutable.
+    let i1 = 0;
+    // i1 += 2; // error: cannot assign twice to immutable variable.
+    // let r1 = &mut i1; // cannot borrow i1 as mutable, as it is not declared as mutable
 }
 
 fn calculate_length(s: &String) -> usize {
@@ -58,7 +84,7 @@ fn change(some_string: &mut String) {
 
 /*
 fn dangle() -> &String {
-    // compiler error: this function's return type contains a borrowed value, but ther eis no value for it to be borrowed from.
+    // compiler error: this function's return type contains a borrowed value, but there is no value for it to be borrowed from.
     let s = String::from("hello");
 
     &s
