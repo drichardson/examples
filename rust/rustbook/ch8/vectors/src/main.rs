@@ -33,7 +33,7 @@ fn main() {
     let does_not_exist = v.get(100); // returns None.
     print!("does_not_exist={:?}", does_not_exist);
 
-    let mut v = vec![1, 2, 3, 4, 5];
+    let v = vec![1, 2, 3, 4, 5];
     let first = &v[0];
     // v.push(6); // error: cannot borrow 'v' as mutable because it is also borrowed as immutable
     println!("The first elemetn is: {}", first);
