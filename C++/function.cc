@@ -1,8 +1,8 @@
 #include <array>
 #include <functional>
-#include <future>
 #include <sched.h>
 #include <stdio.h>
+#include <thread>
 #include <unistd.h>
 
 #define USE_SHAREDPTR 0
