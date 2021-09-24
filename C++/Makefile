@@ -51,6 +51,7 @@ TARGETS=\
 	template_specialization \
 	templates \
 	typeid \
+	unordered_map \
 	vector \
 	virtual
 
