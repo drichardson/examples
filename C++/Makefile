@@ -30,6 +30,7 @@ TARGETS=\
 	ofstream_test \
 	operators \
 	override \
+	permuation \
 	placement_new \
 	playground \
 	pointers \
