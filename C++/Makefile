@@ -38,6 +38,7 @@ TARGETS=\
 	prime_factorization \
 	primes \
 	priority_q \
+	random \
 	rod_cutting references \
 	scoped_enums \
 	sort_main \

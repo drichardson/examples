@@ -55,14 +55,11 @@ int main()
 
 	unsigned int i;
 	unsigned a[4];
-	auto reset = [&i, &a]() {
+	auto a_begin = &a[0];
+	auto a_end = &a[sizeof(a) / sizeof(a[0])];
+	auto reset = [&i, a_begin, a_end]() {
 		i = 0xdeadbeef;
-
-		a[0] = 0xdeadbeef;
-		a[1] = 0xdeadbeef;
-		a[2] = 0xdeadbeef;
-		a[3] = 0xdeadbeef;
-
+		fill(a_begin, a_end, 0xdeadbeef);
 		// cout << "i reset to " << i << endl;
 	};
 
@@ -85,7 +82,7 @@ int main()
 	new (a) int[4];
 	cout << "default initialization of array with empty parens: "
 	     << describe(a) << endl;
-	assert(all_of(&a[0], &a[3], [](auto v) { return v == 0xdeadbeef; }));
+	assert(all_of(a_begin, a_end, [](auto v) { return v == 0xdeadbeef; }));
 
 	// https://en.cppreference.com/w/cpp/language/direct_initialization
 	reset();
@@ -124,14 +121,15 @@ int main()
 	new (a) int[4]();
 	cout << "value initialization of array (empty parens): " << describe(a)
 	     << endl;
-	assert(all_of(&a[0], &a[3], [](auto v) { return v == 0; }));
+	assert(all_of(a_begin, a_end, [](auto v) { return v == 0; }));
 
 	// Value initialized by rule 5:
 	// T{} 	(5) 	(since C++11)
 	reset();
-	new (&i) int[1]{};
-	cout << "value initialization of array (empty braces): " << i << endl;
-	assert(i == 0);
+	new (a) int[4]{};
+	cout << "value initialization of array (empty braces): " << describe(a)
+	     << endl;
+	assert(all_of(a_begin, a_end, [](auto v) { return v == 0; }));
 
 	// https://en.cppreference.com/w/cpp/language/list_initialization
 	// initialization of an object with dynamic storage duration with a
