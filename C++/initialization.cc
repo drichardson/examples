@@ -54,10 +54,14 @@ int main()
 	cout << hex;
 
 	unsigned int i;
-	unsigned a[4] = {0xdeadbeef, 0xdeadbeef, 0xdeadbeef, 0xdeadbeef};
+	unsigned a[4];
 	auto reset = [&i, &a]() {
 		i = 0xdeadbeef;
-		fill(&a[0], &a[3], 0xdeadbeef);
+
+		a[0] = 0xdeadbeef;
+		a[1] = 0xdeadbeef;
+		a[2] = 0xdeadbeef;
+		a[3] = 0xdeadbeef;
 
 		// cout << "i reset to " << i << endl;
 	};
@@ -75,12 +79,13 @@ int main()
 	assert(i == 0xdeadbeef);
 
 	// https://en.cppreference.com/w/cpp/language/default_initialization
-	// If initializer is absent, each element is default-initialized
+	// If initializer is absent, each element is default-initialized (for
+	// non-class objects, left indeterminate).
 	reset();
-	new (&i) int[1];
-	cout << "default initialization of array with empty parens: " << i
-	     << endl;
-	assert(i == 0xdeadbeef);
+	new (a) int[4];
+	cout << "default initialization of array with empty parens: "
+	     << describe(a) << endl;
+	assert(all_of(&a[0], &a[3], [](auto v) { return v == 0xdeadbeef; }));
 
 	// https://en.cppreference.com/w/cpp/language/direct_initialization
 	reset();
@@ -116,10 +121,10 @@ int main()
 
 	// If initializer is an empty pair of parentheses, each element is
 	// value-initialized.
-	reset();
-	new (&i) int[1]();
-	cout << "value initialization of array (empty parens): " << i << endl;
-	assert(i == 0);
+	new (a) int[4]();
+	cout << "value initialization of array (empty parens): " << describe(a)
+	     << endl;
+	assert(all_of(&a[0], &a[3], [](auto v) { return v == 0; }));
 
 	// Value initialized by rule 5:
 	// T{} 	(5) 	(since C++11)
@@ -136,23 +141,23 @@ int main()
 	// Otherwise, if T is an aggregate type, aggregate initialization is
 	// performed.
 	reset();
-	new (a) int[2]{1};
+	new (a) int[4]{1};
 	cout << "aggregate initialization of array (braces with single item): "
 	     << describe(a) << endl;
 	assert(a[0] == 1);
 	assert(a[1] == 0);
-	assert(a[2] == 0xdeadbeef);
-	assert(a[3] == 0xdeadbeef);
+	assert(a[2] == 0);
+	assert(a[3] == 0);
 
 	reset();
-	new (a) int[3]{1, 2};
+	new (a) int[4]{1, 2};
 	cout << "aggregate initialization of array (braces with fewer items "
 		"than array):  "
 	     << describe(a) << endl;
 	assert(a[0] == 1);
 	assert(a[1] == 2);
 	assert(a[2] == 0);
-	assert(a[3] == 0xdeadbeef);
+	assert(a[3] == 0);
 
 	reset();
 	new (a) int[3]{1, 2, 3};
