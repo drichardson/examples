@@ -24,6 +24,7 @@ TARGETS=\
 	initialization \
 	io \
 	iterator \
+	list \
 	literals \
 	max_subarray \
 	namespaces \
