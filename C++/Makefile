@@ -28,6 +28,7 @@ TARGETS=\
 	literals \
 	max_subarray \
 	namespaces \
+	numeric_limits \
 	ofstream_test \
 	operators \
 	override \
