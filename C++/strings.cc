@@ -30,6 +30,12 @@ int main()
     cout << "middle: " << middle << "\n";
     cout << "end: " << end << "\n";
 
+    std::string s = "1234";
+    cout << "s: " << s << '\n';
+    s[0] = 'a';
+    s[2] = 'c';
+    cout << "s: " << s << '\n';
+
     return 0;
 }
 

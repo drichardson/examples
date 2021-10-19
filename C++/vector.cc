@@ -24,9 +24,11 @@ public:
         cout << "A copy ctor\n";
     }
 
-    ~A() {
-        cout << "~A for this=" << this << ", deleting buf=" << static_cast<void*>(buf) << '\n';
-        delete[] buf;
+    virtual ~A()
+    {
+	    cout << "~A for this=" << this
+		 << ", deleting buf=" << static_cast<void *>(buf) << '\n';
+	    delete[] buf;
     }
 
     char const* str() const { return buf; }
@@ -43,31 +45,50 @@ public:
         cout << "B buf is " << static_cast<void*>(buf) << '\n';
     }
 
-    ~B() {
-        cout << "~B for this=" << this << ", buf=" << static_cast<void*>(buf) << '\n';
-        delete[] buf;
+    ~B()
+    {
+	    cout << "~B for this=" << this
+		 << ", buf=" << static_cast<void *>(buf) << '\n';
+	    delete[] buf;
     }
 };
 
 int main() {
-    vector<int> a = {1, 3, 4};
-    vector<int> b = {4, 1, 1};
-    vector<int> c = a;
+	{
+		cout << "Int test ==================\n";
+		vector<int> a = {1, 3, 4};
+		vector<int> b = {4, 1, 1};
+		vector<int> c = a;
 
-    cout << "a > b: " << (a > b) << endl;
-    cout << "a < b: " << (a > b) << endl;
-    cout << "a == a: " << (a == a) << endl;
-    cout << "a == b: " << (a == b) << endl;
-    cout << "a == c: " << (a == c) << endl;
-    cout << "max(a,b) == a: " << (max(a,b) == a) << endl;
-    cout << "max(a,b) == b: " << (max(a,b) == b) << endl;
+		cout << "a > b: " << (a > b) << endl;
+		cout << "a < b: " << (a > b) << endl;
+		cout << "a == a: " << (a == a) << endl;
+		cout << "a == b: " << (a == b) << endl;
+		cout << "a == c: " << (a == c) << endl;
+		cout << "max(a,b) == a: " << (max(a, b) == a) << endl;
+		cout << "max(a,b) == b: " << (max(a, b) == b) << endl;
+	}
 
-    cout << "Class test ==================\n";
-    vector<A> va;
-    va.push_back(A("one"));
-    va.push_back(A("two"));
-    va.push_back(B("B.three")); // note: ~B won't be called
-    for(A const & e : va) {
-        cout << e.str() << '\n';
+    {
+	    cout << "Class test ==================\n";
+	    vector<A> va;
+	    va.push_back(A("one"));
+	    va.push_back(A("two"));
+	    va.push_back(
+		B("B.three")); // note: ~B won't be called. A not a pointer.
+	    for (A const &e : va)
+	    {
+		    cout << e.str() << '\n';
+	    }
     }
+
+    {
+	    cout << "Class pointer test ===============\n";
+	    vector<unique_ptr<A>> va;
+	    va.push_back(make_unique<A>("one"));
+	    va.push_back(make_unique<A>("two"));
+	    va.push_back(make_unique<B>("B.three")); // note: ~B will be called
+    }
+
+    return 0;
 }
