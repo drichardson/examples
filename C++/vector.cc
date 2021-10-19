@@ -90,5 +90,26 @@ int main() {
 	    va.push_back(make_unique<B>("B.three")); // note: ~B will be called
     }
 
+    {
+	    cout << "Vector of strings test ============\n";
+	    vector<string> vs;
+	    vs.emplace_back("hello");
+	    vs.emplace_back("world");
+
+	    for (auto const &s : vs)
+	    {
+		    cout << s << '\n';
+	    }
+
+	    vs[0][1] = '3';
+	    vs[0][4] = '0';
+	    vs[1][4] = 'D';
+
+	    for (auto const &s : vs)
+	    {
+		    cout << s << '\n';
+	    }
+    }
+
     return 0;
 }
