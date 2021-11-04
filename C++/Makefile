@@ -1,3 +1,13 @@
+# Most targets can be built with either g++ or clang++. However, some targets
+# require "-arch x86_64" which requires clang++.
+
+#CXX=g++
+#CXX=clang++
+
+OPTIMIZATION=-O3
+DEBUG=-g
+CXXFLAGS=-std=c++20 -Wall -Wextra ${DEBUG} ${OPTIMIZATION} -pthread -fstack-protector-all 
+
 TARGETS=\
 	access_specifiers \
 	array \
@@ -7,6 +17,7 @@ TARGETS=\
 	bigsort \
 	casting  \
 	chrono \
+	concepts \
 	condition \
 	const \
 	copying \
@@ -14,8 +25,6 @@ TARGETS=\
 	ctor \
 	ctor-init-list \
 	destructors \
-	function \
-	function.S \
 	graph \
 	hash \
 	heap_main \
@@ -59,13 +68,13 @@ TARGETS=\
 	vector \
 	virtual
 
+CLANG_REQUIRED_TARGETS=\
+	function \
+	function.S
 
-# -arch x86_64 requires clang++ and won't work with g++.
-#CXX=g++
-CXX=clang++
-OPTIMIZATION=-O3
-DEBUG=-g
-CXXFLAGS=-std=c++20 -Wall -Wextra ${DEBUG} ${OPTIMIZATION} -pthread -fstack-protector-all 
+ifeq ($(CXX),clang++)
+	TARGETS += $(CLANG_REQUIRED_TARGETS)
+endif
 
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
