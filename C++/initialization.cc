@@ -20,6 +20,7 @@ For placement new, the syntax is:
 
 #include <algorithm>
 #include <array>
+#include <cassert>
 #include <iostream>
 #include <sstream>
 

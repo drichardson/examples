@@ -61,10 +61,11 @@ TARGETS=\
 
 
 # -arch x86_64 requires clang++ and won't work with g++.
+#CXX=g++
 CXX=clang++
 OPTIMIZATION=-O3
 DEBUG=-g
-CXXFLAGS=-std=c++17 -Wall -Wextra ${DEBUG} ${OPTIMIZATION} -pthread -fstack-protector-all 
+CXXFLAGS=-std=c++20 -Wall -Wextra ${DEBUG} ${OPTIMIZATION} -pthread -fstack-protector-all 
 
 LINK.o=$(LINK.cc) # Use c++ link rule by default instead of c link rule
 
