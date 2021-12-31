@@ -25,7 +25,14 @@ Commands:
     kubectl get services
     minikube service hello-service --url
 
-    kubectl delete -f pod.yaml
+    kubectl delete -f service.yaml
+
+
+    kubectl create -f service-load-balancer.yaml
+    kubectl get services (note pending IP for service)
+    minikube tunnel (enter password when prompted)
+    kubectl get services (note assigned IP for service)
+    curl localhost:80
 
 Alternatives for creation:
 

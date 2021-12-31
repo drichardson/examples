@@ -14,8 +14,8 @@ kind: Service
 metadata:
     name: hello-service
 spec:
-    # selector app must match app label in pod.yaml
     type: NodePort
+    # selector app must match app label in pod.yaml
     selector:
         app: hello-app
     ports:

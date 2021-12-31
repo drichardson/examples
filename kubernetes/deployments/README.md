@@ -10,16 +10,31 @@ Commands:
     kubectl get replicasets
     kubectl describe replicasets
 
-    minikube service hello-service --url
+    kubectl get services (note pending IP address for load balancer)
+    minikube tunnel
+    kubectl get services (note assigned IP address for load balancer)
+    curl localhost:80
 
-    kubectl expose deployment hello-deployment --type=NodePort --name=hello-service
-    minikube service hello-service --url
 
+Port forward to random pod in service:
+
+    Using minikube:
+        minikube service hello-service --url
+
+    Using kubectl:
+        kubectl port-forward hello-service 8080:80
+
+Port forward to specific pod:
+    kubectl get pods
+    kubectl port-forward pods/hello-deployment-5d7445f548-dhmkw 8080:80
+
+Tail the log of a specific pod:
+    kubectl logs hello-deployment-5d7445f548-cmffd -f
 
 For Google Container Engine:
 
     gcloud container clusters create my-cluster --zone us-west1-a
-    kubectl apply -f hello-gke.yaml
+    kubectl apply -f hello.yaml
     kubectl get service hello-service
 
 

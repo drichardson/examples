@@ -23,15 +23,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-    name: hello-service
+  name: hello-service
 spec:
-    # selector app must match app label in pod.yaml
-    type: NodePort
-    selector:
-        app: hello-app
-    ports:
-        - protocol: TCP
-          port: 80
-          targetPort: 80
+  type: LoadBalancer
+  # selector app must match app label in pod.yaml
+  selector:
+    app: hello-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
 
 
