@@ -33,7 +33,7 @@ Tail the log of a specific pod:
 
 For Google Container Engine:
 
-    gcloud container clusters create my-cluster --zone us-west1-a
+    gcloud container clusters create my-cluster
     kubectl apply -f hello.yaml
     kubectl get service hello-service
 
