@@ -35,7 +35,11 @@ For Google Container Engine:
 
     gcloud container clusters create my-cluster
     kubectl apply -f hello.yaml
-    kubectl get service hello-service
+    kubectl get service hello-service (note IP_ADDR)
+    curl IP_ADDR
+    curl IP_ADDR
+    curl IP_ADDR
+    gcloud container clusters delete my-cluster
 
 
 
