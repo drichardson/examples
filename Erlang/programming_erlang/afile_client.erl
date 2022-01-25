@@ -9,7 +9,7 @@ run() ->
 		{_, {ok, Items}} -> io:format("Got directories: ~s", [string:join(Items, " ")])
 	end,
 	io:format("1~n"),
-	Filename = "Makefile.BAD",
+	Filename = "Makefile",
 	Server ! {self(), get_file, Filename},
 	io:format("2~n"),
 	receive
