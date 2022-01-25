@@ -1,24 +1,15 @@
 -module(afile_client).
--export([run/0]).
+-export([ls/1, get_file/2]).
 
 
-run() ->
-	Server = afile_server:start("."),
+ls(Server) ->
 	Server ! {self(), list_dir},
 	receive
-		{_, {ok, Items}} -> io:format("Got directories: ~s", [string:join(Items, " ")])
-	end,
-	io:format("1~n"),
-	Filename = "Makefile",
-	Server ! {self(), get_file, Filename},
-	io:format("2~n"),
+		{_, Items} -> Items
+	end.
+
+get_file(Server, File) ->
+	Server ! {self(), get_file, File},
 	receive
-		{Pid, {ok, Body}} -> io:format("CONTENT from ~w~n====~s BEGIN~n~s====~s END~n",
-					       [Pid, Filename, Body, Filename]);
-		{Pid, {error, Reason}} -> io:format("FAILURE from ~w: ~w~n", Pid, Reason);
-		Err -> io:format("OTHER ~w~n", [Err])
-	end,
-	io:format("3~n"),
-	init:stop().
-
-
+		{_, Content} -> Content
+	end.

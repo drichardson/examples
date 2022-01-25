@@ -4,8 +4,8 @@ BEAM=$(addsuffix .beam,${MODULES})
 
 all: ${BEAM}
 
-run_afile_client: afile_client.beam afile_server.beam
-	erl -noshell -s afile_client run
+run_afile_client: afile_runner.beam afile_client.beam afile_server.beam
+	erl -noshell -s afile_runner run
 
 %.beam: %.erl
 	erlc $<
