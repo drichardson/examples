@@ -9,7 +9,7 @@ idna==3.3
 pycodestyle==2.8.0
 six==1.16.0
 sniffio==1.2.0
-starlette==0.17.1
+starlette==0.25.0
 toml==0.10.2
 typing_extensions==4.0.1
 uvicorn==0.17.1
