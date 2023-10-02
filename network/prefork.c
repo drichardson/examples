@@ -13,7 +13,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-void child_loop(int server, int childnum);
+void child_loop(int server, int childnum, char loadtype);
 void parent_loop();
 
 int main(int argc, char **argv)
@@ -22,9 +22,11 @@ int main(int argc, char **argv)
 	{
 		fprintf(stderr,
 			"Expected 2 args but got %d.\n"
-			"Usage: acceptclose PORT REUSE\n"
-			"   REUSE can be 0 (do not reuse address) or 1 (reuse "
-			"address)\n",
+			"Usage: acceptclose PORT LOAD\n"
+			"LOAD is a mode and can be:\n"
+			"  n: no load\n"
+			"  b: 100-300ms balanced across workers\n"
+			"  s: 100-300ms skewed across workers\n",
 			argc - 1);
 		exit(1);
 	}
@@ -44,7 +46,7 @@ int main(int argc, char **argv)
 
 	unsigned short port = (unsigned short)portLong;
 
-	const char *reuseOpt = argv[2];
+	const char loadtype = argv[2][0];
 
 	int server = socket(AF_INET, SOCK_STREAM, 0);
 	if (server == -1)
@@ -54,38 +56,6 @@ int main(int argc, char **argv)
 			errno,
 			strerror(errno));
 		exit(1);
-	}
-
-	if (reuseOpt[0] == '1')
-	{
-		printf("Setting SO_REUSEADDR\n");
-		int optval = 1;
-		if (setsockopt(server,
-			       SOL_SOCKET,
-			       SO_REUSEADDR,
-			       &optval,
-			       sizeof(optval)) == -1)
-		{
-			fprintf(stderr,
-				"setsockopt(SO_REUSEADDR) failed. %d: %s\n",
-				errno,
-				strerror(errno));
-			exit(1);
-		}
-
-		optval = 1;
-		if (setsockopt(server,
-			       SOL_SOCKET,
-			       SO_REUSEPORT,
-			       &optval,
-			       sizeof(optval)) == -1)
-		{
-			fprintf(stderr,
-				"setsockopt(SO_REUSEPORT) failed. %d: %s\n",
-				errno,
-				strerror(errno));
-			exit(1);
-		}
 	}
 
 	struct sockaddr_in addr;
@@ -127,7 +97,7 @@ int main(int argc, char **argv)
 	if (is_child)
 	{
 		// This is a child process.
-		child_loop(server, childnum);
+		child_loop(server, childnum, loadtype);
 	}
 	else
 	{
@@ -138,7 +108,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-void child_loop(int server, int childnum)
+void child_loop(int server, int childnum, char loadtype)
 {
 	unsigned int counter = 0;
 	char outfile[1024];
@@ -159,6 +129,24 @@ void child_loop(int server, int childnum)
 				errno,
 				strerror(errno));
 			continue;
+		}
+
+		switch (loadtype)
+		{
+		case 'n':
+			// no load
+			break;
+		case 'b':
+			// balanced by worker
+			usleep(1000 * (counter % 10));
+			break;
+		case 's':
+			// skewed across workers
+			usleep(1000 * childnum);
+			break;
+		default:
+			fprintf(stderr, "INVALID LOAD TYPE\n");
+			exit(1);
 		}
 
 		char buf[100];
