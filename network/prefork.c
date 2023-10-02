@@ -216,7 +216,8 @@ void load(double seconds)
 	{
 		struct timespec now;
 		clock_gettime(CLOCK_MONOTONIC, &now);
-		if (delta_seconds(t0, now) > seconds)
+		// printf("DELTA: %f\n", delta_seconds(t0, now));
+		if (delta_seconds(t0, now) >= seconds)
 		{
 			break;
 		}
