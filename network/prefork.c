@@ -13,7 +13,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-void child_loop(int server);
+void child_loop(int server, int childnum);
 void parent_loop();
 
 int main(int argc, char **argv)
@@ -110,22 +110,24 @@ int main(int argc, char **argv)
 
 	printf("Listening on port %d...\n", port);
 	pid_t children[3] = {0};
-	for (int i = 0; i < 3; ++i)
+	int childnum = 0;
+	for (; childnum < 3; ++childnum)
 	{
-		children[i] = fork();
-		if (children[i] == 0)
+		children[childnum] = fork();
+		if (children[childnum] == 0)
 		{
 			break;
 		}
 	}
 
-	bool const is_parent = children[2] != 0;
+	bool const is_parent =
+	    childnum == sizeof(children) / sizeof(children[0]);
 	bool const is_child = !is_parent;
 
 	if (is_child)
 	{
 		// This is a child process.
-		child_loop(server);
+		child_loop(server, childnum);
 	}
 	else
 	{
@@ -136,9 +138,13 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-void child_loop(int server)
+void child_loop(int server, int childnum)
 {
 	unsigned int counter = 0;
+	char outfile[1024];
+	snprintf(outfile, sizeof(outfile), "/tmp/prefork_child_%d", childnum);
+	FILE *out = fopen(outfile, "w");
+	fprintf(out, "Starting child %d PID %u\n", childnum, getpid());
 	while (1)
 	{
 		struct sockaddr_in addr;
@@ -147,9 +153,8 @@ void child_loop(int server)
 		int conn = accept(server, (struct sockaddr *)&addr, &addrlen);
 		if (conn == -1)
 		{
-			fprintf(stderr,
-				"%u:%u accept failed: %d: %s\n",
-				getpid(),
+			fprintf(out,
+				"ERROR %u accept failed: %d: %s\n",
 				counter,
 				errno,
 				strerror(errno));
@@ -162,17 +167,16 @@ void child_loop(int server)
 		buf[sizeof(buf) - 1] = 0; // make sure 0 terminated
 		if (displayString)
 		{
-			printf("PID %u:%u Accepted connection from %s:%d\n",
-			       getpid(),
-			       counter,
-			       displayString,
-			       ntohs(addr.sin_port));
+			fprintf(out,
+				"%u Accepted connection from %s:%d\n",
+				counter,
+				displayString,
+				ntohs(addr.sin_port));
 		}
 		else
 		{
-			fprintf(stderr,
-				"PID %u:%u inet_ntop failed: %d: %s\n",
-				getpid(),
+			fprintf(out,
+				"%u inet_ntop failed: %d: %s\n",
 				counter,
 				errno,
 				strerror(errno));
@@ -181,6 +185,7 @@ void child_loop(int server)
 		close(conn);
 		counter++;
 	}
+	fclose(out);
 }
 
 void parent_loop()
