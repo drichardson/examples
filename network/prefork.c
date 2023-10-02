@@ -11,10 +11,27 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <time.h>
 #include <unistd.h>
+
+struct timespec start_time;
+
+void init_start_time()
+{
+	clock_gettime(CLOCK_MONOTONIC, &start_time);
+}
+
+double get_time_since_start()
+{
+	struct timespec current_time;
+	clock_gettime(CLOCK_MONOTONIC, &current_time);
+	return (current_time.tv_sec - start_time.tv_sec) +
+	       (current_time.tv_nsec - start_time.tv_nsec) / 1e9;
+}
 
 void child_loop(int server, int childnum, char loadtype);
 void parent_loop();
+void load(double seconds);
 
 int main(int argc, char **argv)
 {
@@ -138,11 +155,11 @@ void child_loop(int server, int childnum, char loadtype)
 			break;
 		case 'b':
 			// balanced by worker
-			usleep(1000 * (counter % 10));
+			load(counter % 10);
 			break;
 		case 's':
 			// skewed across workers
-			usleep(1000 * childnum);
+			load(1 + childnum);
 			break;
 		default:
 			fprintf(stderr, "INVALID LOAD TYPE\n");
@@ -183,5 +200,25 @@ void parent_loop()
 	{
 		printf("Parent sleeping %d", counter++);
 		sleep(10);
+	}
+}
+
+double delta_seconds(struct timespec t0, struct timespec t1)
+{
+	return (t1.tv_sec - t0.tv_sec) + (t1.tv_nsec - t0.tv_nsec) / 1e9;
+}
+
+void load(double seconds)
+{
+	struct timespec t0;
+	clock_gettime(CLOCK_MONOTONIC, &t0);
+	while (true)
+	{
+		struct timespec now;
+		clock_gettime(CLOCK_MONOTONIC, &now);
+		if (delta_seconds(t0, now) > seconds)
+		{
+			break;
+		}
 	}
 }
