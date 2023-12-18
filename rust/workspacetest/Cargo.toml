@@ -3,6 +3,7 @@
 members = [
     "adder",
     "add_one",
+    "add_two",
 ]
 
 resolver = "2"
