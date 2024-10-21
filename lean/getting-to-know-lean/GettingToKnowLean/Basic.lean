@@ -534,3 +534,427 @@ def multi {α : Type} (b : Bool) (val : α) : α ⊕ α :=
 
 #eval multi True 123
 #eval multi False 123
+
+
+-- Additional Conveniences
+-- https://lean-lang.org/functional_programming_in_lean/getting-to-know/conveniences.html
+
+-- Automatic Implicit Arguments
+
+def length_verbose {α : Type} (xs : List α) : Nat :=
+  match xs with
+  | [] => 0
+  | y :: ys => Nat.succ (length_verbose ys)
+
+def length_implicit (xs : List α) : Nat :=
+  match xs with
+  | [] => 0
+  | y :: ys => Nat.succ (length_implicit ys)
+
+example : length_verbose [1,2,3] = 3 := rfl
+example : length_implicit [1,2,3] = 3 := rfl
+
+-- Pattern-Matching Definitions
+
+def length_pattern_match : List α → Nat
+  | [] => 0
+  | y :: ys => Nat.succ (length_pattern_match ys)
+
+example : length_pattern_match [1,2,3] = 3 := rfl
+
+
+def drop : Nat → List α -> List α
+  | Nat.zero, xs => xs
+  | _, [] => []
+  | Nat.succ n, _ :: xs => drop n xs
+
+example : drop 2 [1,2,3,4] = [3,4] := rfl
+
+-- named arguments and patterns in same definition
+def fromOption (default : α) : Option α → α
+  | none => default
+  | some x => x
+
+example : fromOption 2 (Option.some 123) = 123 := rfl
+example : fromOption 2 Option.none  = 2 := rfl
+
+-- this function is called Option.getD in the standard library
+
+example : (some "salmonberry").getD "" = "salmonberry" := rfl
+example : none.getD "" = "" := rfl
+
+-- Local Definitions
+
+
+-- as written unzip_slow is O(n^2) time complexity because of the double recursive call.
+-- however, in my testing with #eval with lists around 30 items, which should take 2^30-ish amount of work, it returns very fast, making me think some sort of optimization is in place.
+-- That said, lean provides ways to explicity keep the result with let.
+def unzip_slow : List (α × β) → List α × List β
+  | [] => ([], [])
+  | (x, y) :: xys =>
+    (x :: (unzip_slow xys).fst, y :: (unzip_slow xys).snd)
+
+example : unzip_slow [(1,"one")] = ([1], ["one"]) := rfl
+
+def long_list := [
+  (1,"one"), (2, "two"), (3, "three"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  (4, "four"), (5, "five"), (6, "six"),
+  ]
+
+#eval unzip_slow long_list
+
+#eval 2 ^ (13 * 3)
+#eval 2 ^ (20 * 3)
+
+-- unzip_fast uses let to save result of the recursive call to unzip_fast, instead of calling it 2 times.
+
+/-
+In Lean, the result of the recursive call can be named, and thus saved, using let. Local definitions with let resemble top-level definitions with def: it takes a name to be locally defined, arguments if desired, a type signature, and then a body following :=. After the local definition, the expression in which the local definition is available (called the body of the let-expression) must be on a new line, starting at a column in the file that is less than or equal to that of the let keyword. For instance, let can be used in unzip like this:
+-/
+def unzip_fast : List (α × β) → List α × List β
+  | [] => ([], [])
+  | (x, y) :: xys =>
+    let unzipped : List α × List β := unzip_fast xys
+    (x :: unzipped.fst, y :: unzipped.snd)
+
+  #eval unzip_fast long_list
+
+/-
+Local definitions with let may also use pattern matching when one pattern is enough to match all cases of a datatype. In the case of unzip, the result of the recursive call is a pair. Because pairs have only a single constructor, the name unzipped can be replaced with a pair pattern:
+-/
+def unzip_fast2 : List (α × β) → List α × List β
+  | [] => ([], [])
+  | (x, y) :: xys =>
+    let (xs, ys) : List α × List β := unzip_fast2 xys
+    (x :: xs, y :: ys)
+
+#eval unzip_fast2 long_list
+
+/-
+The biggest difference between let and def is that recursive let definitions must be explicitly indicated by writing let rec. For instance, one way to reverse a list involves a recursive helper function, as in this definition:
+-/
+def reverse (xs : List α) : List α :=
+  let rec helper : List α → List α → List α
+    | [], soFar => soFar
+    | y :: ys, soFar => helper ys (y :: soFar)
+  helper xs []
+
+example : reverse [1,2,3] == [3,2,1] := rfl
+
+/-
+Type Inference
+
+In many situations, Lean can automatically determine an expression's type. In these cases, explicit types may be omitted from both top-level definitions (with def) and local definitions (with let). For instance, the recursive call to unzip does not need an annotation:
+-/
+
+def unzip_type_inf : List (α × β) → List α × List β
+  | [] => ([], [])
+  | (x, y) :: xys =>
+    let unzipped := unzip_type_inf xys
+    (x :: unzipped.fst, y :: unzipped.snd)
+
+example : unzip_type_inf [(1, "one"), (2, "two")] = ([1,2], ["one", "two"]) := rfl
+
+-- Omitting the return type for unzip is possible when using an explicit match expression:
+
+def unzip_omit_return (pairs : List (α × β)) :=
+  match pairs with
+  | [] => ([], [])
+  | (x, y) :: xys =>
+    let unzipped := unzip_omit_return xys
+    (x :: unzipped.fst, y :: unzipped.snd)
+
+example : unzip_omit_return [(1, "one"), (2, "two")] = ([1,2], ["one", "two"]) := rfl
+
+/-
+annotations. First off, explicit types communicate assumptions about the code to readers. Even if Lean can determine the type on its own, it can still be easier to read code without having to repeatedly query Lean for type information. Secondly, explicit types help localize errors. The more explicit a program is about its types, the more informative the error messages can be. This is especially important in a language like Lean that has a very expressive type system. Thirdly, explicit types make it easier to write the program in the first place. The type is a specification, and the compiler's feedback can be a helpful tool in writing a program that meets the specification. Finally, Lean's type inference is a best-effort system. Because Lean's type system is so expressive, there is no "best" or most general type to find for all expressions. This means that even if you get a type, there's no guarantee that it's the right type for a given application. For instance, 14 can be a Nat or an Int:
+-/
+
+#check 14
+#check (14 : Int)
+
+-- Missing type annotations can give confusing error messages.
+
+/-
+In general, messages that say something like "failed to infer" or that mention metavariables are often a sign that more type annotations are necessary. Especially while still learning Lean, it is useful to provide most types explicitly.
+-/
+
+/-
+Simultaneous Matching
+
+Pattern-matching expressions, just like pattern-matching definitions, can match on multiple values at once. Both the expressions to be inspected and the patterns that they match against are written with commas between them, similarly to the syntax used for definitions. Here is a version of drop that uses simultaneous matching:
+-/
+
+def drop_v2 (n : Nat) (xs : List α) : List α :=
+  match n, xs with
+  | Nat.zero, ys => ys
+  | _, [] => []
+  | Nat.succ n', _ :: ys => drop n' ys
+
+example : drop_v2 2 [1,2,3,4] = [3,4] := rfl
+
+/-
+Natural Number Patterns
+
+Just as there is special syntax to make list patterns more readable than using List.cons and List.nil directly, natural numbers can be matched using literal numbers and +. For instance, even can also be defined like this:
+-/
+
+def even_v2 : Nat → Bool
+  | 0 => true
+  | n + 1 => not (even_v2 n)
+
+example : even_v2 0 == true := rfl
+example : even_v2 1 == false := rfl
+example : even_v2 2 == true := rfl
+
+#print even_v2 10
+
+--example : even_v2 19858761287341612873467812873468213581512303 == false := rfl
+set_option maxRecDepth 512
+example : even_v2 125 == false := rfl
+set_option maxRecDepth 1000
+example : even_v2 125 == false := rfl
+
+example : even_v2 125123456789 == false := rfl
+
+-- still too big, try tail call
+
+def even_v2_tail (n : Nat) : Bool :=
+  let rec aux : Nat → Bool → Bool
+    | 0, acc => acc
+    | n + 1, acc => aux n (not acc)
+  aux n true
+
+#print even_v2_tail
+
+--set_option diagnostics true
+example : even_v2_tail 1219 == false := rfl
+
+-- #eval even_v2_tail 19858761287341612873467812873468213581512302
+
+-- example : even_v2_tail 19858761287341612873467812873468213581512303 == false := rfl
+
+/-
+Natural Number Patterns
+
+Just as there is special syntax to make list patterns more readable than using List.cons and List.nil directly, natural numbers can be matched using literal numbers and +. For instance, even can also be defined like this:
+-/
+
+def even_nat_num_pattern : Nat → Bool
+| 0 => true
+| n + 1 => not (even_nat_num_pattern n)
+
+example : even_nat_num_pattern 0 = true := rfl
+example : even_nat_num_pattern 1 = false := rfl
+example : even_nat_num_pattern 2 = true := rfl
+example : even_nat_num_pattern 225 = false := rfl
+
+def halve : Nat → Nat
+  | 0 => 0
+  | 1 => 0
+  | n + 2 => halve n + 1
+
+example : halve 0 = 0 := rfl
+example : halve 1 = 0 := rfl
+example : halve 2 = 1 := rfl
+example : halve 4 = 2 := rfl
+example : halve 5 = 2 := rfl
+
+/-
+Anonymous Functions
+
+This style of anonymous function expression is often referred to as a lambda expression, because the typical notation used in mathematical descriptions of programming languages uses the Greek letter λ (lambda) where Lean has the keyword fun. Even though Lean does permit λ to be used instead of fun, it is most common to write fun.
+-/
+
+#check fun x => x + 1
+#check λ x => x + 1
+
+#check fun (x : Int) => x + 1
+#check fun {α : Type} (x : α) => x
+
+#check fun x =>
+  match x with
+  | 0 => none
+  | Nat.succ n => some n
+
+#check fun
+  | 0 => none
+  | n + 1 => some n
+
+
+def double (n : Nat) :=
+  match n with
+  | 0 => 0
+  | k + 1 => double k + 2
+
+def double_fun := fun
+  | 0 => 0
+  | k + 1 => double_fun k + 2
+
+example : double 4 = 8 := rfl
+example : double_fun 4 = 8 :=rfl
+
+/-
+When an anonymous function is very simple, like fun x => x + 1, the syntax for creating the function can be fairly verbose. In that particular example, six non-whitespace characters are used to introduce the function, and its body consists of only three non-whitespace characters. For these simple cases, Lean provides a shorthand. In an expression surrounded by parentheses, a centered dot character · can stand for an argument, and the expression inside the parentheses becomes the function's body. That particular function can also be written (· + 1).
+
+The centered dot always creates a function out of the closest surrounding set of parentheses. For instance, (· + 5, 3) is a function that returns a pair of numbers, while ((· + 5), 3) is a pair of a function and a number. If multiple dots are used, then they become arguments from left to right:
+
+Write · with \. or \centerdot. Note that \cdot does not work.
+-/
+
+example : (·, ·) 1 2 = (1,2) := rfl
+example : (1, ·) 2 = (1,2) := rfl
+example : (1, 2) = (1,2) := rfl
+
+example : (fun x => x + x) 5 = 10 := rfl
+example : (· * 2) 5 = 10 := rfl
+
+/-
+Namespaces
+
+Each name in Lean occurs in a namespace, which is a collection of names. Names are placed in namespaces using ., so List.map is the name map in the List namespace. Names in different namespaces do not conflict with each other, even if they are otherwise identical. This means that List.map and Array.map are different names. Namespaces may be nested, so Project.Frontend.User.loginTime is the name loginTime in the nested namespace Project.Frontend.User.
+
+Names can be directly defined within a namespace. For instance, the name double can be defined in the Nat namespace:
+-/
+
+def Nat.double (x : Nat) : Nat := x + x
+
+/-
+Because Nat is also the name of a type, dot notation is available to call Nat.double on expressions with type Nat:
+-/
+
+example : (4 : Nat).double = 8 := rfl
+
+/-
+In addition to defining names directly in a namespace, a sequence of declarations can be placed in a namespace using the namespace and end commands. For instance, this defines triple and quadruple in the namespace NewNamespace:
+-/
+
+namespace NewNamespace
+def triple (x : Nat) : Nat := 3 * x
+def quadruple (x: Nat) : Nat := 2 * x + 2 * x
+#check triple
+end NewNamespace
+
+#check triple
+#check NewNamespace.triple
+#check NewNamespace.quadruple
+
+-- Namespaces may be opened, which allows the names in them to be used without explicit qualification.
+
+def timesTwelve (x : Nat) :=
+  open NewNamespace in
+  quadruple (triple x)
+
+example : timesTwelve 2 = 24 := rfl
+
+/-
+Namespaces can also be opened prior to a command. This allows all parts of the command to refer to the contents of the namespace, rather than just a single expression. To do this, place the open ... in prior to the command.
+-/
+open NewNamespace in
+#check quadruple
+#check quadruple -- only applies to the first command
+
+/- Namespaces may additionally be opened for all following commands for the rest of the file. To do this, simply omit the in from a top-level usage of open. -/
+
+/-
+if let
+
+When consuming values that have a sum type, it is often the case that only a single constructor is of interest. For instance, given this type that represents a subset of Markdown inline elements:
+-/
+
+inductive Inline : Type where
+  | lineBreak
+  | string : String → Inline
+  | emph : Inline -> Inline
+  | strong : Inline → Inline
+deriving Repr
+
+#check Inline.lineBreak
+#check Inline.string
+#eval Inline.lineBreak
+#eval Inline.string "howdy"
+#eval Inline.emph (Inline.string "hi")
+
+-- a function that recognizes string elements and extracts their contents can be written:
+
+def Inline.string? : Inline -> Option String
+  | Inline.string s => some s
+  | _ => none
+
+example : Inline.string? Inline.lineBreak = Option.none := rfl
+example : Inline.string? (Inline.string "hi") = Option.some "hi" := rfl
+
+-- An alternative way of writing this function body uses if together with let:
+
+def Inline.string_if? (inline : Inline) : Option String :=
+  if let Inline.string s := inline then
+    some s
+  else none
+
+example : Inline.string_if? Inline.lineBreak = Option.none := rfl
+example : Inline.string_if? (Inline.string "hi") = Option.some "hi" := rfl
+
+/-
+This is very much like the pattern-matching let syntax. The difference is that it can be used with sum types, because a fallback is provided in the else case. In some contexts, using if let instead of match can make code easier to read.
+-/
+
+
+/-
+Positional Structure Arguments
+
+The section on structures presents two ways of constructing structures:
+
+The constructor can be called directly, as in Point.mk 1 2.
+Brace notation can be used, as in { x := 1, y := 2 }.
+
+In some contexts, it can be convenient to pass arguments positionally, rather than by name, but without naming the constructor directly. For instance, defining a variety of similar structure types can help keep domain concepts separate, but the natural way to read the code may treat each of them as being essentially a tuple. In these contexts, the arguments can be enclosed in angle brackets ⟨ and ⟩. A Point can be written ⟨1, 2⟩. Be careful! Even though they look like the less-than sign < and greater-than sign >, these brackets are different. They can be input using \< and \>, respectively.
+
+Just as with the brace notation for named constructor arguments, this positional syntax can only be used in a context where Lean can determine the structure's type, either from a type annotation or from other type information in the program.
+-/
+
+#eval ⟨1,2⟩
+#eval (⟨1,2⟩ : Point)
+
+example : (⟨1, 2⟩ : Point) = { x := 1, y := 2 : Point} := rfl
+example : ⟨1, 2⟩ = { x := 1, y := 2 : Point} := rfl
+
+/-
+String Interpolation
+In Lean, prefixing a string with s! triggers interpolation, where expressions contained in curly braces inside the string are replaced with their values. This is similar to f-strings in Python and $-prefixed strings in C#. For instance,
+-/
+
+example : s!"three fives is {NewNamespace.triple 5}" = "three fives is 15" := rfl
+
+/-
+Not all expressions can be interpolated. For instance, attempting to interpolate a function fails.
+
+This is because there is no standard way to convert functions into strings. The Lean compiler maintains a table that describes how to convert values of various types into strings, and the message failed to synthesize instance means that the Lean compiler didn't find an entry in this table for the given type. This uses the same language feature as the deriving Repr syntax that was described in the section on structures.
+-/
+
+#check s!"three fives is {NewNamespace.triple}"
