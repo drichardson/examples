@@ -3,7 +3,7 @@ CFLAGS=-Wa,--gsframe
 
 foo: foo.o bar.o
 
-show: foo
+objdump-demo: foo
 	echo bar.o objdump
 	objdump --sframe bar.o
 	echo
@@ -13,6 +13,8 @@ show: foo
 	echo foo objdump
 	objdump --sframe foo
 
+readelf-demo: foo
+	readelf --sframe foo
 
 clean:
 	$(RM) *.o foo
